@@ -11,88 +11,58 @@ body {
     margin: 0 auto !important;
 }
 
-header {
-    display: block;
-    text-align: center;
-    margin: 20px;
-}
-
-.header-titulo {
-    margin: 0 auto;
-    width: 60vw;
-    padding: 30px 100px;
-    border: 1px solid black;
-}
-
-
-
-img {
-    margin: 0px 50px;
-    width: 50px;
-}
-
 .container {
     display: flex;
+    background-color: rgba(90, 193, 224, 0.514);
+    
 }
 
-.botoes {
+h1, h3 {
     text-align: center;
-    margin: 10px;
-    width: 50%;
 }
 
-.tabela {
-    margin: 100px 0px 0px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.espaço {
+    width: 70vw;
+    text-align: end;
 }
 
-.dados{
-    margin: 25px;
-}
-
-th {
-    background-color:rgb(111, 153, 231) ;
-}
-
-.linha {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 20px;
-    text-align: center;
+img {
+    width: 15vw;
 }
 
 .botao-separado {
-    background-color: rgb(111, 153, 231);
-    margin: 10px;
-    width: 200px;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.205);
-    border: 0px;
+    padding: 5px;
+    background-color: rgba(151, 198, 212, 0.096);
+    border: 0.1px solid rgba(255, 255, 255, 0.096);
 }
 
 .botao-separado:hover {
-    background-color: rgb(98, 143, 228); ;
+    background-color: rgba(80, 174, 202, 0.096);
+    border: 0.1px solid rgba(255, 255, 255, 0.096);
 }
 
-@media (max-width: 1200px) {
-    .botao-separado {
-        background-color: rgb(111, 153, 231);
-        margin: 10px;
-        width: 150px;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.205);
-        border: 0px;
-    }
+table, .linha {
+    padding: 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    justify-content: center;
+}
 
-    .linha {
-        border: 1px solid black;
-        border-collapse: collapse;
-        padding: 15px;
-        text-align: center;
-    }
+th {
+    background-color: rgba(151, 198, 212, 0.411);
+}
+
+.infoalunos {
     
+    display: flex;
+    justify-content: space-evenly;
+    margin: 10px;
+}
+
+.listaalunos {
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
 }

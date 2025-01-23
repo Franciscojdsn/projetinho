@@ -1,16 +1,14 @@
-import React from "react";
 import './App.scss';
-import OutraLista from "./componentes/lista/Outralista";
-
+import InfoAlunos from './componentes/InfoAlunos';
+import List from './componentes/lista/List';
 
 const Home = () => {
 
-    const meusItens = ['React','Vue' ,'JavaScript', 'Java', 'luup' ]
 
     return (
         <>
-            <OutraLista itens={meusItens}/>
-            <OutraLista itens={[]}/>
+            <InfoAlunos/>
+            <List/>
             {/*<main>
             <Evento title="evento" numero="primeiro"/>
             <Botao title="evento" numero="segundo"/>

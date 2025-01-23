@@ -3,8 +3,8 @@ import Item from "./Item"
 function List () {
     return (
         <>
-            <h1>Minha Lista</h1>
-            <ul>
+            <h3>Aluno - Responsável</h3>
+            <ul className="listaalunos">
                 <Item aluno="Jose" responsavel="Julio"/>
                 <Item aluno="Emilio" responsavel="Adoleta"/>
                 <Item aluno="Cade" responsavel="Vivenci"/>

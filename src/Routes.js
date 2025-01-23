@@ -1,14 +1,22 @@
 import React from "react";
 import Home from "./Home.js";
-import Contato from "./DadosDosAlunos.js";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import Turmas from "./Turmas.js"
+import Financeiro from "./Financeiro.js";
+import DadosDosAlunos from "./DadosDosAlunos.js";
+import Navbar from "./componentes/Navbar/index.js";
+import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import Funcionarios from "./Funcionarios.js";
 
 const AppRoutes = () => {
     return (
         <Router>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Home/>}></Route>
-                <Route path="/contato" element={<Contato/>}></Route>
+                <Route path="/DadosDosAlunos" element={<DadosDosAlunos/>}></Route>
+                <Route path="/Financeiro" element={<Financeiro/>}></Route>
+                <Route path="/Turmas" element={<Turmas/>}></Route>
+                <Route path="/Funcionarios" element={<Funcionarios/>}></Route>
             </Routes>
         </Router>
     )
