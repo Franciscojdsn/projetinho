@@ -1,8 +1,12 @@
+import InfoTurmas from "./componentes/Turmas/InfoTurmas";
 import React from "react";
 
 const Turmas = () => {
     return (
-        <h1>Pagina Turmas</h1>
+        <>
+        <InfoTurmas />
+        </>
+        
     )
 }
 

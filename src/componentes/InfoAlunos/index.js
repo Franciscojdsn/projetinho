@@ -1,11 +1,14 @@
 import Botao from "../Botao";
+import { Link } from "react-router-dom";
 
 function InfoAlunos () {
 
     return (
 
         <div className="infoalunos">
-            <Botao title="matricula" classname="botao-separado" />
+            <Link to="DadosDosAlunos">
+                <Botao title="matricula" classname="botao-separado" />
+            </Link>
             <table>
                 <thead className="linha">
                     <tr className="linha">
