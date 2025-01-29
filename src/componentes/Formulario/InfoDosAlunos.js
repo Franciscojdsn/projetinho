@@ -10,12 +10,10 @@ function InfoDosAlunos() {
                     <div className="ContainerAluno2">
                         <div>
                             <label>Nome do Aluno</label>
-                            <br></br>
                             <input type="text" name="NomeDoAluno" placeholder="Aluno" className="NomeAluno" />
                         </div>
                         <div className="Item1">
                             <label>Data de nascimento</label>
-                            <br></br>
                             <input type="text" name="DataDeNascimento" placeholder="00/00/0000" className="Nascimento" />
                         </div>
                         <div>

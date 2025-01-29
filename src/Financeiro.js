@@ -1,8 +1,11 @@
 import React from "react";
+import DadosFinanceiros from "./componentes/Financeiro/DadosFinanceiros";
 
 const Financeiro = () => {
     return (
-        <h1>Pagina Financeiro</h1>
+        <>
+           <DadosFinanceiros />
+        </>
     )
 }
 

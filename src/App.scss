@@ -28,6 +28,7 @@ h1, h3 {
 
 img {
     width: 15vw;
+    border-radius: 50%;
 }
 
 .botao-separado {
@@ -41,20 +42,75 @@ img {
     border: 0.1px solid rgba(255, 255, 255, 0.096);
 }
 
-table, .linha {
-    padding: 5px;
-    border: 1px solid black;
-    border-collapse: collapse;
+.linha {
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.247);
+}
+
+.table-turmas {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px 50px;
+}
+
+.tabela-dados {
     text-align: center;
     justify-content: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    box-shadow: 0 0 0 1px #666; /* this draws the table border  */
+    margin: 10px;
+}
+
+.sticky-thc {
+    text-align: center;
+    justify-content: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    box-shadow: 0 0 0 1px #666; /* this draws the table border  */
+    margin: 10px;
+    width: 90%;
 }
 
 th {
-    background-color: rgba(151, 198, 212, 0.411);
+    background-color: rgb(196, 191, 191);
+}
+
+.sticky-thc {
+    th {
+        position:sticky;
+        top: 0;
+    }
+}
+
+.info-financeiro {
+    display: flex;
+
+}
+
+.tabela-financeiro1 {
+    margin: 10px;
+    text-align: center;
+    justify-content: center;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-style: hidden; /* hide standard table (collapsed) border */
+    box-shadow: 0 0 0 1px #666; /* this draws the table border  */
+}
+
+.tabela-financeiro1 {
+
+    th {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
 }
 
 .infoalunos {
-    
     display: flex;
     justify-content: space-evenly;
     margin: 10px;
@@ -108,6 +164,21 @@ th {
     padding: 5px 50px;
 }
 
+.cabecalho1 {
+    display: flex;
+    padding: 5px;
+}
+
+.cabecalho-historico {
+    margin: 40px 15px 30px 15px;
+}
+
+.botoes-historico {
+    display: flex;
+    margin-right: 50px;
+    justify-content: end;
+}
+
 .botao-separado2 {
     background-color: rgba(151, 198, 212, 0.096);
     border: 0.1px solid rgba(255, 255, 255, 0.096);
@@ -146,3 +217,45 @@ th {
     display: flex;
     justify-content: center;
 }
+
+.container-nota {
+    margin: 30px 150px;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.nota {
+    display: block;
+    width: 50px;
+}
+
+.infonotas {
+    display: flex;
+    padding: 2px;
+}
+
+.notas {
+    padding: 8px;
+    margin-left:15px ;
+}
+
+.media {
+    margin-left: 100px;
+    padding: 8px;
+}
+
+.presença {
+    display: block;
+    width: 65px;
+}
+
+.selecao {
+    display: block;
+}
+
+.tabela-financeiro {
+    display: flex;
+    justify-content: space-around;
+    margin: 70px;
+}
+

@@ -15,7 +15,7 @@ export default function Turmas() {
             </div>
             
             <div className="tabelaturmas">
-                <table>
+                <table className="sticky-thc">
                     <thead>
                         <tr className="linha">
                             <th className="linha">Turma</th>
@@ -31,11 +31,6 @@ export default function Turmas() {
                             <td className="linha">000</td>
                             <td className="linha">000</td>
                             <td className="linha">000</td>
-                        </tr>
-                        <tr className="linha">
-                            <td className="linha">000</td>
-                            <td className="linha">000</td>
-                            <td className="linha">000</td>
                             <td className="linha">000</td>
                         </tr>
                         <tr className="linha">
@@ -43,7 +38,44 @@ export default function Turmas() {
                             <td className="linha">000</td>
                             <td className="linha">000</td>
                             <td className="linha">000</td>
-                        </tr>                            <tr class="linha">
+                        </tr>
+                        <tr className="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>                            
+                        <tr class="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>
+                        <tr class="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>
+                        <tr class="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>
+                        <tr class="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>
+                        <tr class="linha">
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                            <td className="linha">000</td>
+                        </tr>
+                        <tr class="linha">
                             <td className="linha">000</td>
                             <td className="linha">000</td>
                             <td className="linha">000</td>

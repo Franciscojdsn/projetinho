@@ -6,6 +6,7 @@ import DadosDosAlunos from "./DadosDosAlunos.js";
 import Navbar from "./componentes/Navbar/index.js";
 import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
 import Funcionarios from "./Funcionarios.js";
+import Historico from "./Historico.js";
 
 const AppRoutes = () => {
     return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
                 <Route path="/Financeiro" element={<Financeiro/>}></Route>
                 <Route path="/Turmas" element={<Turmas/>}></Route>
                 <Route path="/Funcionarios" element={<Funcionarios/>}></Route>
+                <Route path="/DadosDosAlunos/Historico" element={<Historico/>}></Route>
             </Routes>
         </Router>
     )
