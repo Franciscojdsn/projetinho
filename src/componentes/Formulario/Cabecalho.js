@@ -12,9 +12,11 @@ function Cabecalho () {
                 </div>
                 <div className="Item2">
                     <Link to="Historico">
-                        <Botao title="HIstórico" classname="botao-separado2"/>
+                        <Botao title="Histórico" classname="botao-separado2"/>
                     </Link>
-                    <Botao title="Financeiro" classname="botao-separado2"/>
+                    <Link to="FinanceiroAluno">
+                        <Botao title="Financeiro" classname="botao-separado2"/>
+                    </Link>
                 </div>
             </div>
         </>

@@ -259,3 +259,43 @@ th {
     margin: 70px;
 }
 
+.ListaFinanceiro {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+li { 
+    display: flex;
+    justify-content: space-around;
+    text-decoration: none;
+    list-style: none;
+}
+
+.titulo-renda-complementar { 
+    margin: 70px 0px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container-financeiro {
+    display: flex;
+    margin: 10px;
+}
+
+.container-financeiro1 {
+    padding: 10px;
+    margin: 20px 50px;
+    background-color: rgba(130, 171, 177, 0.418);
+    border-radius: 5px;
+    width: 70%;
+}
+
+.dados-financeiro {
+    margin: 5px;
+    padding: 1px;
+}
+
+.botoes-financeiro {
+    display: flex;
+    justify-content: end;
+}
