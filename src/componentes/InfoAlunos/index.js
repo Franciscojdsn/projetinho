@@ -1,6 +1,8 @@
 import Botao from "../Botao";
 import { Link } from "react-router-dom";
 
+
+
 function InfoAlunos () {
 
     return (
