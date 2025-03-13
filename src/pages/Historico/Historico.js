@@ -1,7 +1,7 @@
-import Botao from "./componentes/Botao";
-import InfoDosAlunos from "./componentes/Formulario/InfoDosAlunos";
-import Perfil from "./assets/imagens/perfil.jpg"
-import Notas from "./componentes/Formulario/Notas";
+import Botao from "../../componentes/Botao";
+import InfoDosAlunos from "../../componentes/Formulario/InfoDosAlunos/InfoDosAlunos";
+import Perfil from "../../assets/imagens/perfil.jpg"
+import Notas from "../../componentes/Formulario/Notas";
 
 export default function Historico() {
 

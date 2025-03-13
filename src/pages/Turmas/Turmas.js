@@ -1,4 +1,4 @@
-import InfoTurmas from "./componentes/Turmas/InfoTurmas";
+import InfoTurmas from "../../componentes/Turmas/InfoTurmas";
 import React from "react";
 
 const Turmas = () => {

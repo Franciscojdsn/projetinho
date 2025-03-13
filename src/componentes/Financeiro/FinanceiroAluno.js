@@ -1,4 +1,4 @@
-import InfoDosAlunos from "../Formulario/InfoDosAlunos";
+import InfoDosAlunos from "../Formulario/InfoDosAlunos/InfoDosAlunos";
 import Botao from "../Botao/index";
 
 export default function FinanceiroAluno() {

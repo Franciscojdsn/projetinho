@@ -1,11 +1,12 @@
-function Botao(props) {
+function Botao({event, classname, title, icone}) {
     return (
         <>
 
             <button
-               onClick={props.event}
-                className={props.classname}>
-                    {props.title}
+               onClick={event}
+                className={classname}>
+                    {icone}
+                    {title}
             </button>
         </>
     )

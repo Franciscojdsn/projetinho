@@ -1,7 +1,7 @@
 import React from "react";
-import InfoFuncionarios from "./componentes/Funcionarios/InfoFuncionarios";
-import ListaFuncionarios from "./componentes/Funcionarios/ListaFuncionarios";
-import Botao from "./componentes/Botao";
+import InfoFuncionarios from "../../componentes/Funcionarios/InfoFuncionarios";
+import ListaFuncionarios from "../../componentes/Funcionarios/ListaFuncionarios";
+import Botao from "../../componentes/Botao";
 
 const Funcionarios = () => {
     return (

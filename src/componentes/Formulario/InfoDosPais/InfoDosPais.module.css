@@ -1,0 +1,37 @@
+@import url(https://fonts.googleapis.com/css2?family=Aldrich&display=swap);
+
+.container {
+    width: 60vw;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+.container label {
+    font-family: "Aldrich", sans-serif;
+    font-size: 1em;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.021);
+    padding: 2em;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.container input {
+    margin: .5em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    border-radius: .3em;
+}
+
+.container select {
+    margin: .5em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    border-radius: .3em;
+}
+
+.radio {
+    padding-top: 1.6em;
+}

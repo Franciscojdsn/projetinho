@@ -1,0 +1,39 @@
+.titulo {
+    background-color: rgba(181, 213, 223, 0.514);
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+    width: 80vw;
+    margin: 1em auto;
+    padding: .7em;
+    padding-left: 2em;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 6px;
+    
+}
+
+.div2 {
+    grid-column: span 3 / span 3;
+}
+
+.div3 {
+    grid-column: span 3 / span 3;
+    grid-column-start: 5;
+}
+
+.div4 {
+    grid-column-start: 8;
+}
+
+.div5 {
+    grid-column-start: 10;
+}
+
+.div6 {
+    grid-column-start: 11;
+}
+
+.div7 {
+    grid-column-start: 12;
+}

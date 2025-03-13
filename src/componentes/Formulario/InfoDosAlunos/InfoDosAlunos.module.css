@@ -1,0 +1,101 @@
+@import url(https://fonts.googleapis.com/css2?family=Aldrich&display=swap);
+
+.container {
+    width: 60vw;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+.container label {
+    font-family: "Aldrich", sans-serif;
+    font-size: 1em;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.021);
+    padding: 2em;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 4px;
+}
+
+.container input {
+    margin: .5em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    border-radius: .3em;
+}
+
+.container select {
+    margin: .5em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    border-radius: .3em;
+}
+
+.grupo1 {
+    grid-column: span 1 / span 1;
+}
+
+.grupo1 input {
+    width: 24em;
+}
+
+.grupo5 input {
+    width: 24em;
+}
+
+.grupo6 input {
+    width: 4em;
+}
+
+.grupo2 {
+    grid-column-start: 2;
+}
+
+.grupo3 {
+    grid-column-start: 3;
+}
+
+.grupo4 {
+    grid-column-start: 4;
+}
+
+.grupo5 {
+    grid-column: 1;
+    grid-row-start: 2;
+}
+
+.grupo6 {
+    grid-row-start: 2;
+    grid-column: 2;
+}
+
+.grupo7 {
+    grid-row-start: 2;
+    grid-column: 3;
+}
+
+.grupo8 {
+    grid-row-start: 2;
+    grid-column: 4;
+}
+
+.grupo9 {
+    grid-row-start: 3;
+}
+
+.grupo3 label div {
+    margin: .4em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    background-color: white;
+    border-radius: .3em;
+}
+
+.grupo3 label label {
+    padding-left: .5em;
+    width: 1.5em;
+}
+
+input[type="radio"] {
+    accent-color: rgba(106, 109, 160, 0.815);
+}

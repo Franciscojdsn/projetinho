@@ -1,0 +1,40 @@
+.containerdados {
+    margin-top: 2em;
+    border: 1px solid black;
+    border-radius: 1em;
+}
+
+.containerdadoscontainer {
+    display: flex;
+    background-color: rgba(181, 213, 223, 0.514);
+    border-top-left-radius: 1em;
+    border-top-right-radius: 1em;
+}
+
+.containerdadosdados {
+    display: flex;
+    justify-content: space-around;
+    font-size: 2em;
+}
+
+.containerdados h4 {
+    padding: 1.2em;
+}
+
+.containerdados p {
+    padding: .3em;
+}
+
+.entrada {
+    display: flex;
+    background-color: rgba(0, 128, 0, 0.664);
+    border-top-left-radius: 1em;
+}
+
+.segunda {
+    display: flex;
+    background-color: rgb(221, 82, 82);
+    border-top-right-radius: 1em;
+}
+
+

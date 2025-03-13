@@ -1,12 +1,12 @@
 import React from "react";
-import Home from "./Home.js";
-import Turmas from "./Turmas.js"
-import Financeiro from "./Financeiro.js";
-import DadosDosAlunos from "./DadosDosAlunos.js";
-import Navbar from "./componentes/Navbar/index.js";
 import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
-import Funcionarios from "./Funcionarios.js";
-import Historico from "./Historico.js";
+import Home from "./pages/Home/Home.js";
+import Turmas from "./pages/Turmas/Turmas.js";
+import Financeiro from "./pages/Financeiro/Financeiro.js";
+import DadosDosAlunos from "./pages/DadosDosAlunos/DadosDosAlunos.js";
+import Navbar from "./componentes/Navbar/Navbar.js";
+import Funcionarios from "./pages/Funcionarios/Funcionarios.js";
+import Historico from "./pages/Historico/Historico.js";
 import FinanceiroAluno from "./componentes/Financeiro/FinanceiroAluno.js";
 import InfoFuncionarios from "./componentes/Funcionarios/InfoFuncionarios.js";
 

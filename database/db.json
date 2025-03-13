@@ -1,0 +1,77 @@
+{
+    "alunos": [
+        {
+            "id": 0,
+            "nome": "Aluno da José silva Neto",
+            "data": "18/12/1997",
+            "genero": "M",
+            "CPF": "000.000.000-00",
+            "endereco": "Rua lorem ipsum lorem ipsum",
+            "numero": "150",
+            "cidade": "Abreu e Lima",
+            "bairro": "Matinha",
+            "CEP": "53580-150",
+            "responsavel": "Nome da mãe da Silva",
+            "turma": "1º Ano",
+            "turno": "A"
+        },
+        {
+            "id": 1,
+            "nome": "Aluno Nome Grande da silva Neto",
+            "data": "18/12/1997",
+            "genero": "M",
+            "CPF": "000.000.000-00",
+            "endereco": "Rua lorem ipsum lorem ipsum",
+            "numero": "150",
+            "cidade": "Abreu e Lima",
+            "bairro": "Matinha",
+            "CEP": "53580-150",
+            "responsavel": "Nome da mãe da Silva",
+            "turma": "1º Ano",
+            "turno": "A"
+        },
+        {
+            "id": 2,
+            "nome": "Aluno da silva Neto",
+            "data": "18/12/1997",
+            "genero": "M",
+            "CPF": "000.000.000-00",
+            "endereco": "Rua lorem ipsum lorem ipsum",
+            "numero": "150",
+            "cidade": "Abreu e Lima",
+            "bairro": "Matinha",
+            "CEP": "53580-150",
+            "responsavel": "Nome da mãe da Silva",
+            "turma": "1º Ano",
+            "turno": "A"
+        },
+        {
+            "id": 3,
+            "nome": "Aluno da Silva 2",
+            "responsavel": "responsavel",
+            "turma": "A"
+        }
+    ],
+    "turmas": [
+    {
+            "id": "1",
+            "nome": "maternal",
+            "turno": "manhã"
+        }
+    ],
+    "funcionarios": [
+        {
+            "id":"1",
+            "nome":"funcionario",
+            "turma": "maternal"
+        }
+    ],
+    "dadosfinanceiros": [
+        {
+            "entrada": "0",
+            "saida": "100",
+            "totaldealunos": "10",
+            "alunospendentes": ""
+        }
+    ]
+} 
