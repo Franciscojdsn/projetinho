@@ -1,13 +1,13 @@
 import styles from "./ListaAluno.module.css"
 
-export default function ListaAlunos({ matricula, nome, responsavel, data, turma, turno, icone }) {
+export default function ListaAlunos({ id, nome, responsavel, data, turma, turno, icone, category }) {
 
     return (
         <>
-            <div className={styles.container}>
+            <div key={1} className={styles.container}>
                 <li className={styles.titulolista}>
                     <div>
-                        <p>{matricula}</p>
+                        <p>{id}</p>
                     </div>
                     <div className={styles.div2}>
                         <p>{nome}</p>

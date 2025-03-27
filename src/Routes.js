@@ -7,8 +7,8 @@ import DadosDosAlunos from "./pages/DadosDosAlunos/DadosDosAlunos.js";
 import Navbar from "./componentes/Navbar/Navbar.js";
 import Funcionarios from "./pages/Funcionarios/Funcionarios.js";
 import Historico from "./pages/Historico/Historico.js";
-import FinanceiroAluno from "./componentes/Financeiro/FinanceiroAluno.js";
-import InfoFuncionarios from "./componentes/Funcionarios/InfoFuncionarios.js";
+import FinanceiroAluno from "./pages/FinanceiroAluno/FinanceiroAluno.js";
+import PaginaAluno from "./pages/PaginaAluno/PaginaAluno.js";
 
 const AppRoutes = () => {
     return (
@@ -21,8 +21,8 @@ const AppRoutes = () => {
                 <Route path="/Turmas" element={<Turmas/>}></Route>
                 <Route path="/Funcionarios" element={<Funcionarios/>}></Route>
                 <Route path="/DadosDosAlunos/Historico" element={<Historico/>}></Route>
-                <Route path="/DadosDosAlunos/FinanceiroAluno" element={<FinanceiroAluno/>}></Route>
-                <Route path="/Funcionarios/InfoFuncionarios" element={<InfoFuncionarios/>}></Route>
+                <Route path="/DadosDosAlunos/FinanceiroAluno" element={<PaginaAluno/>}></Route>
+                <Route path="/DadosDosAlunos/Financeiro" element={<FinanceiroAluno/>}></Route>
             </Routes>
         </Router>
     )

@@ -26,21 +26,21 @@
 
 .div4 {
     grid-column-start: 8;
-    padding-left: 2em;
+    padding-left: 1.3em;
 }
 
 .div5 {
     grid-column-start: 10;
-    padding-left: 1em;
+    padding-left: .3em;
 }
 
 .div6 {
     grid-column-start: 11;
-    padding-left: 2.5em;
+    padding-left: 1.7em;
 }
 
 .div7 {
     grid-column-start: 12;
-    padding-left: 2.5em;
+    padding-left: 1.5em;
 
 }

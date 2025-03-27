@@ -1,13 +1,12 @@
-function Botao({event, classname, title, icone}) {
+function Botao({ id, classname, title, icone, type, onclick}) {
     return (
         <>
 
             <button
-               onClick={event}
-                className={classname}>
-                    {icone}
-                    {title}
-            </button>
+                id={id}
+                onClick={onclick}
+                type={type}
+                className={classname}>{icone}{title}</button>
         </>
     )
 }

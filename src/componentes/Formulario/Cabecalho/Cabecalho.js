@@ -4,22 +4,30 @@ import Botao from "../../Botao"
 import { GrNotes } from "react-icons/gr";
 import { GoGraph } from "react-icons/go";
 import { Link } from "react-router-dom"
+import { useLocation } from "react-router-dom";
 
-export default function Imagem() {
+export default function Cabecalho() {
+
+    const location = useLocation();
 
     return (
         <>
-            <div className="containercabecalho">
+            <div className={styles.containercabecalho}>
                 <img src={Perfil} alt="FotoDoAluno" className="PerfilDoAluno" />
-                <h3>Nome do Aluno</h3>
-                <div className={styles.containerbotoes}>
+
+                
+
+                {location.pathname === '/DadosDosAlunos/Financeiro' && <h3>Nome do Aluno</h3>}
+
+
+                {location.pathname === '/DadosDosAlunos' ? <div className={styles.containerbotoes}>
                     <Link to="Historico">
                         <Botao
                             icone={<GrNotes />}
                             title="Histórico"
                             classname={styles.botao}
                         />
-                    </Link>
+                    </Link>        
                     <Link to="Financeiro">
                         <Botao
                             icone={<GoGraph />}
@@ -27,7 +35,9 @@ export default function Imagem() {
                             classname={styles.botao}
                         />
                     </Link>
-                </div>
+                </div> : <div></div>}
+
+                
             </div>
         </>
     )

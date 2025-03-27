@@ -1,70 +1,141 @@
 import styles from './InfoDosPais.module.css'
-import { GrDocumentTransfer } from "react-icons/gr";
+import Input from '../Componentes/Input/Input';
+import { useState } from 'react';
+import { GrDocumentTransfer } from "react-icons"
 
-function InfoDosPais() {
+function InfoDosPais({ handleSubmit, dadosData }) {
+
+    const [dados, setDados] = useState(dadosData || {})
+
+    const submit = (e) => {
+        e.preventDefault()
+        //console.log(dados)
+        handleSubmit(dados)
+    } 
+
+    function handleChange(e) {
+        setDados({ ...dados, [e.target.name]: e.target.value })
+        console.log(dados)
+    }
 
     return (
         <>
-            <div className={styles.container}>
-                <div>
-                    <label>Nome da pai:</label>
-                    <br></br>
-                    <input type="text" name="pai" placeholder="Nome Completo" />
+            <form onSubmit={submit}>
+                <div className={styles.container}>
+                    <div className={styles.div1}>
+                        <Input
+                            type="text"
+                            text="Nome do pai"
+                            name="nome_do_pai"
+                            placeholder="Nome completo"
+                            handleOnChange={handleChange}
+                            value={dados.nome_do_pai ? dados.nome_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div2}>
+                        <Input
+                            type="number"
+                            text="CPF:"
+                            name="cpf_do_pai"
+                            placeholder="000.000.000-00"
+                            handleOnChange={handleChange}
+                            value={dados.cpf_do_pai ? dados.cpf_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div3}>
+                        <Input
+                            type="number"
+                            text="RG:"
+                            name="rg_do_pai"
+                            placeholder="000.000.000-00"
+                            handleOnChange={handleChange}
+                            value={dados.rg_do_pai ? dados.rg_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div4}>
+                        <Input
+                            type="number"
+                            text="Telefone 1"
+                            name="telefone1_do_pai"
+                            placeholder="Telefone 1"
+                            handleOnChange={handleChange}
+                            value={dados.telefone1_do_pai ? dados.telefone1_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div5}>
+                        <Input
+                            type="number"
+                            text="Telefone 2:"
+                            name="telefone2_do_pai"
+                            placeholder="Telefone 2"
+                            handleOnChange={handleChange}
+                            value={dados.telefone2_do_pai ? dados.telefone2_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div6}>
+                        <Input
+                            type="text"
+                            text="Endereço"
+                            name="endereco_do_pai"
+                            placeholder="Endereço"
+                            handleOnChange={handleChange}
+                            value={dados.endereco_do_pai ? dados.endereco_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div7}>
+                        <Input
+                            type="number"
+                            text="Nº"
+                            name="n_do_pai"
+                            placeholder="Nº"
+                            handleOnChange={handleChange}
+                            value={dados.n_do_pai ? dados.n_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div8}>
+                        <Input
+                            type="text"
+                            text="Cidade"
+                            name="cidade_do_pai"
+                            placeholder="Cidade"
+                            handleOnChange={handleChange}
+                            value={dados.cidade_do_pai ? dados.cidade_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div9}>
+                        <Input
+                            type="text"
+                            text="Bairro"
+                            name="bairro_do_pai"
+                            placeholder="Bairro"
+                            handleOnChange={handleChange}
+                            value={dados.bairro_do_pai ? dados.bairro_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div10}>
+                        <Input
+                            type="number"
+                            text="CEP"
+                            name="cep_do_pai"
+                            placeholder="000.000-00"
+                            handleOnChange={handleChange}
+                            value={dados.cep_do_pai ? dados.cep_do_pai : ''}
+                        />
+                    </div>
+                    <div className={styles.div11}>
+                        <Input
+                            type="text"
+                            text="E-mail"
+                            name="email_do_pai"
+                            placeholder="E-mail"
+                            handleOnChange={handleChange}
+                            value={dados.email_do_pai ? dados.email_do_pai : ''}
+                        />
+                    </div>
                 </div>
-                <div>
-                    <label for="cpf">CPF:</label>
-                    <br></br>
-                    <input type="text" id='cpf' name="cpf" placeholder="CPF" />
-                </div>
-                <div className="Item1">
-                    <label for="rg">RG:</label>
-                    <br></br>
-                    <input type="text" id="rg" name="rg" placeholder="RG" />
-                </div>
-                <div>
-                    <label for="contato">Contato:</label>
-                    <br></br>
-                    <input type="number" id="contato" name="contato" placeholder="Contato 1" />
-                </div>
-                <div>
-                    <label for="contato2">Contato 2:</label>
-                    <br></br>
-                    <input type="number" id='contato2' name="contato2" placeholder="Contato 2" />
-                </div>
-                <div>
-                    <label for="email">E-mail:</label>
-                    <br></br>
-                    <input type="text" id='email' name="email" placeholder="E-mail" />
-                </div>
-                <div >
-                    <label for="end">Endereço:</label><br></br>
-                    <input type="text" id="end" name="end" placeholder='Endereço' />
-                    <GrDocumentTransfer />
-                </div>
-                <div >
-                    <label for="n">Nº:</label><br></br>
-                    <input type="text" id="n" name="n" placeholder='Nº' />
-                </div>
-                <div >
-                    <label for="cidade">Cidade:</label><br></br>
-                    <input type="text" id="cidade" name="cidade" placeholder='Cidade' />
-                </div>
-                <div >
-                    <label for="bairro">Bairro:</label><br></br>
-                    <input type="text" id="bairro" name="bairro" placeholder='Bairro' />
-                </div>
-                <div >
-                    <label for="cep">CEP:</label><br></br>
-                    <input type="text" id="cep" name="cep" placeholder='CEP' />
-                </div>
-                <div className={styles.radio}>
-                    <label for="fin">Resp. financeiro:</label>
-                    <input type="radio" id="fin" name="fin"/>
-                </div>
-            </div>
+            </form>
         </>
     )
-
 }
 
 export default InfoDosPais;

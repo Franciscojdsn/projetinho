@@ -1,77 +1,213 @@
 {
-    "alunos": [
-        {
-            "id": 0,
-            "nome": "Aluno da José silva Neto",
-            "data": "18/12/1997",
-            "genero": "M",
-            "CPF": "000.000.000-00",
-            "endereco": "Rua lorem ipsum lorem ipsum",
-            "numero": "150",
-            "cidade": "Abreu e Lima",
-            "bairro": "Matinha",
-            "CEP": "53580-150",
-            "responsavel": "Nome da mãe da Silva",
-            "turma": "1º Ano",
-            "turno": "A"
-        },
-        {
-            "id": 1,
-            "nome": "Aluno Nome Grande da silva Neto",
-            "data": "18/12/1997",
-            "genero": "M",
-            "CPF": "000.000.000-00",
-            "endereco": "Rua lorem ipsum lorem ipsum",
-            "numero": "150",
-            "cidade": "Abreu e Lima",
-            "bairro": "Matinha",
-            "CEP": "53580-150",
-            "responsavel": "Nome da mãe da Silva",
-            "turma": "1º Ano",
-            "turno": "A"
-        },
-        {
-            "id": 2,
-            "nome": "Aluno da silva Neto",
-            "data": "18/12/1997",
-            "genero": "M",
-            "CPF": "000.000.000-00",
-            "endereco": "Rua lorem ipsum lorem ipsum",
-            "numero": "150",
-            "cidade": "Abreu e Lima",
-            "bairro": "Matinha",
-            "CEP": "53580-150",
-            "responsavel": "Nome da mãe da Silva",
-            "turma": "1º Ano",
-            "turno": "A"
-        },
-        {
-            "id": 3,
-            "nome": "Aluno da Silva 2",
-            "responsavel": "responsavel",
-            "turma": "A"
-        }
-    ],
-    "turmas": [
+  "alunos": [
     {
-            "id": "1",
-            "nome": "maternal",
-            "turno": "manhã"
-        }
-    ],
-    "funcionarios": [
-        {
-            "id":"1",
-            "nome":"funcionario",
-            "turma": "maternal"
-        }
-    ],
-    "dadosfinanceiros": [
-        {
-            "entrada": "0",
-            "saida": "100",
-            "totaldealunos": "10",
-            "alunospendentes": ""
-        }
-    ]
-} 
+      "id": "5222",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "data": "18021997"
+    },
+    {
+      "id": "7cda",
+      "data": "2025-02-04",
+      "nome": "Francisco",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760"
+    },
+    {
+      "id": "946e",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "data": "2000-12-12",
+      "sexo": "M",
+      "resp": "mae",
+      "nome_da_mae": "Francisco João da Silva Neto Boni",
+      "telefone1_da_mae": "81971199800",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "53580760"
+    },
+    {
+      "id": "924e"
+    },
+    {
+      "id": "0ff7"
+    },
+    {
+      "id": "cbe5"
+    },
+    {
+      "id": "77d2"
+    },
+    {
+      "id": "9825"
+    },
+    {
+      "id": "254c"
+    },
+    {
+      "id": "dcb9",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "nome_da_mae": "Francisco João da Silva Neto Boni",
+      "telefone1_da_mae": "81971199800",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "53580760",
+      "nome_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760"
+    },
+    {
+      "id": "6328",
+      "nome_da_mae": "Francisco João da Silva Neto Boni",
+      "telefone1_da_mae": "81971199800",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "53580760",
+      "cpf_da_mae": "1212121"
+    },
+    {
+      "id": "1e94",
+      "nome_da_mae": "",
+      "cpf_da_mae": "",
+      "resp_financeiro": "",
+      "cpf_financeiro": ""
+    },
+    {
+      "id": "70f6",
+      "nome_da_mae": "",
+      "cpf_da_mae": "",
+      "resp_financeiro": "",
+      "cpf_financeiro": ""
+    },
+    {
+      "id": "6570"
+    },
+    {
+      "id": "176f"
+    },
+    {
+      "id": "6dcb"
+    },
+    {
+      "id": "0d35"
+    },
+    {
+      "id": "b9dd"
+    },
+    {
+      "id": "1a7c"
+    },
+    {
+      "id": "c3fc"
+    },
+    {
+      "id": "5c51"
+    },
+    {
+      "id": "4a6b"
+    },
+    {
+      "id": "3207"
+    },
+    {
+      "id": "a3ec"
+    },
+    {
+      "id": "beaf",
+      "nome_da_mae": "Francisco João da Silva Neto Boni",
+      "telefone1_da_mae": "81971199800",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "53580760",
+      "nome_do_pai": "asd",
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "data_financeiro": "1997-02-18",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "data_da_mae": "1997-02-18"
+    },
+    {
+      "id": "bda2"
+    },
+    {
+      "id": "9e14"
+    },
+    {
+      "id": "108d"
+    },
+    {
+      "id": "68dd"
+    },
+    {
+      "id": "0687"
+    },
+    {
+      "id": "cbb0"
+    }
+  ],
+  "opcoesturma": [
+    {
+      "id": "1",
+      "nome": "Maternal II"
+    },
+    {
+      "id": "2",
+      "nome": "Maternal III"
+    },
+    {
+      "id": "3",
+      "nome": "Jardim I"
+    },
+    {
+      "id": "4",
+      "nome": "Jardim II"
+    }
+  ],
+  "turnos": [
+    {
+      "id": "11",
+      "nome": "Manhã"
+    },
+    {
+      "id": "12",
+      "nome": "Tarde"
+    }
+  ],
+  "turmas": [
+    {
+      "id": "1",
+      "professor": "Nome do Professor da Silva Grande",
+      "turma": "1º Ano",
+      "turno": "manhã",
+      "qtdalunos": "10"
+    }
+  ],
+  "funcionarios": [
+    {
+      "id": "1",
+      "funcionario": "Funcionario com o nome grande",
+      "funcao": "funcao com tres nomes"
+    }
+  ],
+  "dadosfinanceiros": [
+    {
+      "entrada": "0",
+      "saida": "100",
+      "totaldealunos": "10",
+      "alunospendentes": "",
+      "id": "effc"
+    }
+  ]
+}

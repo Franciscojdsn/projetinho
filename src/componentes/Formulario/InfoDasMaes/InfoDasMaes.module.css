@@ -4,6 +4,7 @@
     width: 60vw;
     margin: 0 auto;
     margin-top: 1em;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
 }
 
 .container label {
@@ -16,14 +17,15 @@
     padding: 2em;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 4px;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
 }
 
 .container input {
     margin: .5em;
     border: 1px solid rgba(139, 139, 255, 0.301);
     border-radius: .3em;
+    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
 }
 
 .container select {
@@ -34,4 +36,102 @@
 
 .radio {
     padding-top: 1.6em;
+}
+
+.div1 {
+    grid-column: span 3 / span 3;
+}
+
+.div1 input {
+    width: 20em;
+}
+
+.div2 {
+    grid-column: span 1 / span 1;
+    grid-column-start: 6;
+}
+
+.div2 input {
+    width: 8em;
+}
+
+.div3 {
+    grid-column: span 1 / span 2;
+    grid-column-start: 7;
+}
+
+.div3 input {
+    width: 6em;
+}
+
+.div4 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 9;
+}
+
+.div5 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 11;
+    grid-row-start: 1;
+}
+
+.div6 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.div6 input {
+    width: 18em;
+}
+
+
+.div7 {
+    grid-column: span 1 / span 1;
+    grid-column-start: 5;
+    grid-row-start: 2;
+}
+
+.div7 input {
+    width: 3em;
+}
+
+.div8 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 7;
+    grid-row-start: 2;
+}
+
+.div8 input {
+    width: 7em;
+}
+
+.div9 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 6;
+    grid-row-start: 2;
+}
+
+.div9 input {
+    width: 7em;
+}
+
+.div10 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 9;
+    grid-row-start: 2;
+}
+
+.div10 input {
+    width: 7em ;
+}
+
+.div11 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 11;
+    grid-row-start: 2;
+}
+
+.div11 input {
+    width: 12em;
 }

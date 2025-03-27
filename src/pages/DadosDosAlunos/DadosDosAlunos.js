@@ -1,34 +1,41 @@
-import React from "react";
 import styles from "./DadosDosAlunos.module.css"
-import { TfiSave } from "react-icons/tfi";
-import { TbTrashX } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
+import { v4 as uuid } from 'uuid'
 
 import InfoDosAlunos from "../../componentes/Formulario/InfoDosAlunos/InfoDosAlunos";
-import Botao from "../../componentes/Botao";
 import Imagem from "../../componentes/Formulario/Cabecalho/Cabecalho";
-import InfoDasMaes from "../../componentes/Formulario/InfoDasMaes/InfoDasMaes";
-import InfoDosPais from "../../componentes/Formulario/InfoDosPais/InfoDosPais";
+
 
 const DadosDosAlunos = () => {
+
+    const navigate = useNavigate()
+
+    function addAluno(dados) {
+
+        dados.id = uuid
+
+        fetch('http://localhost:5000/alunos', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(dados)
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                console.log(data)
+                navigate('/DadosDosAlunos/Financeiro', {state: {message: 'Projeto criado com sucesso!'} })
+            })
+            .catch((err) => console.log(err))
+    }
+
     return (
         <>
             <div className={styles.containerdados}>
-                <Imagem />
-                <InfoDosAlunos />
-                <InfoDasMaes />
-                <InfoDosPais />
-                <div className={styles.containerbotao}>
-                    <Botao
-                        title="Salvar"
-                        icone={<TfiSave />}
-                        classname={styles.botao}>
-                    </Botao>
-                    <Botao
-                        title="Limpar"
-                        icone={<TbTrashX />}
-                        classname={styles.botao2}>
-                    </Botao>
-                </div>
+                    <Imagem />
+                    <InfoDosAlunos
+                        handleSubmit={addAluno}
+                    />
             </div>
         </>
     )

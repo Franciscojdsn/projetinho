@@ -1,0 +1,29 @@
+.container {
+    margin: 0 auto;
+    margin-bottom: 1em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.13);
+    width: 60vw;
+    padding-left: 2em;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 8px;
+}
+
+.div2 {
+    grid-column: span 5 / span 5;
+    grid-column-start: 2;
+    margin-left: 2em;
+}
+
+.div3 {
+    grid-column: span 3 / span 3;
+    grid-column-start: 7;
+    margin-left: 2em;
+}
+
+.div4 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 11;
+}
+     
