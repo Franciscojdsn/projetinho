@@ -1,27 +1,4 @@
-.containercabecalho {
-    display: flex;
-    justify-content: center;
-    margin: 2em;
-}
-
-.containercabecalho2 {
-    display: flex;
-    justify-content: space-around;
-    margin: 2em;
-    align-items: center;
-}
-
-.containercabecalho2 img {
-    width: 10em;
-}
-
-.containerdados {
-    width: 70vw;
-    margin: 2em auto;
-    border: 1px solid black;
-    border-radius: 1em;
-    box-shadow: 3px 2px 10px 1px rgba(0, 0, 0, 0.192);
-}
+@import url(https://fonts.googleapis.com/css2?family=Aldrich&display=swap);
 
 .container {
     width: 60vw;
@@ -33,13 +10,14 @@
 .container label {
     font-family: "Aldrich", sans-serif;
     font-size: 1em;
+    margin-top: 1em;
 }
 
 .container {
     background-color: rgba(0, 0, 0, 0.021);
     padding: 2em;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 8px;
 }
@@ -58,51 +36,42 @@
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
 }
 
-.div1 {
-    grid-column: span 3 / span 3;
+.container span {
+    padding: .5em;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.082);
+    border-radius: 3px;
 }
 
-.div1 input {
-    width: 20em;
+.div1 {
+    grid-column: span 6 / span 6;
 }
+
 
 .div2 {
-    grid-column: span 1 / span 1;
-    grid-column-start: 5;
-}
-
-.div2 input {
-    width: 7em;
-}
-
-.div3 {
-    grid-column: span 1 / span 1;
-    grid-column-start: 6;
-}
-
-.div3 input {
-    width: 7em;
-}
-
-.div4 {
     grid-column: span 2 / span 2;
     grid-column-start: 7;
 }
 
-.div5 {
+.div3 {
     grid-column: span 2 / span 2;
-    grid-column-start: 9;
+    grid-column-start: 10;
+}
+
+.div4 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 13;
+}
+
+.div5 {
+    grid-column: span 3 / span 3;
+    grid-column-start: 17;
     grid-row-start: 1;
 }
 
 .div6 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 11;
+    grid-column: span 3 / span 3;
+    grid-column-start: 15;
     grid-row-start: 1;
-}
-
-.div6 input {
-    width: 8em;
 }
 
 
@@ -112,43 +81,28 @@
     grid-row-start: 2;
 }
 
-.div7 input {
-    width: 8em;
-}
-
 .div8 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 3;
+    grid-column: span 3 / span 3;
+    grid-column-start: 4;
     grid-row-start: 2;
 }
 
-.div8 input {
-    width: 18em;
-}
 
 .div9 {
     grid-column: span 2 / span 2;
-    grid-column-start: 8;
+    grid-column-start: 9;
     grid-row-start: 2;
-}
-
-.div9 input {
-    width: 3em;
 }
 
 .div10 {
     grid-column: span 2 / span 2;
-    grid-column-start: 6;
+    grid-column-start: 11;
     grid-row-start: 2;
-}
-
-.div10 input {
-    width: 10em ;
 }
 
 .div11 {
     grid-column: span 2 / span 2;
-    grid-column-start: 9;
+    grid-column-start: 14;
     grid-row-start: 2;
 }
 
@@ -158,147 +112,77 @@
 
 .div12 {
     grid-column: span 2 / span 2;
-    grid-column-start: 11;
+    grid-column-start: 17;
     grid-row-start: 2;
 }
 
-.div12 input {
-    width: 8em;
-}
-
-.div4 label div {
-    margin: .4em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    background-color: white;
-    border-radius: .3em;
-}
-
-.div4 label label {
-    padding-left: .5em;
-    width: 1.5em;
-}
-
-input[type="radio"] {
-    accent-color: rgba(106, 109, 160, 0.815);
-}
-
 .divmae1 {
-    grid-column: span 4 / span 4;
-}
-
-.divmae1 input {
-    width: 18em;
+    grid-column: span 5 / span 5;
 }
 
 .divmae2 {
+    grid-column: span 2 / span 2;
     grid-column-start: 6;
 }
 
-.divmae2 input {
-    width: 9em;
-}
-
 .divmae3 {
-    grid-column: span 1 / span 1;
-    grid-column-start: 7;
-}
-
-.divmae3 input {
-    width: 6em;
+    grid-column: span 2 / span 2;
+    grid-column-start: 9;
 }
 
 .divmae4 {
     grid-column: span 2 / span 2;
-    grid-column-start: 8;
-    grid-row-start: 1;
-}
-
-.divmae4 input {
-    width: 8em;
+    grid-column-start: 12;
 }
 
 .divmae5 {
     grid-column: span 2 / span 2;
-    grid-column-start: 10;
+    grid-column-start: 14;
     grid-row-start: 1;
-}
-
-.divmae5 input {
-    width: 8em;
 }
 
 .divmae6 {
     grid-column: span 2 / span 2;
+    grid-column-start: 17;
+    grid-row-start: 1;
+}
+
+
+.divmae7 {
+    grid-column: span 6 / span 6;
     grid-column-start: 1;
     grid-row-start: 2;
 }
 
-.divmae6 input {
-    width: 18em;
-}
-
-.divmae7 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 5;
-    grid-row-start: 2;
-}
-
-.divmae7 input {
-    width: 3em;
-}
-
 .divmae8 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 6;
-    grid-row-start: 2;
-}
-
-.divmae8 input {
-    width: 8em;
-}
-
-.divmae9 {
-    grid-column: span 2 / span 2;
+    grid-column: span 3 / span 3;
     grid-column-start: 7;
     grid-row-start: 2;
 }
 
-.divmae9 input {
-    width: 7em;
-}
 
-.divmae10 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 8;
+.divmae9 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 9;
     grid-row-start: 2;
 }
 
-.divmae10 input {
-    width: 8em;
+.divmae10 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 12;
+    grid-row-start: 2;
 }
 
 .divmae11 {
     grid-column: span 2 / span 2;
-    grid-column-start: 10;
+    grid-column-start: 15;
     grid-row-start: 2;
 }
 
 .divmae12 {
     grid-column: span 2 / span 2;
-    grid-column-start: 12;
-    grid-row-start: 1;
-}
-
-.divmae12 label div {
-    margin: .4em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    background-color: white;
-    border-radius: .3em;
-}
-
-.divmae12 label label {
-    padding-left: .5em;
-    width: 1.5em;
+    grid-column-start: 17;
+    grid-row-start: 2;
 }
 
 .containerbotao {
@@ -311,7 +195,7 @@ input[type="radio"] {
     font-size: 1em;
     padding: 1em;
     border: none;
-    background-color: rgba(156, 221, 223, 0.514);
+    background-color: rgba(156, 223, 156, 0.514);
     border-radius: .3em;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
     font-family: "Outfit", sans-serif;
@@ -323,23 +207,22 @@ input[type="radio"] {
     margin-right: .4em;
 }
 .botao:hover {
-    background-color: rgba(145, 205, 223, 0.781);
+    background-color: rgba(145, 223, 145, 0.781);
     color: rgb(255, 255, 255);
     transition: .4s;
 }
 
 .botao3 {
-    font-size: 1.5em;
-    padding: 1em;
+    font-size: 1em;
+    padding: .3em;
     border: none;
-    background-color: rgba(156, 223, 156, 0.514);
+    background-color: rgba(241, 245, 241, 0.514);
     border-radius: .3em;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
     font-family: "Outfit", sans-serif;
-    margin: 1em;
 }
 
-.botao3 svg {
+.botao svg {
     font-size: 1em;
     margin-right: .4em;
 }

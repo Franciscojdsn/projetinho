@@ -1,6 +1,4 @@
-import styles from './Input.module.css'
-
-export default function Input({ type, text, name, placeholder, handleOnChange, value }) {
+export default function Input({ type, text, name, placeholder, handleOnChange, value, accept }) {
 
     return (
 
@@ -14,6 +12,7 @@ export default function Input({ type, text, name, placeholder, handleOnChange, v
                     placeholder={placeholder}
                     onChange={handleOnChange}
                     value={value}
+                    {...(type === "file" && { accept } )}
                 />
             </div>
         </>

@@ -1,8 +1,8 @@
 .containercabecalho {
+    width: 70vw;
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    margin-top: 1.5em;
+    margin: 0 auto;
 }
 
 .botao {
@@ -26,6 +26,17 @@
     transition: .4s;
 }
 
-.containerbotoes button{
+.containerbotoes button {
     margin-right: .5em;
+}
+
+.containerbotoes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 1em auto;
+}
+
+.containerbotoes h3 {
+    margin-right: 5em;
 }

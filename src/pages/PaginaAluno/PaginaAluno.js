@@ -1,404 +1,185 @@
-import styles from './PaginaAluno.module.css'
+import { useEffect, useState } from 'react';
+import { IoTrashBinOutline } from "react-icons/io5";
+import { AiOutlineEdit } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
+import styles from './PaginaAluno.module.css';
 import InputExibir from '../../componentes/Formulario//Componentes/InputExibir/InputExibir';
-import Input from "../../componentes/Formulario/Componentes/Input/Input";
+import Botao from '../../componentes/Botao';
+import EditarDados from '../../componentes/Formulario/EditarDados/EditarDados';
 
 function PaginaAluno() {
 
+    const navigate = useNavigate()
+    const { id } = useParams();
+    const [alunos, setAlunos] = useState([])
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    function toggleEditMode() {
+        setIsEditing((prev) => !prev);
+    }
+
+    function handleEdit(updatedData) {
+        fetch(`http://localhost:5000/alunos/${id}`, {
+            method: 'PATCH', // Use PATCH para atualizar apenas os campos alterados
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedData), // Envia os dados atualizados
+        })
+            .then((resp) => {
+                if (resp.ok) {
+                    // Atualiza os dados do aluno no estado
+                    setAlunos((prevAlunos) => ({ ...prevAlunos, ...updatedData }));
+                    setIsEditing(false) // Redireciona para a página do aluno após a atualização
+                } else {
+                    alert("Erro ao atualizar os dados do aluno.");
+                }
+            })
+            .catch((err) => console.log("Erro ao atualizar os dados do aluno:", err));
+    }
+
+    function handleDelete() {
+        if (window.confirm("Tem certeza que deseja excluir este aluno?")) {
+            fetch(`http://localhost:5000/alunos/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((resp) => {
+                    if (resp.ok) {
+                        alert("Aluno excluído com sucesso!");
+                        navigate('/'); // Redireciona para a página inicial após a exclusão
+                    } else {
+                        alert("Erro ao excluir o aluno.");
+                    }
+                })
+                .catch((err) => console.log("Erro ao excluir o aluno:", err));
+        }
+    }
+
+    useEffect(() => {
+        // Busca os dados do aluno pelo ID
+        fetch(`http://localhost:5000/alunos/${id}`)
+            .then((resp) => resp.json())
+            .then((data) => {
+                setAlunos(data);
+            })
+            .catch((err) => console.log(err));
+    }, [id]);
+
+
     return (
         <>
-            <form>
-                <div className={styles.container}>
-                    <div className={styles.div1}>
-                        <InputExibir
-                            type="text"
-                            text="Nome do aluno"
-                            name="nome"
-                            placeholder="Nome completo"
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data"
-                            placeholder="00/00/0000"
-                        />
-                    </div>
-                    <div className={styles.div3}>
-                        <Input
-                            type="text"
-                            text="Naturalidade:"
-                            name="naturalidade"
-                            placeholder="Loc"
-                        />
-                    </div>
-                    <div className={styles.div4}>
+            <div className={styles.containerdados}>
+                {isEditing ? (
+                    <EditarDados aluno={alunos} onSave={handleEdit} />
+                ) : (
+                    <>
+                        {alunos && (
+                            <>
+                                <div className={styles.containercabecalho2}>
+                                    <img
+                                        src={alunos.imagem}
+                                        alt="Foto do Aluno"
+                                    />
+                                    <div>
+                                        <Botao
+                                            title="Histórico"
+                                            classname={styles.botao3}
+                                            icone={<AiOutlineEdit />}
+                                        />
+                                        <Link to="">
+                                            <Botao
+                                                title="Financeiro"
+                                                classname={styles.botao3}
+                                                icone={<AiOutlineEdit />}
+                                            />
+                                        </Link>
+                                    </div>
+                                </div>
 
-                    </div>
-                    <div className={styles.div5}>
-
-                    </div>
-                    <div className={styles.div6}>
-
-                    </div>
-                    <div className={styles.div7}>
-                        <Input
-                            type="number"
-                            text="CPF:"
-                            name="cpf"
-                            placeholder="000.000.000-00"
-                        />
-                    </div>
-                    <div className={styles.div8}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco"
-                            placeholder="Endereço"
-                        />
-                    </div>
-                    <div className={styles.div9}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n"
-                            placeholder="Nº"
-                        />
-                    </div>
-                    <div className={styles.div10}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade"
-                            placeholder="Cidade"
-                        />
-                    </div>
-                    <div className={styles.div11}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro"
-                            placeholder="Bairro"
-                        />
-                    </div>
-                    <div className={styles.div12}>
-                        <Input
-                            type="number"
-                            text="CEP"
-                            name="cep"
-                            placeholder="000.000-00"
-                        />
-                    </div>
+                                <div className={styles.containercabecalho}>
+                                    <InputExibir
+                                        nome_aluno={alunos.nome}
+                                        data_nasc={alunos.data ? (() => {
+                                            const data = new Date(alunos.data);
+                                            const dia = String(data.getDate()).padStart(2, '0');
+                                            const mes = String(data.getMonth() + 1).padStart(2, '0');
+                                            const ano = data.getFullYear();
+                                            return `${dia}/${mes}/${ano}`;
+                                        })() : 'Não informada'}
+                                        naturalidade={alunos.naturalidade}
+                                        genero={alunos.sexo}
+                                        cpf_aluno={alunos.cpf}
+                                        turma={alunos.turma ? alunos.turma.nome : ''}
+                                        turno={alunos.turno ? alunos.turma.nome : ''}
+                                        endereco_aluno={alunos.endereco}
+                                        n_aluno={alunos.n}
+                                        cidade_aluno={alunos.cidade}
+                                        bairro_aluno={alunos.bairro}
+                                        cep_aluno={alunos.cep}
+                                        nome_mae={alunos.nome_da_mae}
+                                        data_mae={alunos.data_da_mae ? (() => {
+                                            const data = new Date(alunos.data_da_mae);
+                                            const dia = String(data.getDate()).padStart(2, '0');
+                                            const mes = String(data.getMonth() + 1).padStart(2, '0');
+                                            const ano = data.getFullYear();
+                                            return `${dia}/${mes}/${ano}`;
+                                        })() : 'Não informada'}
+                                        cpf_mae={alunos.cpf_da_mae}
+                                        rg_mae={alunos.rg_da_mae}
+                                        telefone1_mae={alunos.telefone1_da_mae}
+                                        telefone2_mae={alunos.telefone2_da_mae}
+                                        endereco_mae={alunos.endereco_da_mae}
+                                        n_mae={alunos.n_da_mae}
+                                        cidade_mae={alunos.cidade_da_mae}
+                                        bairro_mae={alunos.bairro_da_mae}
+                                        cep_mae={alunos.cep_da_mae}
+                                        email_mae={alunos.email_da_mae}
+                                        nome_pai={alunos.nome_do_pai}
+                                        data_pai={alunos.data_do_pai ? (() => {
+                                            const data = new Date(alunos.data_do_pai);
+                                            const dia = String(data.getDate()).padStart(2, '0');
+                                            const mes = String(data.getMonth() + 1).padStart(2, '0');
+                                            const ano = data.getFullYear();
+                                            return `${dia}/${mes}/${ano}`;
+                                        })() : 'Não informada'}
+                                        cpf_pai={alunos.cpf_do_pai}
+                                        rg_pai={alunos.rg_do_pai}
+                                        telefone1_pai={alunos.telefone1_do_pai}
+                                        telefone2_pai={alunos.telefone2_do_pai}
+                                        endereco_pai={alunos.endereco_do_pai}
+                                        n_pai={alunos.n_do_pai}
+                                        cidade_pai={alunos.cidade_do_pai}
+                                        bairro_pai={alunos.bairro_do_pai}
+                                        cep_pai={alunos.cep_do_pai}
+                                        email_pai={alunos.email_do_pai}
+                                    />
+                                </div>
+                            </>
+                        )}
+                    </>
+                )}
+                <div className={styles.containerbotao}>
+                    <Botao
+                        title={isEditing ? "Cancelar" : "Editar"}
+                        classname={styles.botao}
+                        icone={<AiOutlineEdit />}
+                        onclick={toggleEditMode} // Alterna entre os modos de edição e exibição
+                    />
+                    <Botao
+                        title="excluir"
+                        classname={styles.botao4}
+                        icone={<IoTrashBinOutline />}
+                        onclick={handleDelete} // Adiciona a função de exclusão ao botão
+                    />
                 </div>
-
-                <div className={styles.container}>
-                    <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Nome da mãe"
-                            name="nome_da_mae"
-                            placeholder="Nome completo"
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data_da_mae"
-                            placeholder="00/00/0000"
-                        />
-                    </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="number"
-                            text="CPF:"
-                            name="cpf_da_mae"
-                            placeholder="000.000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae3}>
-                        <Input
-                            type="number"
-                            text="RG:"
-                            name="rg_da_mae"
-                            placeholder="000.000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae4}>
-                        <Input
-                            type="number"
-                            text="Telefone 1"
-                            name="telefone1_da_mae"
-                            placeholder="Telefone 1"
-                        />
-                    </div>
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="number"
-                            text="Telefone 2:"
-                            name="telefone2_da_mae"
-                            placeholder="Telefone 2"
-                        />
-                    </div>
-                    <div className={styles.divmae6}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco_da_mae"
-                            placeholder="Endereço"
-
-                        />
-                    </div>
-                    <div className={styles.divmae7}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n_da_mae"
-                            placeholder="Nº"
-
-                        />
-                    </div>
-                    <div className={styles.divmae8}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade_da_mae"
-                            placeholder="Cidade"
-
-                        />
-                    </div>
-                    <div className={styles.divmae9}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro_da_mae"
-                            placeholder="Bairro"
-
-                        />
-                    </div>
-                    <div className={styles.divmae10}>
-                        <Input
-                            type="number"
-                            text="CEP"
-                            name="cep_da_mae"
-                            placeholder="000.000-00"
-
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_da_mae"
-                            placeholder="E-mail"
- 
-                        />
-                    </div>
-                </div>
-
-                <div className={styles.container}>
-                    <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Nome do pai"
-                            name="nome_do_pai"
-                            placeholder="Nome completo"
-
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data_do_pai"
-                            placeholder="00/00/0000"
-
-                        />
-                    </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="number"
-                            text="CPF:"
-                            name="cpf_do_pai"
-                            placeholder="000.000.000-00"
-
-                        />
-                    </div>
-                    <div className={styles.divmae3}>
-                        <Input
-                            type="number"
-                            text="RG:"
-                            name="rg_do_pai"
-                            placeholder="000.000.000-00"
-
-                        />
-                    </div>
-                    <div className={styles.divmae4}>
-                        <Input
-                            type="number"
-                            text="Telefone 1"
-                            name="telefone1_do_pai"
-                            placeholder="Telefone 1"
-                        />
-                    </div>
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="number"
-                            text="Telefone 2:"
-                            name="telefone2_do_pai"
-                            placeholder="Telefone 2"
-                        />
-                    </div>
-                    <div className={styles.divmae6}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco_do_pai"
-                            placeholder="Endereço"
-                        />
-                    </div>
-                    <div className={styles.divmae7}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n_do_pai"
-                            placeholder="Nº"
-                        />
-                    </div>
-                    <div className={styles.divmae8}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade_do_pai"
-                            placeholder="Cidade"
-                        />
-                    </div>
-                    <div className={styles.divmae9}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro_do_pai"
-                            placeholder="Bairro"
-                        />
-                    </div>
-                    <div className={styles.divmae10}>
-                        <Input
-                            type="number"
-                            text="CEP"
-                            name="cep_do_pai"
-                            placeholder="000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_do_pai"
-                            placeholder="E-mail"
-                        />
-                    </div>
-                </div>
-
-                <div className={styles.container}>
-                    <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Nome do responsável financeiro"
-                            name="resp_financeiro"
-                            placeholder="Nome completo"
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data_financeiro"
-                            placeholder="00/00/0000"
-                        />
-                    </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="number"
-                            text="CPF:"
-                            name="cpf_financeiro"
-                            placeholder="000.000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae3}>
-                        <Input
-                            type="number"
-                            text="RG:"
-                            name="rg_financeiro"
-                            placeholder="000.000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae4}>
-                        <Input
-                            type="number"
-                            text="Telefone 1"
-                            name="telefone1_financeiro"
-                            placeholder="Telefone 1"
-                        />
-                    </div>
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="number"
-                            text="Telefone 2:"
-                            name="telefone2_financeiro"
-                            placeholder="Telefone 2"
-                        />
-                    </div>
-
-                    <div className={styles.divmae6}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco_financeiro"
-                            placeholder="Endereço"
-                        />
-                    </div>
-                    <div className={styles.divmae7}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n_financeiro"
-                            placeholder="Nº"
-                        />
-                    </div>
-                    <div className={styles.divmae8}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade_financeiro"
-                            placeholder="Cidade"
-                        />
-                    </div>
-                    <div className={styles.divmae9}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro_financeiro"
-                            placeholder="Bairro"
-                        />
-                    </div>
-                    <div className={styles.divmae10}>
-                        <Input
-                            type="number"
-                            text="CEP"
-                            name="cep_financeiro"
-                            placeholder="000.000-00"
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_financeiro"
-                            placeholder="E-mail"
-                        />
-                    </div>
-                </div>
-            </form>
+            </div>
         </>
     )
 

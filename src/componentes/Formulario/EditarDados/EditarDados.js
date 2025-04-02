@@ -1,23 +1,64 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { TfiSave } from "react-icons/tfi";
-import { IoTrashBinOutline } from "react-icons/io5";
 
+import styles from './EditarDados.module.css';
 import Input from '../Componentes/Input/Input';
+import Select from '../Componentes/Select/Select';
 import Radio from '../Componentes/Radio/Radio';
-import Select from '../Componentes/Select/Select'
-import styles from './InfoDosAlunos.module.css'
-import Botao from '../../Botao';
+import Botao from '../../Botao/index'
 
-function InfoDosAlunos({ handleSubmit, dadosData }) {
 
+export default function EditarDados({ aluno, onSave }) {
+    const [dados, setDados] = useState(aluno);
 
     const [opcoesturma, setOpcoesturma] = useState([])
     const [turno, setTurno] = useState([])
 
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setDados((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    }
 
-    const [dados, setDados] = useState(dadosData || {})
+    function handleSubmit(e) {
+        e.preventDefault();
+        onSave(dados); // Chama a função de salvar com os dados atualizados
+    }
 
+    function handleSelectTurma(e) {
+        setDados({
+            ...dados, turma: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
+    }
 
+    function handleSelectTurno(e) {
+        setDados({
+            ...dados, turno: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
+        console.log(dados)
+    }
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setDados({ ...dados, imagem: reader.result }); // Salva a imagem como Base64
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    };
 
     useEffect(() => {
         fetch('http://localhost:5000/opcoesturma', {
@@ -43,100 +84,9 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
             .catch((err) => console.log(err))
     }, [])
 
-    const submit = (e) => {
-        e.preventDefault()
-        console.log(dados)
-        handleSubmit(dados)
-    }
-
-    function handleChange(e) {
-        setDados({ ...dados, [e.target.name]: e.target.value })
-        console.log(dados)
-    }
-
-    function handleSelectTurma(e) {
-        setDados({
-            ...dados, turma: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
-            },
-        })
-    }
-
-    function handleSelectTurno(e) {
-        setDados({
-            ...dados, turno: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
-            },
-        })
-        console.log(dados)
-    }
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-    
-        reader.onloadend = () => {
-            setDados({ ...dados, imagem: reader.result }); // Salva a imagem como Base64
-        };
-    
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
-
-    function handleClear() {
-        const camposLimpos = Object.keys(dados).reduce((acc, key) => {
-            acc[key] = ''; // Define cada campo como uma string vazia
-            return acc;
-        }, {});
-
-        setDados(camposLimpos);
-        console.log("Todos os campos foram limpos!");
-    }
-
-    function handleClick() {
-        setDados((prevDados) => ({
-            ...prevDados,
-            resp_financeiro: prevDados.nome_da_mae,
-            data_financeiro: prevDados.data_da_mae,
-            cpf_financeiro: prevDados.cpf_da_mae,
-            rg_financeiro: prevDados.rg_da_mae,
-            telefone1_financeiro: prevDados.telefone1_da_mae,
-            telefone2_financeiro: prevDados.telefone2_da_mae,
-            endereco_financeiro: prevDados.endereco_da_mae,
-            n_financeiro: prevDados.n_da_mae,
-            cidade_financeiro: prevDados.cidade_da_mae,
-            bairro_financeiro: prevDados.bairro_da_mae,
-            cep_financeiro: prevDados.cep_da_mae,
-            email_financeiro: prevDados.email_da_mae,
-        }));
-    }
-
-    function handleClick1() {
-        setDados((prevDados) => ({
-            ...prevDados,
-            resp_financeiro: prevDados.nome_do_pai,
-            data_financeiro: prevDados.data_do_pai,
-            cpf_financeiro: prevDados.cpf_do_pai,
-            rg_financeiro: prevDados.rg_do_pai,
-            telefone1_financeiro: prevDados.telefone1_do_pai,
-            telefone2_financeiro: prevDados.telefone2_do_pai,
-            endereco_financeiro: prevDados.endereco_do_pai,
-            n_financeiro: prevDados.n_do_pai,
-            cidade_financeiro: prevDados.cidade_do_pai,
-            bairro_financeiro: prevDados.bairro_do_pai,
-            cep_financeiro: prevDados.cep_do_pai,
-            email_financeiro: prevDados.email_do_pai,
-        }));
-    }
-
-
-
     return (
         <>
-            <form onSubmit={submit}>
+            <form onSubmit={handleSubmit}>
                 <div className={styles.containerimagem}>
                     <Input
                         name="imagem"
@@ -329,16 +279,6 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
                         />
                     </div>
-                    <div className={styles.divmae12}>
-                        <Botao
-                            id="copiarDados"
-                            onclick={handleClick}
-                            type="button"
-                            classname={styles.botao3}
-                            title="Resp. Financeiro"
-                        />
-                    </div>
-
 
                     <div className={styles.divmae6}>
                         <Input
@@ -463,15 +403,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             value={dados.telefone2_do_pai ? dados.telefone2_do_pai : ''}
                         />
                     </div>
-                    <div className={styles.divmae12}>
-                        <Botao
-                            id="copiarDados"
-                            onclick={handleClick1}
-                            type="button"
-                            classname={styles.botao3}
-                            title="Resp. Financeiro"
-                        />
-                    </div>
+
                     <div className={styles.divmae6}>
                         <Input
                             type="text"
@@ -533,138 +465,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                         />
                     </div>
                 </div>
-
-                <div className={styles.container}>
-                    <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Nome do responsável financeiro"
-                            name="resp_financeiro"
-                            placeholder="Nome completo"
-                            handleOnChange={handleChange}
-                            value={dados.resp_financeiro ? dados.resp_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data_financeiro"
-                            placeholder="00/00/0000"
-                            handleOnChange={handleChange}
-                            value={dados.data_financeiro ? dados.data_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="number"
-                            text="CPF:"
-                            name="cpf_financeiro"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
-                            value={dados.cpf_financeiro ? dados.cpf_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae3}>
-                        <Input
-                            type="number"
-                            text="RG:"
-                            name="rg_financeiro"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
-                            value={dados.rg_financeiro ? dados.rg_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae4}>
-                        <Input
-                            type="number"
-                            text="Telefone 1"
-                            name="telefone1_financeiro"
-                            placeholder="Telefone 1"
-                            handleOnChange={handleChange}
-                            value={dados.telefone1_financeiro ? dados.telefone1_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="number"
-                            text="Telefone 2:"
-                            name="telefone2_financeiro"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleChange}
-                            value={dados.telefone2_financeiro ? dados.telefone2_financeiro : ''}
-                        />
-                    </div>
-
-                    <div className={styles.divmae6}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco_financeiro"
-                            placeholder="Endereço"
-                            handleOnChange={handleChange}
-                            value={dados.endereco_financeiro ? dados.endereco_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae7}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n_financeiro"
-                            placeholder="Nº"
-                            handleOnChange={handleChange}
-                            value={dados.n_financeiro ? dados.n_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae8}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade_financeiro"
-                            placeholder="Cidade"
-                            handleOnChange={handleChange}
-                            value={dados.cidade_financeiro ? dados.cidade_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae9}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro_financeiro"
-                            placeholder="Bairro"
-                            handleOnChange={handleChange}
-                            value={dados.bairro_financeiro ? dados.bairro_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae10}>
-                        <Input
-                            type="number"
-                            text="CEP"
-                            name="cep_financeiro"
-                            placeholder="000.000-00"
-                            handleOnChange={handleChange}
-                            value={dados.cep_financeiro ? dados.cep_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_financeiro"
-                            placeholder="E-mail"
-                            handleOnChange={handleChange}
-                            value={dados.email_financeiro ? dados.email_financeiro : ''}
-                        />
-                    </div>
-                </div>
                 <div className={styles.containerbotao}>
-                    <Botao
-                        type="button"
-                        onclick={handleClear}
-                        title="Limpar"
-                        icone={<IoTrashBinOutline />}
-                        classname={styles.botao4}
-                    />
                     <Botao
                         title="Salvar"
                         icone={<TfiSave />}
@@ -673,8 +474,5 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                 </div>
             </form>
         </>
-    )
-
+    );
 }
-
-export default InfoDosAlunos;
