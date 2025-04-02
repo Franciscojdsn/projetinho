@@ -41,43 +41,9 @@
       "cpf": "123"
     },
     {
-      "id": "dce06e2f-8734-4086-94f6-3246fd355806",
-      "nome": "tes",
+      "id": "24431cf7-2662-46b1-9367-44667809982a",
+      "nome": "teste",
       "matricula": 2
-    },
-    {
-      "id": "2ca0910f-8745-43b0-9b68-b116c25c3d24",
-      "nome": "Danielle Nascimento",
-      "data": "1987-01-09",
-      "naturalidade": "olinda",
-      "sexo": "F",
-      "cpf": "0000000000",
-      "turma": {
-        "id": "3",
-        "nome": "Jardim I"
-      },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "cidade": "Abreu e Lima",
-      "endereco": "Rua Júlio Moliterno, 33",
-      "cep": "53510530",
-      "n": "41",
-      "bairro": "centro",
-      "nome_da_mae": "Danielle Nascimento da Silva",
-      "telefone1_da_mae": "81998292317",
-      "endereco_da_mae": "Rua Júlio Moliterno, 33",
-      "cidade_da_mae": "Abreu e Lima",
-      "cep_da_mae": "53510530",
-      "email_da_mae": "Danielle.nsilva@ufrpe.br",
-      "resp_financeiro": "Danielle Nascimento da Silva",
-      "telefone1_financeiro": "81998292317",
-      "endereco_financeiro": "Rua Júlio Moliterno, 33",
-      "cidade_financeiro": "Abreu e Lima",
-      "cep_financeiro": "53510530",
-      "email_financeiro": "Danielle.nsilva@ufrpe.br",
-      "matricula": 3
     }
   ],
   "opcoesturma": [
@@ -185,37 +151,14 @@
   ],
   "financeiro": [
     {
-      "id": "db58e6af-2251-4c24-bb18-39455a369493",
-      "valor_mensalidade": "456",
+      "id": "24431cf7-2662-46b1-9367-44667809982a",
       "meses": {
-        "id": "4",
-        "mes": "Abril"
-      }
-    },
-    {
-      "id": "c95a08e3-f03e-4cb1-8ae9-d1f7ca666147",
-      "valor_mensalidade": "234234",
-      "desconto": "234234",
-      "dia_vencimento": "234234",
-      "telefone2_da_mae": "234234",
-      "meses": {
-        "id": "11",
-        "mes": "Novembro"
-      }
-    },
-    {
-      "id": "832a867d-cf41-4c77-b2fa-472c9eb2bdff",
+        "id": "2",
+        "mes": "Fevereiro"
+      },
+      "desconto": "11",
       "valor_mensalidade": "123",
-      "desconto": "123"
-    },
-    {
-      "id": "ff912f5c-6ddc-426b-9b89-6a8dedb58502"
-    },
-    {
-      "id": "dce06e2f-8734-4086-94f6-3246fd355806"
-    },
-    {
-      "id": "2ca0910f-8745-43b0-9b68-b116c25c3d24"
+      "dia_vencimento": "222"
     }
   ]
 }

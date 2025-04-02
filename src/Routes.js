@@ -9,6 +9,7 @@ import Funcionarios from "./pages/Funcionarios/Funcionarios.js";
 import Historico from "./pages/Historico/Historico.js";
 import FinanceiroAluno from "./pages/FinanceiroAluno/FinanceiroAluno.js";
 import PaginaAluno from "./pages/PaginaAluno/PaginaAluno.js";
+import PaginaFinanceiro from "./pages/PaginaFinanceiro/PaginaFinanceiro.js";
 
 const AppRoutes = () => {
     return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
                
                 <Route path="/DadosDosAlunos/Financeiro/:id" element={<FinanceiroAluno/>}></Route>
                 <Route path="/PaginaAluno/:id" element={<PaginaAluno/>}></Route>
+                <Route path="/PaginaFinanceiro/:id" element={<PaginaFinanceiro/>}></Route>
             </Routes>
         </Router>
     )

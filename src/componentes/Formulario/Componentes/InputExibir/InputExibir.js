@@ -1,13 +1,10 @@
 import styles from './InputExibir.module.css'
-import Input from '../Input/Input';
-import { useEffect, useState } from 'react';
 
 export default function InputExibir({ nome_aluno, data_nasc, naturalidade, genero, turma, turno, cpf_aluno, endereco_aluno, n_aluno, cidade_aluno, bairro_aluno, cep_aluno,
     nome_mae, rg_mae, data_mae, cpf_mae, endereco_mae, n_mae, cidade_mae, bairro_mae, cep_mae, telefone1_mae, telefone2_mae, email_mae,
     nome_pai, rg_pai, data_pai, cpf_pai, endereco_pai, n_pai, cidade_pai, bairro_pai, cep_pai, telefone1_pai, telefone2_pai, email_pai,
 }) {
 
-    const [alunos, setAlunos] = useState([])
 
     return (
 

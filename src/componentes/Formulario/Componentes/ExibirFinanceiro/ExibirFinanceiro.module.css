@@ -1,0 +1,102 @@
+@import url(https://fonts.googleapis.com/css2?family=Aldrich&display=swap);
+
+.container {
+    width: 60vw;
+    margin: 0 auto;
+    margin-top: 1em;
+}
+
+.container label {
+    font-family: "Aldrich", sans-serif;
+    font-size: 1em;
+    padding: .5em;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.container span {
+    padding: 1em;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.082);
+    border-radius: 3px;
+}
+
+.container select {
+    margin: .5em;
+    border: 1px solid rgba(139, 139, 255, 0.301);
+    border-radius: .3em;
+}
+
+.radio {
+    padding-top: 1.6em;
+}
+
+.div1 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.div1 input {
+    width: 8em;
+}
+
+.div2 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 7;
+    grid-row-start: 1;
+}
+
+.div2 input {
+    width: 8em;
+}
+
+.div3 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 12;
+    grid-row-start: 1;
+}
+
+.div4 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 1;
+    grid-row-start: 2;
+}
+
+.div5 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 17;
+    grid-row-start: 1;
+}
+
+.div6 {
+    grid-column: span 2 / span 2;
+    grid-column-start: 17;
+    grid-row-start: 2;
+}
+
+
+.botao {
+    font-size: 1em;
+    padding: 1em;
+    border: none;
+    background-color: rgba(156, 223, 156, 0.514);
+    border-radius: .3em;
+    box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
+    font-family: "Outfit", sans-serif;
+    margin: 1em;
+}
+
+.botao svg {
+    font-size: 1.2em;
+    margin-right: .4em;
+}
+.botao:hover {
+    background-color: rgba(145, 223, 145, 0.781);
+    color: rgb(255, 255, 255);
+    transition: .4s;
+}

@@ -1,0 +1,28 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70vw;
+    margin: 1em auto;
+    padding: 1em;
+    border-radius: 7px;
+}
+
+.cabecalho {
+    margin: 0em auto;
+    width: 50vw;
+    display: flex   ;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho h1 {
+    font-size: 2rem;
+    color: var(--cor-primaria);
+}
+
+.cabecalho img {
+    width: 150px;
+    height: 150px;
+}

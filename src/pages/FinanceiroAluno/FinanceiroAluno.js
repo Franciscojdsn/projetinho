@@ -1,11 +1,10 @@
-import Cabecalho from "../../componentes/Formulario/Cabecalho/Cabecalho";
 import FormularioFinanceiro from "../../componentes/Formulario/FomularioFinanceiro/FormularioFinanceiro";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import styles from './FinanceiroAluno.module.css';
 
 export default function FinanceiroAluno() {
 
-    const navigate = useNavigate()
     const { id } = useParams();
     const [aluno, setAluno] = useState(null);
 
@@ -21,16 +20,23 @@ export default function FinanceiroAluno() {
 
     return (
         <>      
-            {aluno && (
-                <>
-                    <h1>Financeiro do Aluno: {aluno.nome}</h1>
-                    <img
-                        src={aluno.imagem} // Exibe a imagem do primeiro aluno
-                        alt="Foto do Aluno"
-                    />
-                </>
-            )}
-            <FormularioFinanceiro />
+            <div className={styles.container}>
+                {aluno && (
+                    <>
+                        <div className={styles.cabecalho}>
+                            <div>
+                                <h1>Aluno: {aluno.nome}</h1>
+                                <h1>Responsável: {aluno.resp_financeiro}</h1>
+                            </div>
+                            <img
+                                src={aluno.imagem} // Exibe a imagem do primeiro aluno
+                                alt="Foto do Aluno"
+                            />
+                        </div>
+                    </>
+                )}
+                <FormularioFinanceiro />
+            </div>
         </>
 
     )

@@ -44,6 +44,7 @@ function PaginaAluno() {
 
     function handleDelete() {
         if (window.confirm("Tem certeza que deseja excluir este aluno?")) {
+            // Exclui os dados do aluno na tabela `alunos`
             fetch(`http://localhost:5000/alunos/${id}`, {
                 method: 'DELETE',
                 headers: {
@@ -52,13 +53,26 @@ function PaginaAluno() {
             })
                 .then((resp) => {
                     if (resp.ok) {
-                        alert("Aluno excluído com sucesso!");
-                        navigate('/'); // Redireciona para a página inicial após a exclusão
+                        // Após excluir o aluno, exclui os dados financeiros correspondentes
+                        return fetch(`http://localhost:5000/financeiro/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
                     } else {
-                        alert("Erro ao excluir o aluno.");
+                        throw new Error("Erro ao excluir o aluno.");
                     }
                 })
-                .catch((err) => console.log("Erro ao excluir o aluno:", err));
+                .then((resp) => {
+                    if (resp.ok) {
+                        alert("Aluno e dados financeiros excluídos com sucesso!");
+                        navigate('/'); // Redireciona para a página inicial após a exclusão
+                    } else {
+                        throw new Error("Erro ao excluir os dados financeiros.");
+                    }
+                })
+                .catch((err) => console.log("Erro ao excluir o aluno ou os dados financeiros:", err));
         }
     }
 
@@ -93,7 +107,7 @@ function PaginaAluno() {
                                             classname={styles.botao3}
                                             icone={<AiOutlineEdit />}
                                         />
-                                        <Link to="">
+                                        <Link to={`/PaginaFinanceiro/${id}`}>
                                             <Botao
                                                 title="Financeiro"
                                                 classname={styles.botao3}
@@ -117,7 +131,7 @@ function PaginaAluno() {
                                         genero={alunos.sexo}
                                         cpf_aluno={alunos.cpf}
                                         turma={alunos.turma ? alunos.turma.nome : ''}
-                                        turno={alunos.turno ? alunos.turma.nome : ''}
+                                        turno={alunos.turno ? alunos.turno.nome : ''}
                                         endereco_aluno={alunos.endereco}
                                         n_aluno={alunos.n}
                                         cidade_aluno={alunos.cidade}
