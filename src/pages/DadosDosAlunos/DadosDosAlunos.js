@@ -1,6 +1,7 @@
 import styles from "./DadosDosAlunos.module.css"
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { v4 as uuid } from 'uuid'
+import { useEffect, useState } from 'react';
 
 import InfoDosAlunos from "../../componentes/Formulario/InfoDosAlunos/InfoDosAlunos";
 import Cabecalho from "../../componentes/Formulario/Cabecalho/Cabecalho";
@@ -8,8 +9,19 @@ import Cabecalho from "../../componentes/Formulario/Cabecalho/Cabecalho";
 
 const DadosDosAlunos = () => {
 
-    
+    const location = useLocation();
+    const [message, setMessage] = useState(location.state?.message || null);
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage(null); // Remove a mensagem após 5 segundos
+            }, 5000);
+
+            return () => clearTimeout(timer); // Limpa o temporizador ao desmontar o componente
+        }
+    }, [message]);
 
     function addAluno(dados) {
         // Busca todos os alunos para determinar o maior número de matrícula
@@ -32,6 +44,9 @@ const DadosDosAlunos = () => {
     
                 // Adiciona o ID único ao objeto `dados`
                 dados.id = uuid();
+
+                const dataAtual = new Date();
+                dados.data_matricula = dataAtual.toISOString();
     
                 // Envia os dados para o servidor
                 return fetch('http://localhost:5000/alunos', {
@@ -45,7 +60,8 @@ const DadosDosAlunos = () => {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("Aluno criado com sucesso:", data);
-                navigate(`/DadosDosAlunos/Financeiro/${dados.id}`, { state: { message: 'Aluno criado com sucesso!' } });
+                navigate(`/DadosDosAlunos/Financeiro/${dados.id}`, { state: { message: 'Dados do aluno salvo com sucesso!' } });
+
             })
             .catch((err) => console.log("Erro ao adicionar aluno:", err));
     }

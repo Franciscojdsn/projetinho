@@ -3,7 +3,7 @@ import { IoTrashBinOutline } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import styles from './PaginaAluno.module.css';
 import InputExibir from '../../componentes/Formulario//Componentes/InputExibir/InputExibir';
@@ -16,7 +16,30 @@ function PaginaAluno() {
     const { id } = useParams();
     const [alunos, setAlunos] = useState([])
 
+    const location = useLocation();
+    const [message, setMessage] = useState(location.state?.message || null);
+
     const [isEditing, setIsEditing] = useState(false);
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage(null); // Remove a mensagem após 5 segundos
+            }, 5000);
+
+            return () => clearTimeout(timer); // Limpa o temporizador ao desmontar o componente
+        }
+    }, [message]);
+
+    useEffect(() => {
+        // Busca os dados do aluno pelo ID
+        fetch(`http://localhost:5000/alunos/${id}`)
+            .then((resp) => resp.json())
+            .then((data) => {
+                setAlunos(data);
+            })
+            .catch((err) => console.log(err));
+    }, [id]);
 
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
@@ -35,6 +58,7 @@ function PaginaAluno() {
                     // Atualiza os dados do aluno no estado
                     setAlunos((prevAlunos) => ({ ...prevAlunos, ...updatedData }));
                     setIsEditing(false) // Redireciona para a página do aluno após a atualização
+                    navigate(`/PaginaAluno/${id}`, { state: { message: 'Aluno atualizado com sucesso!' } });
                 } else {
                     alert("Erro ao atualizar os dados do aluno.");
                 }
@@ -67,7 +91,7 @@ function PaginaAluno() {
                 .then((resp) => {
                     if (resp.ok) {
                         alert("Aluno e dados financeiros excluídos com sucesso!");
-                        navigate('/'); // Redireciona para a página inicial após a exclusão
+                        navigate(`/`, { state: { message: 'Aluno exlcuído com sucesso!' } });
                     } else {
                         throw new Error("Erro ao excluir os dados financeiros.");
                     }
@@ -76,19 +100,14 @@ function PaginaAluno() {
         }
     }
 
-    useEffect(() => {
-        // Busca os dados do aluno pelo ID
-        fetch(`http://localhost:5000/alunos/${id}`)
-            .then((resp) => resp.json())
-            .then((data) => {
-                setAlunos(data);
-            })
-            .catch((err) => console.log(err));
-    }, [id]);
 
 
     return (
         <>
+            <div>
+                {message && <div className={styles.successmessage}>{message}</div>} {/* Exibe a mensagem, se existir */}
+                {/* Resto do código da página */}
+            </div>
             <div className={styles.containerdados}>
                 {isEditing ? (
                     <EditarDados aluno={alunos} onSave={handleEdit} />

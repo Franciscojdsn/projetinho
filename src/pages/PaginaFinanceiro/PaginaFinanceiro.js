@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { TfiSave } from "react-icons/tfi";
-import { IoTrashBinOutline } from "react-icons/io5";
+import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import styles from './PaginaFinanceiro.module.css';
 import Botao from '../../componentes/Botao';
@@ -13,13 +12,15 @@ import EditarFinanceiro from '../../componentes/Formulario/EditarFinanceiro/Edit
 
 function PaginaFinanceiro({ handleSubmit, dadosData }) {
 
-    const navigate = useNavigate()
     const { id } = useParams();
 
     const [dados, setDados] = useState({ dadosData, id })
     const [alunos, setAlunos] = useState(null);
 
-    const [meses, setMeses] = useState([])
+    const navigate = useNavigate()
+    const location = useLocation();
+    const [message, setMessage] = useState(location.state?.message || null);
+
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -28,6 +29,26 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
     }
 
     useEffect(() => {
+        if (location.state?.message) {
+            setMessage(location.state.message);
+
+            // Limpa o estado da mensagem no location para evitar reutilização
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location, navigate]);
+
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage(null); // Remove a mensagem após 5 segundos
+            }, 5000);
+
+            return () => clearTimeout(timer); // Limpa o temporizador ao desmontar o componente
+        }
+    }, [message]);
+
+    useEffect(() => {
+
         // Busca os dados do aluno pelo ID
         fetch(`http://localhost:5000/alunos/${id}`)
             .then((resp) => resp.json())
@@ -36,20 +57,6 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
             })
             .catch((err) => console.log(err));
     }, [id]);
-
-    useEffect(() => {
-        fetch('http://localhost:5000/meses', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setMeses(data)
-            })
-            .catch((err) => console.log(err))
-
-    }, [])
 
     const submit = (e) => {
         e.preventDefault()
@@ -63,7 +70,6 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
     }
 
     function handleSubmit(dados) {
-
         fetch(`http://localhost:5000/financeiro/${id}`, {
             method: 'POST',
             headers: {
@@ -74,30 +80,16 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("Dados financeiros criados:", data);
-                navigate(`/PaginaAluno/${dados.id}`, { state: { message: 'Projeto criado com sucesso!' } })
+                navigate(`/PaginaAluno/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
             })
             .catch((err) => console.log(err))
     }
 
-    function handleEdit(updatedData) {
-        fetch(`http://localhost:5000/financeiro/${id}`, {
-            method: 'PATCH', // Use PATCH para atualizar apenas os campos alterados
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedData), // Envia os dados atualizados
-        })
-            .then((resp) => {
-                if (resp.ok) {
-                    alert("Dados financeiros atualizados com sucesso!");
-                    // Atualiza os dados financeiros no estado local
-                    setDados((prevDados) => ({ ...prevDados, ...updatedData }));
-                    setIsEditing(false); // Sai do modo de edição
-                } else {
-                    alert("Erro ao atualizar os dados financeiros.");
-                }
-            })
-            .catch((err) => console.log("Erro ao atualizar os dados financeiros:", err));
+    function formatarParaReais(valor) {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(valor);
     }
 
     useEffect(() => {
@@ -126,23 +118,35 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
                     </div>
                 </>
             )}
+            <div>
+                {message && <div className={styles.successmessage}>{message}</div>} {/* Exibe a mensagem, se existir */}
+                {/* Resto do código da página */}
+            </div>
             {isEditing ? (
-                <EditarFinanceiro aluno={dados} onSave={handleEdit} />
+                <EditarFinanceiro aluno={dados} setIsEditing={setIsEditing}/>
             ) : (
                 <div className={styles.container}>
                     <ExibirFinanceiro
                         type="text"
                         text="Valor da Mensalidade:"
                         name="valor_mensalidade"
-                        valor_mensalidade={dados.valor_mensalidade}
-                        desconto={dados.desconto}
+                        valor_mensalidade={formatarParaReais(dados.valor_mensalidade)}
+                        desconto={formatarParaReais(dados.desconto)}
                         dia_vencimento={dados.dia_vencimento}
-                        meses={dados.meses ? dados.meses.mes : ''}
+                        meses={dados.meses ? dados.meses.nome : ''}
+                        total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
                         handleOnChange={handleChange}
                     />
                 </div>
             )}
             <div className={styles.containerbotao}>
+                <Link to={`/PaginaAluno/${id}`}>
+                    <Botao
+                        title={"Voltar"}
+                        classname={styles.botao4}
+                        icone={<IoArrowBack />}
+                    />
+                </Link>
                 <Botao
                     title={isEditing ? "Cancelar" : "Editar"}
                     classname={styles.botao}

@@ -58,6 +58,18 @@
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
 }
 
+.successmessage {
+    width: 60vw;
+    background-color: #d4edda;
+    color: #188d00;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin: 1em auto;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
 .div1 {
     grid-column: span 3 / span 3;
 }

@@ -19,7 +19,7 @@ export default function FinanceiroAluno() {
     }, [id]);
 
     return (
-        <>      
+        <>
             <div className={styles.container}>
                 {aluno && (
                     <>

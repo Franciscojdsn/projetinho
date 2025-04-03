@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { TfiSave } from "react-icons/tfi";
+import { useNavigate, useParams } from 'react-router-dom';
+
 
 import styles from './EditarFinanceiro.module.css';
 import Input from '../Componentes/Input/Input';
@@ -8,10 +10,25 @@ import Select from '../Componentes/Select/Select';
 import Botao from '../../Botao/index'
 
 
-export default function EditarFinanceiro({ aluno, onSave }) {
+export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
-    const [dados, setDados] = useState(aluno);
+    const [dados, setDados] = useState({
+        ...aluno,
+        valor_mensalidade: formatarParaReais(aluno.valor_mensalidade),
+        desconto: formatarParaReais(aluno.desconto),
+    });
     const [meses, setMeses] = useState([])
+
+    const navigate = useNavigate()
+    const { id } = useParams();
+
+    function formatarParaReais(valor) {
+        return new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(valor || 0); // Garante que valores nulos ou indefinidos sejam tratados como 0
+    }
+
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -21,10 +38,59 @@ export default function EditarFinanceiro({ aluno, onSave }) {
         }));
     }
 
+    function handleChangeReais(e) {
+        const { name, value } = e.target;
+
+        // Remove caracteres não numéricos
+        const numericValue = value.replace(/\D/g, '');
+
+        // Formata o valor como reais
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(numericValue / 100); // Divide por 100 para considerar os centavos
+
+        // Atualiza o estado com o valor formatado
+        setDados({ ...dados, [name]: formattedValue });
+        console.log({ ...dados, [name]: formattedValue });
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-        onSave(dados); // Chama a função de salvar com os dados atualizados
+
+        // Validações dos campos obrigatórios
+        if (!dados.valor_mensalidade || dados.valor_mensalidade.trim() === '') {
+            alert('O campo "Valor da Mensalidade" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
+        if (!dados.desconto || dados.desconto.trim() === '') {
+            alert('O campo "Desconto" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
+        if (!dados.meses || !dados.meses.id) {
+            alert('O campo "Mês de início" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
+        // Prepara os dados para envio
+        const dadosAtualizados = {
+            ...dados,
+            valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            meses: {
+                id: dados.meses.id,
+                nome: dados.meses.nome,
+            },
+        };
+
+        console.log("Dados enviados:", dadosAtualizados);
+
+        // Chama a função de salvar
+        onSave(dadosAtualizados);
     }
+
     function handleSelectMes(e) {
         setDados({
             ...dados, meses: {
@@ -49,6 +115,31 @@ export default function EditarFinanceiro({ aluno, onSave }) {
 
     }, [])
 
+    function onSave(dadosAtualizados) {
+        fetch(`http://localhost:5000/financeiro/${dadosAtualizados.id}`, {
+            method: 'PATCH', // Use PATCH para atualizar os dados
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(dadosAtualizados),
+        })
+            .then((resp) => {
+                if (resp.ok) {
+                    setTimeout(() => {
+                        setIsEditing(false);
+                    }, 1000);
+                } else {
+                    alert('Erro ao atualizar os dados financeiros.');
+                }
+            })
+            .then(() => {
+                window.location.reload(); // Recarrega a página após o redirecionamento
+                navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
+            })
+
+            .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
+    }
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -59,17 +150,17 @@ export default function EditarFinanceiro({ aluno, onSave }) {
                             text="Valor da Mensalidade:"
                             name="valor_mensalidade"
                             placeholder="R$ 000,00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleChangeReais}
                             value={dados.valor_mensalidade ? dados.valor_mensalidade : ''}
                         />
                     </div>
                     <div className={styles.div2}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Desconto:"
                             name="desconto"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            placeholder="R$ 000,00"
+                            handleOnChange={handleChangeReais}
                             value={dados.desconto ? dados.desconto : ''}
                         />
                     </div>
@@ -78,7 +169,7 @@ export default function EditarFinanceiro({ aluno, onSave }) {
                             type="number"
                             text="Dia de vencimento:"
                             name="dia_vencimento"
-                            placeholder="000.000.000-00"
+                            placeholder="00"
                             handleOnChange={handleChange}
                             value={dados.dia_vencimento ? dados.dia_vencimento : ''}
                         />
@@ -96,7 +187,7 @@ export default function EditarFinanceiro({ aluno, onSave }) {
                     <div className={styles.div5}>
                         <Input
                             type="number"
-                            text="Telefone 2:"
+                            text="Total:"
                             name="telefone2_da_mae"
                             placeholder="Telefone 2"
                             handleOnChange={handleChange}
