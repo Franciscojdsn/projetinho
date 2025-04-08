@@ -8,6 +8,10 @@
     padding: 2em;
 }
 
+.containerboletos ul {
+    padding: 0;
+}
+
 .containerbotao {
     text-align: end;
     margin: 1em;
@@ -31,6 +35,29 @@
 .cabecalho img {
     width: 150px;
     height: 150px;
+
+}
+
+.spinnercontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+    font-size: 2rem;
+    color: var(--cor-primaria);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .successmessage {

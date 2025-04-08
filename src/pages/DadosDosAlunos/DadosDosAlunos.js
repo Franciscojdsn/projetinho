@@ -14,6 +14,15 @@ const DadosDosAlunos = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (location.state?.message) {
+            setMessage(location.state.message);
+    
+            // Limpa o estado da mensagem no location para evitar reutilização
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location, navigate]);
+
+    useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
                 setMessage(null); // Remove a mensagem após 5 segundos
@@ -61,7 +70,7 @@ const DadosDosAlunos = () => {
             .then((data) => {
                 console.log("Aluno criado com sucesso:", data);
                 navigate(`/DadosDosAlunos/Financeiro/${dados.id}`, { state: { message: 'Dados do aluno salvo com sucesso!' } });
-
+                window.scrollTo(0, 0);
             })
             .catch((err) => console.log("Erro ao adicionar aluno:", err));
     }

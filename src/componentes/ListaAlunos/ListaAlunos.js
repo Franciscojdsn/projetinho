@@ -1,11 +1,11 @@
 import styles from "./ListaAluno.module.css"
 import { Link } from "react-router-dom"
 
-export default function ListaAlunos({ link, id, nome, responsavel, data, turma, turno, icone, category }) {
+export default function ListaAlunos({key, link, id, nome, responsavel, data, turma, turno, icone, category }) {
 
     return (
         <>
-            <div key={1} className={styles.container}>
+            <div key={key} className={styles.container}>
                 <li className={styles.titulolista}>
                     <div>
                         <p>{id}</p>

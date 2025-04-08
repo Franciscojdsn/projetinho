@@ -22,6 +22,15 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
     const [meses, setMeses] = useState([])
 
     useEffect(() => {
+        if (location.state?.message) {
+            setMessage(location.state.message);
+    
+            // Limpa o estado da mensagem no location para evitar reutilização
+            navigate(location.pathname, { replace: true, state: {} });
+        }
+    }, [location, navigate]);
+
+    useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
                 setMessage(null); // Remove a mensagem após 5 segundos
@@ -99,6 +108,11 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
             alert('O campo "Mes" é obrigatório.');
             return; // Impede o envio do formulário
         }
+
+        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {    
+            alert('O campo "dia do vencimento" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
     
         const dadosAtualizados = {
             ...dados,
@@ -121,6 +135,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
             .then((data) => {
                 console.log("Dados financeiros criados:", data);
                 navigate(`/PaginaAluno/${id}`, { state: { message: 'Matrícula criada com sucesso!' } });
+                window.scrollTo(0, 0);
             })
             .catch((err) => console.log(err));
     }
@@ -161,6 +176,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.dia_vencimento ? dados.dia_vencimento : ''}
+
                         />
                     </div>
                     <div className={styles.div4}>

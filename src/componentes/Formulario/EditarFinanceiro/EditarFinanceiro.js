@@ -58,19 +58,23 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     function handleSubmit(e) {
         e.preventDefault();
 
-        // Validações dos campos obrigatórios
         if (!dados.valor_mensalidade || dados.valor_mensalidade.trim() === '') {
             alert('O campo "Valor da Mensalidade" é obrigatório.');
             return; // Impede o envio do formulário
         }
-
+    
         if (!dados.desconto || dados.desconto.trim() === '') {
             alert('O campo "Desconto" é obrigatório.');
             return; // Impede o envio do formulário
         }
 
-        if (!dados.meses || !dados.meses.id) {
-            alert('O campo "Mês de início" é obrigatório.');
+        if (!dados.meses || dados.meses === '') {
+            alert('O campo "Mes" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
+        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {    
+            alert('O campo "dia do vencimento" é obrigatório.');
             return; // Impede o envio do formulário
         }
 

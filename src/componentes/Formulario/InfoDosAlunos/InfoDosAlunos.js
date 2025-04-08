@@ -13,11 +13,14 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
 
     const [opcoesturma, setOpcoesturma] = useState([])
     const [turno, setTurno] = useState([])
-
-
     const [dados, setDados] = useState(dadosData || {})
 
+    const anoAtual = new Date().getFullYear();
+    const anoMinimo = anoAtual - 100;
+    const anoMaximo = anoAtual - 1;
 
+    const dataMinima = `${anoMinimo}-01-01`;
+    const dataMaxima = `${anoMaximo}-12-31`;
 
     useEffect(() => {
         fetch('http://localhost:5000/opcoesturma', {
@@ -54,6 +57,12 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
         console.log(dados)
     }
 
+    function handleInputLimit(e, maxLength) {
+        if (e.target.value.length > maxLength) {
+            e.target.value = e.target.value.slice(0, maxLength); // Limita o valor ao máximo permitido
+        }
+    }
+
     function handleSelectTurma(e) {
         setDados({
             ...dados, turma: {
@@ -76,11 +85,11 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         const reader = new FileReader();
-    
+
         reader.onloadend = () => {
             setDados({ ...dados, imagem: reader.result }); // Salva a imagem como Base64
         };
-    
+
         if (file) {
             reader.readAsDataURL(file);
         }
@@ -166,6 +175,8 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data ? dados.data : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.div3}>
@@ -214,6 +225,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cpf ? dados.cpf : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.div8}>
@@ -264,6 +276,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cep ? dados.cep : ''}
+                            onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
                 </div>
@@ -287,6 +300,8 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_da_mae ? dados.data_da_mae : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.divmae2}>
@@ -297,6 +312,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cpf_da_mae ? dados.cpf_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae3}>
@@ -304,9 +320,10 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             type="number"
                             text="RG:"
                             name="rg_da_mae"
-                            placeholder="000.000.000-00"
+                            placeholder="0.000.000"
                             handleOnChange={handleChange}
                             value={dados.rg_da_mae ? dados.rg_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae4}>
@@ -317,6 +334,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 1"
                             handleOnChange={handleChange}
                             value={dados.telefone1_da_mae ? dados.telefone1_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae5}>
@@ -327,6 +345,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 2"
                             handleOnChange={handleChange}
                             value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae12}>
@@ -388,6 +407,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cep_da_mae ? dados.cep_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
                     <div className={styles.divmae11}>
@@ -421,6 +441,8 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_do_pai ? dados.data_do_pai : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.divmae2}>
@@ -431,6 +453,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cpf_do_pai ? dados.cpf_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae3}>
@@ -441,6 +464,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.rg_do_pai ? dados.rg_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae4}>
@@ -451,6 +475,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 1"
                             handleOnChange={handleChange}
                             value={dados.telefone1_do_pai ? dados.telefone1_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae5}>
@@ -461,6 +486,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 2"
                             handleOnChange={handleChange}
                             value={dados.telefone2_do_pai ? dados.telefone2_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae12}>
@@ -520,6 +546,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cep_do_pai ? dados.cep_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
                     <div className={styles.divmae11}>
@@ -553,6 +580,8 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_financeiro ? dados.data_financeiro : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.divmae2}>
@@ -563,6 +592,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cpf_financeiro ? dados.cpf_financeiro : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae3}>
@@ -573,6 +603,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000.000-00"
                             handleOnChange={handleChange}
                             value={dados.rg_financeiro ? dados.rg_financeiro : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae4}>
@@ -583,6 +614,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 1"
                             handleOnChange={handleChange}
                             value={dados.telefone1_financeiro ? dados.telefone1_financeiro : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
                     <div className={styles.divmae5}>
@@ -593,6 +625,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="Telefone 2"
                             handleOnChange={handleChange}
                             value={dados.telefone2_financeiro ? dados.telefone2_financeiro : ''}
+                            onInput={(e) => handleInputLimit(e, 11)}
                         />
                     </div>
 
@@ -644,6 +677,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             placeholder="000.000-00"
                             handleOnChange={handleChange}
                             value={dados.cep_financeiro ? dados.cep_financeiro : ''}
+                            onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
                     <div className={styles.divmae11}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import { useParams } from "react-router-dom";
@@ -9,21 +9,50 @@ import styles from './PaginaFinanceiro.module.css';
 import Botao from '../../componentes/Botao';
 import ExibirFinanceiro from '../../componentes/Formulario/Componentes/ExibirFinanceiro/ExibirFinanceiro';
 import EditarFinanceiro from '../../componentes/Formulario/EditarFinanceiro/EditarFinanceiro';
+import ListaBoletos from '../../componentes/ListaBoletos/ListaBoletos';
+import Loading from '../../componentes/Formulario/Componentes/Loading/Loading';
 
-function PaginaFinanceiro({ handleSubmit, dadosData }) {
+function PaginaFinanceiro({ dadosData }) {
 
     const { id } = useParams();
-
+    
     const [dados, setDados] = useState({ dadosData, id })
     const [alunos, setAlunos] = useState(null);
-
+    
     const navigate = useNavigate()
     const location = useLocation();
     const [message, setMessage] = useState(location.state?.message || null);
-
-
+    
+    const [boletos, setBoletos] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(false);
+    
+    const gerarBoletos = useCallback((financeiro) => {
+        const boletosGerados = [];
+        const { meses, valor_mensalidade, dia_vencimento, desconto } = financeiro;
+    
+        if (!meses || !meses.id) return;
+    
+        const mesInicio = parseInt(meses.id); // ID do mês de início (ex.: 1 = Janeiro)
+        const anoAtual = new Date().getFullYear();
+        const _desconto = parseFloat(desconto) || 0; // Converte o desconto para número, se não for fornecido, assume 0
+    
+        for (let i = mesInicio; i < 12; i++) { // Gera 12 boletos (1 ano)
+            const mes = i; // Calcula o mês (1 a 12)
+    
+            const dataVencimento = new Date(anoAtual, mes, dia_vencimento || 1); // Define a data de vencimento
+            boletosGerados.push({
+                id: i + 1,
+                mes: dataVencimento.toLocaleString('pt-BR', { month: 'long' }),
+                ano: dataVencimento.getFullYear(),
+                valor: formatarParaReais(valor_mensalidade - _desconto),
+                dataVencimento: dataVencimento.toLocaleDateString('pt-BR'),
+            });
+        }
+    
+        setBoletos(boletosGerados);
+    }, [setBoletos]);
+    
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
     }
@@ -31,7 +60,6 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
-
             // Limpa o estado da mensagem no location para evitar reutilização
             navigate(location.pathname, { replace: true, state: {} });
         }
@@ -47,9 +75,7 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
         }
     }, [message]);
 
-    useEffect(() => {
-
-        // Busca os dados do aluno pelo ID
+    useEffect(() => { // Busca os dados do aluno pelo ID
         fetch(`http://localhost:5000/alunos/${id}`)
             .then((resp) => resp.json())
             .then((data) => {
@@ -58,31 +84,21 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
             .catch((err) => console.log(err));
     }, [id]);
 
-    const submit = (e) => {
-        e.preventDefault()
-        //console.log(dados)
-        handleSubmit(dados)
-    }
+    useEffect(() => {// Busca os dados do financeiro pelo ID
+        setIsLoading(true);
+        fetch(`http://localhost:5000/financeiro/${id}`)
+            .then((resp) => resp.json())
+            .then((data) => {
+                setDados(data);
+                gerarBoletos(data);
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setIsLoading(false))
+    }, [id, gerarBoletos]);
 
     function handleChange(e) {
         setDados({ ...dados, [e.target.name]: e.target.value })
         console.log(dados)
-    }
-
-    function handleSubmit(dados) {
-        fetch(`http://localhost:5000/financeiro/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json',
-            },
-            body: JSON.stringify(dados)
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                console.log("Dados financeiros criados:", data);
-                navigate(`/PaginaAluno/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
-            })
-            .catch((err) => console.log(err))
     }
 
     function formatarParaReais(valor) {
@@ -92,68 +108,80 @@ function PaginaFinanceiro({ handleSubmit, dadosData }) {
         }).format(valor);
     }
 
-    useEffect(() => {
-        // Busca os dados do aluno pelo ID
-        fetch(`http://localhost:5000/financeiro/${id}`)
-            .then((resp) => resp.json())
-            .then((data) => {
-                setDados(data);
-            })
-            .catch((err) => console.log(err));
-    }, [id]);
+
 
     return (
         <>
-            {alunos && (
+            {isLoading ? (
+                <Loading />
+            ) : (
                 <>
-                    <div className={styles.cabecalho}>
-                        <div>
-                            <h1>Aluno: {alunos.nome}</h1>
-                            <h1>Responsável: {alunos.resp_financeiro}</h1>
+                    {alunos && (
+                        <>
+                            <div className={styles.cabecalho}>
+                                <div>
+                                    <h1>Aluno: {alunos.nome}</h1>
+                                    <h1>Responsável: {alunos.resp_financeiro}</h1>
+                                </div>
+                                <img
+                                    src={alunos.imagem} 
+                                    alt="Foto do Aluno"
+                                />
+                            </div>
+                        </>
+                    )}
+                    <div>
+                        {message && <div className={styles.successmessage}>{message}</div>} 
+                    </div>
+                    <div className={styles.containerboletos}>
+                        <ul>
+                            {boletos.map((boleto) => (
+                                <ListaBoletos
+                                    key={boleto.matricula}
+                                    mes_referente={boleto.mes}
+                                    vencimento={boleto.dataVencimento}
+                                    valor={boleto.valor}
+                                    icone={<AiOutlineEdit />}
+                                />
+                            ))}
+                        </ul>
+                    </div>
+                    {isEditing ? (
+                        <EditarFinanceiro aluno={dados} setIsEditing={setIsEditing} />
+                    ) : (
+                        <div className={styles.container}>
+                            <ExibirFinanceiro
+                                type="text"
+                                text="Valor da Mensalidade:"
+                                name="valor_mensalidade"
+                                valor_mensalidade={formatarParaReais(dados.valor_mensalidade)}
+                                desconto={formatarParaReais(dados.desconto)}
+                                dia_vencimento={dados.dia_vencimento}
+                                meses={dados.meses ? dados.meses.nome : ''}
+                                total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
+                                handleOnChange={handleChange}
+                            />
                         </div>
-                        <img
-                            src={alunos.imagem} // Exibe a imagem do primeiro aluno
-                            alt="Foto do Aluno"
+                    )}
+
+                    <div className={styles.containerbotao}>
+                        <Link to={`/PaginaAluno/${id}`}>
+                            <Botao
+                                title={"Voltar"}
+                                classname={styles.botao4}
+                                icone={<IoArrowBack />}
+                            />
+                        </Link>
+                        <Botao
+                            title={isEditing ? "Cancelar" : "Editar"}
+                            classname={styles.botao}
+                            icone={<AiOutlineEdit />}
+                            onclick={toggleEditMode}
                         />
                     </div>
                 </>
             )}
-            <div>
-                {message && <div className={styles.successmessage}>{message}</div>} {/* Exibe a mensagem, se existir */}
-                {/* Resto do código da página */}
-            </div>
-            {isEditing ? (
-                <EditarFinanceiro aluno={dados} setIsEditing={setIsEditing}/>
-            ) : (
-                <div className={styles.container}>
-                    <ExibirFinanceiro
-                        type="text"
-                        text="Valor da Mensalidade:"
-                        name="valor_mensalidade"
-                        valor_mensalidade={formatarParaReais(dados.valor_mensalidade)}
-                        desconto={formatarParaReais(dados.desconto)}
-                        dia_vencimento={dados.dia_vencimento}
-                        meses={dados.meses ? dados.meses.nome : ''}
-                        total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
-                        handleOnChange={handleChange}
-                    />
-                </div>
-            )}
-            <div className={styles.containerbotao}>
-                <Link to={`/PaginaAluno/${id}`}>
-                    <Botao
-                        title={"Voltar"}
-                        classname={styles.botao4}
-                        icone={<IoArrowBack />}
-                    />
-                </Link>
-                <Botao
-                    title={isEditing ? "Cancelar" : "Editar"}
-                    classname={styles.botao}
-                    icone={<AiOutlineEdit />}
-                    onclick={toggleEditMode} // Alterna entre os modos de edição e exibição
-                />
-            </div>
+
         </>
     )
 }

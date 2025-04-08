@@ -15,6 +15,13 @@ export default function EditarDados({ aluno, onSave }) {
     const [opcoesturma, setOpcoesturma] = useState([])
     const [turno, setTurno] = useState([])
 
+    const anoAtual = new Date().getFullYear();
+    const anoMinimo = anoAtual - 100; 
+    const anoMaximo = anoAtual - 1;  
+
+    const dataMinima = `${anoMinimo}-01-01`; 
+    const dataMaxima = `${anoMaximo}-12-31`;
+
     function handleChange(e) {
         const { name, value } = e.target;
         setDados((prevData) => ({
@@ -116,6 +123,8 @@ export default function EditarDados({ aluno, onSave }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data ? dados.data : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.div3}>
@@ -237,6 +246,8 @@ export default function EditarDados({ aluno, onSave }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_da_mae ? dados.data_da_mae : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.divmae2}>
@@ -361,6 +372,8 @@ export default function EditarDados({ aluno, onSave }) {
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_do_pai ? dados.data_do_pai : ''}
+                            min={dataMinima}
+                            max={dataMaxima}
                         />
                     </div>
                     <div className={styles.divmae2}>
