@@ -188,16 +188,6 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             value={dados.meses ? dados.meses.id : ''}
                         />
                     </div>
-                    <div className={styles.div5}>
-                        <Input
-                            type="number"
-                            text="Total:"
-                            name="telefone2_da_mae"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleChange}
-                            value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
-                        />
-                    </div>
                     <div className={styles.div6}>
                         <Botao
                             type='submit'

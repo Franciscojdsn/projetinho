@@ -1,11 +1,8 @@
-export default function Input({ type, text, name, placeholder, handleOnChange, value, accept, min, max, maxLength, onInput }) {
-
+export default function Input({ onBlur, type, text, name, placeholder, handleOnChange, value, accept, min, max, maxLength, onInput }) {
     return (
-
-        <>
-            <div>
-                <label htmlFor={name}>{text}</label><br></br>
-                <input 
+        <div>
+            <label htmlFor={name}>{text}</label><br />
+                <input
                     type={type}
                     id={name}
                     name={name}
@@ -16,12 +13,9 @@ export default function Input({ type, text, name, placeholder, handleOnChange, v
                     max={max}
                     maxLength={maxLength}
                     onInput={onInput}
-                    {...(type === "file" && { accept } )}
+                    onBlur={onBlur}
+                    {...(type === "file" && { accept })}
                 />
-            </div>
-        </>
-
-    )
-
-
+        </div>
+    );
 }

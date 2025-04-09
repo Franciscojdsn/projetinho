@@ -189,16 +189,6 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.meses ? dados.meses.id : ''}
                         />
                     </div>
-                    <div className={styles.div5}>
-                        <Input
-                            type="number"
-                            text="Telefone 2:"
-                            name="telefone2_da_mae"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleChange}
-                            value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
-                        />
-                    </div>
                     <div className={styles.div6}>
                         <Botao
                             title="Salvar"

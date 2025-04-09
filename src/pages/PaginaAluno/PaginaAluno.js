@@ -26,7 +26,7 @@ function PaginaAluno() {
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
-    
+
             // Limpa o estado da mensagem no location para evitar reutilização
             navigate(location.pathname, { replace: true, state: {} });
         }
@@ -56,6 +56,33 @@ function PaginaAluno() {
 
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
+    }
+
+    function formatCPF(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o primeiro ponto
+            .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o segundo ponto
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
+    }
+
+    function formatRG(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{1})(\d{3})(\d{3})$/, '$1.$2.$3'); // Adiciona os pontos
+    }
+
+    function formatTelefone(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses no DDD
+            .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona o traço
+    }
+
+    function formatCEP(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{5})(\d{3})$/, '$1-$2'); // Adiciona o traço
     }
 
     function handleEdit(updatedData) {
@@ -165,14 +192,14 @@ function PaginaAluno() {
                                                 })() : 'Não informada'}
                                                 naturalidade={alunos.naturalidade}
                                                 genero={alunos.sexo}
-                                                cpf_aluno={alunos.cpf}
+                                                cpf_aluno={alunos.cpf ? formatCPF(alunos.cpf) : 'Não informado'}
                                                 turma={alunos.turma ? alunos.turma.nome : ''}
                                                 turno={alunos.turno ? alunos.turno.nome : ''}
                                                 endereco_aluno={alunos.endereco}
                                                 n_aluno={alunos.n}
                                                 cidade_aluno={alunos.cidade}
                                                 bairro_aluno={alunos.bairro}
-                                                cep_aluno={alunos.cep}
+                                                cep_aluno={alunos.cep ? formatCEP(alunos.cep) : 'Não informado'}
                                                 nome_mae={alunos.nome_da_mae}
                                                 data_mae={alunos.data_da_mae ? (() => {
                                                     const data = new Date(alunos.data_da_mae);
@@ -181,15 +208,15 @@ function PaginaAluno() {
                                                     const ano = data.getFullYear();
                                                     return `${dia}/${mes}/${ano}`;
                                                 })() : 'Não informada'}
-                                                cpf_mae={alunos.cpf_da_mae}
-                                                rg_mae={alunos.rg_da_mae}
-                                                telefone1_mae={alunos.telefone1_da_mae}
-                                                telefone2_mae={alunos.telefone2_da_mae}
+                                                cpf_mae={alunos.cpf_da_mae ? formatCPF(alunos.cpf_da_mae) : 'Não informado'}
+                                                rg_mae={alunos.rg_da_mae ? formatRG(alunos.rg_da_mae) : 'Não informado'}
+                                                telefone1_mae={alunos.telefone1_da_mae ? formatTelefone(alunos.telefone1_da_mae) : 'Não informado'}
+                                                telefone2_mae={alunos.telefone2_da_mae ? formatTelefone(alunos.telefone2_da_mae) : 'Não informado'}
                                                 endereco_mae={alunos.endereco_da_mae}
                                                 n_mae={alunos.n_da_mae}
                                                 cidade_mae={alunos.cidade_da_mae}
                                                 bairro_mae={alunos.bairro_da_mae}
-                                                cep_mae={alunos.cep_da_mae}
+                                                cep_mae={alunos.cep_da_mae ? formatCEP(alunos.cep_da_mae) : 'Não informado'}
                                                 email_mae={alunos.email_da_mae}
                                                 nome_pai={alunos.nome_do_pai}
                                                 data_pai={alunos.data_do_pai ? (() => {
@@ -199,15 +226,15 @@ function PaginaAluno() {
                                                     const ano = data.getFullYear();
                                                     return `${dia}/${mes}/${ano}`;
                                                 })() : 'Não informada'}
-                                                cpf_pai={alunos.cpf_do_pai}
-                                                rg_pai={alunos.rg_do_pai}
-                                                telefone1_pai={alunos.telefone1_do_pai}
-                                                telefone2_pai={alunos.telefone2_do_pai}
+                                                cpf_pai={alunos.cpf_do_pai ? formatCPF(alunos.cpf_do_pai) : 'Não informado'}
+                                                rg_pai={alunos.rg_do_pai ? formatRG(alunos.rg_do_pai) : 'Não informado'}
+                                                telefone1_pai={alunos.telefone1_do_pai ? formatTelefone(alunos.telefone1_do_pai) : 'Não informado'}
+                                                telefone2_pai={alunos.telefone2_do_pai ? formatTelefone(alunos.telefone2_do_pai) : 'Não informado'}
                                                 endereco_pai={alunos.endereco_do_pai}
                                                 n_pai={alunos.n_do_pai}
                                                 cidade_pai={alunos.cidade_do_pai}
                                                 bairro_pai={alunos.bairro_do_pai}
-                                                cep_pai={alunos.cep_do_pai}
+                                                cep_pai={alunos.cep_do_pai ? formatCEP(alunos.cep_do_pai) : 'Não informado'}
                                                 email_pai={alunos.email_do_pai}
                                             />
                                         </div>

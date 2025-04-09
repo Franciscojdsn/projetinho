@@ -47,20 +47,95 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
     }, [])
 
     const submit = (e) => {
-        e.preventDefault()
-        console.log(dados)
-        handleSubmit(dados)
+        e.preventDefault();
+    
+        const dadosSemFormatacao = removerFormatacao(dados);
+    
+        console.log(dadosSemFormatacao);
+        handleSubmit(dadosSemFormatacao);
+    };
+
+    function formatCPF(value) {
+        return value
+        .replace(/\D/g, '') // Remove tudo que não for número
+        .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o primeiro ponto
+        .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o segundo ponto
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
+    }
+    
+    function formatRG(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{1})(\d{3})(\d{3})$/, '$1.$2.$3'); // Adiciona os pontos
+    }
+    
+    function formatTelefone(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses no DDD
+            .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona o traço
+    }
+    
+    function formatCEP(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{5})(\d{3})$/, '$1-$2'); // Adiciona o traço
+    }
+    
+    function handleCPFChange(e) {
+        const formattedCPF = formatCPF(e.target.value);
+        setDados({ ...dados, [e.target.name]: formattedCPF });
+        console.log(dados);
     }
 
-    function handleChange(e) {
-        setDados({ ...dados, [e.target.name]: e.target.value })
-        console.log(dados)
+
+    function handleTelefoneChange(e) {
+        const formattedTelefone = formatTelefone(e.target.value);
+        setDados({ ...dados, [e.target.name]: formattedTelefone });
+        console.log(dados);
+    }
+    
+    function handleCEPChange(e) {
+        const formattedCEP = formatCEP(e.target.value);
+        setDados({ ...dados, [e.target.name]: formattedCEP });
+        console.log(dados);
+    }
+
+    function handleRGChange(e) {
+        const formattedRG = formatRG(e.target.value);
+        setDados({ ...dados, [e.target.name]: formattedRG });
+        console.log(dados);
+    }
+
+    function removerFormatacao(dados) {
+        const camposParaRemoverFormatacao = [
+            'cpf', 'cpf_da_mae', 'cpf_do_pai', 'cpf_financeiro',
+            'telefone1_da_mae', 'telefone2_da_mae', 'telefone1_do_pai', 'telefone2_do_pai',
+            'telefone1_financeiro', 'telefone2_financeiro',
+            'cep', 'cep_da_mae', 'cep_do_pai', 'cep_financeiro',
+            'rg_da_mae', 'rg_do_pai', 'rg_financeiro'
+        ];
+    
+        const dadosSemFormatacao = { ...dados };
+    
+        camposParaRemoverFormatacao.forEach((campo) => {
+            if (dadosSemFormatacao[campo]) {
+                dadosSemFormatacao[campo] = dadosSemFormatacao[campo].replace(/\D/g, '');
+            }
+        });
+    
+        return dadosSemFormatacao;
     }
 
     function handleInputLimit(e, maxLength) {
         if (e.target.value.length > maxLength) {
             e.target.value = e.target.value.slice(0, maxLength); // Limita o valor ao máximo permitido
         }
+    }
+
+    function handleChange(e) {
+        setDados({ ...dados, [e.target.name]: e.target.value })
+        console.log(dados)
     }
 
     function handleSelectTurma(e) {
@@ -141,8 +216,6 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
         }));
     }
 
-
-
     return (
         <>
             <form onSubmit={submit}>
@@ -219,13 +292,13 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.div7}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CPF:"
                             name="cpf"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCPFChange}
                             value={dados.cpf ? dados.cpf : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
                     <div className={styles.div8}>
@@ -270,13 +343,13 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.div12}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CEP"
                             name="cep"
                             placeholder="000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCEPChange}
                             value={dados.cep ? dados.cep : ''}
-                            onInput={(e) => handleInputLimit(e, 8)}
+                            onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
                 </div>
@@ -306,46 +379,46 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.divmae2}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CPF:"
                             name="cpf_da_mae"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCPFChange}
                             value={dados.cpf_da_mae ? dados.cpf_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
                     <div className={styles.divmae3}>
                         <Input
-                            type="number"
+                            type="text"
                             text="RG:"
                             name="rg_da_mae"
                             placeholder="0.000.000"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleRGChange}
                             value={dados.rg_da_mae ? dados.rg_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                            onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
                     <div className={styles.divmae4}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 1"
                             name="telefone1_da_mae"
                             placeholder="Telefone 1"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone1_da_mae ? dados.telefone1_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae5}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 2:"
                             name="telefone2_da_mae"
                             placeholder="Telefone 2"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae12}>
@@ -447,46 +520,46 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.divmae2}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CPF:"
                             name="cpf_do_pai"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCPFChange}
                             value={dados.cpf_do_pai ? dados.cpf_do_pai : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
                     <div className={styles.divmae3}>
                         <Input
-                            type="number"
+                            type="text"
                             text="RG:"
                             name="rg_do_pai"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleRGChange}
                             value={dados.rg_do_pai ? dados.rg_do_pai : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                            onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
                     <div className={styles.divmae4}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 1"
                             name="telefone1_do_pai"
                             placeholder="Telefone 1"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone1_do_pai ? dados.telefone1_do_pai : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae5}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 2:"
                             name="telefone2_do_pai"
                             placeholder="Telefone 2"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone2_do_pai ? dados.telefone2_do_pai : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae12}>
@@ -540,11 +613,11 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.divmae10}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CEP"
                             name="cep_do_pai"
                             placeholder="000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCEPChange}
                             value={dados.cep_do_pai ? dados.cep_do_pai : ''}
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
@@ -586,46 +659,46 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.divmae2}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CPF:"
                             name="cpf_financeiro"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCPFChange}
                             value={dados.cpf_financeiro ? dados.cpf_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
                     <div className={styles.divmae3}>
                         <Input
-                            type="number"
+                            type="text"
                             text="RG:"
                             name="rg_financeiro"
                             placeholder="000.000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleRGChange}
                             value={dados.rg_financeiro ? dados.rg_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                            onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
                     <div className={styles.divmae4}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 1"
                             name="telefone1_financeiro"
                             placeholder="Telefone 1"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone1_financeiro ? dados.telefone1_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.divmae5}>
                         <Input
-                            type="number"
+                            type="text"
                             text="Telefone 2:"
                             name="telefone2_financeiro"
                             placeholder="Telefone 2"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleTelefoneChange}
                             value={dados.telefone2_financeiro ? dados.telefone2_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 11)}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
 
@@ -671,11 +744,11 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     </div>
                     <div className={styles.divmae10}>
                         <Input
-                            type="number"
+                            type="text"
                             text="CEP"
                             name="cep_financeiro"
                             placeholder="000.000-00"
-                            handleOnChange={handleChange}
+                            handleOnChange={handleCEPChange}
                             value={dados.cep_financeiro ? dados.cep_financeiro : ''}
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
