@@ -1,5 +1,7 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { NavbarProvider } from "./context/NavbarContext";
+
 import Home from "./pages/Home/Home.js";
 import Turmas from "./pages/Turmas/Turmas.js";
 import Financeiro from "./pages/Financeiro/Financeiro.js";
@@ -14,19 +16,21 @@ import PaginaFinanceiro from "./pages/PaginaFinanceiro/PaginaFinanceiro.js";
 const AppRoutes = () => {
     return (
         <Router>
-            <Navbar />
-            <Routes>
-                <Route path="/" element={<Home/>}></Route>
-                <Route path="/DadosDosAlunos" element={<DadosDosAlunos/>}></Route>
-                <Route path="/Financeiro" element={<Financeiro/>}></Route>
-                <Route path="/Turmas" element={<Turmas/>}></Route>
-                <Route path="/Funcionarios" element={<Funcionarios/>}></Route>
-                <Route path="/DadosDosAlunos/Historico" element={<Historico/>}></Route>
-               
-                <Route path="/DadosDosAlunos/Financeiro/:id" element={<FinanceiroAluno/>}></Route>
-                <Route path="/PaginaAluno/:id" element={<PaginaAluno/>}></Route>
-                <Route path="/PaginaFinanceiro/:id" element={<PaginaFinanceiro/>}></Route>
-            </Routes>
+            <NavbarProvider>
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<Home />}></Route>
+                    <Route path="/DadosDosAlunos" element={<DadosDosAlunos />}></Route>
+                    <Route path="/Financeiro" element={<Financeiro />}></Route>
+                    <Route path="/Turmas" element={<Turmas />}></Route>
+                    <Route path="/Funcionarios" element={<Funcionarios />}></Route>
+                    <Route path="/DadosDosAlunos/Historico" element={<Historico />}></Route>
+
+                    <Route path="/DadosDosAlunos/Financeiro/:id" element={<FinanceiroAluno />}></Route>
+                    <Route path="/PaginaAluno/:id" element={<PaginaAluno />}></Route>
+                    <Route path="/PaginaFinanceiro/:id" element={<PaginaFinanceiro />}></Route>
+                </Routes>
+            </NavbarProvider>
         </Router>
     )
 }

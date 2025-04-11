@@ -39,3 +39,9 @@
     color: white;
     transition: .4s;
 }
+
+.disabled {
+    pointer-events: none; /* Impede cliques */
+    opacity: 0.5; /* Reduz a opacidade */
+    cursor: not-allowed; /* Mostra o cursor de "não permitido" */
+}

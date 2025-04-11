@@ -84,16 +84,22 @@
 
 .div5 {
     grid-column: span 6 / span 6;
-    grid-column-start: 7;
+    grid-column-start: 11;
     grid-row-start: 2;
 }
 
+
 .div6 {
+    grid-column: span 5 / span 5;
+    grid-column-start: 5;
+    grid-row-start: 2;
+}
+
+.div7 {
     grid-column: span 2 / span 2;
     grid-column-start: 17;
     grid-row-start: 2;
 }
-
 
 .botao {
     font-size: 1em;

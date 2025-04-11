@@ -1,9 +1,11 @@
-import FormularioFinanceiro from "../../componentes/Formulario/FomularioFinanceiro/FormularioFinanceiro";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import styles from './FinanceiroAluno.module.css';
 
-export default function FinanceiroAluno() {
+
+import styles from './FinanceiroAluno.module.css';
+import FormularioFinanceiro from "../../componentes/Formulario/FomularioFinanceiro/FormularioFinanceiro";
+
+export default function FinanceiroAluno({ }) {
 
     const { id } = useParams();
     const [aluno, setAluno] = useState(null);

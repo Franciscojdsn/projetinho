@@ -29,24 +29,30 @@ function PaginaFinanceiro({ dadosData }) {
     
     const gerarBoletos = useCallback((financeiro) => {
         const boletosGerados = [];
-        const { meses, valor_mensalidade, dia_vencimento, desconto } = financeiro;
+        const { meses, valor_mensalidade, dia_vencimento, desconto, valor_matricula, desconto_matricula } = financeiro;
     
         if (!meses || !meses.id) return;
     
         const mesInicio = parseInt(meses.id); // ID do mês de início (ex.: 1 = Janeiro)
         const anoAtual = new Date().getFullYear();
-        const _desconto = parseFloat(desconto) || 0; // Converte o desconto para número, se não for fornecido, assume 0
-    
+        const _desconto = parseFloat(desconto) || 0; 
+        const _descontoMatricula = parseFloat(desconto_matricula) || 0;
+        const _valorMatricula = parseFloat(valor_matricula) || 0;
+
         for (let i = mesInicio; i < 12; i++) { // Gera 12 boletos (1 ano)
             const mes = i; // Calcula o mês (1 a 12)
     
             const dataVencimento = new Date(anoAtual, mes, dia_vencimento || 1); // Define a data de vencimento
+            const dataMatricula = new Date; // Data de matrícula
             boletosGerados.push({
                 id: i + 1,
                 mes: dataVencimento.toLocaleString('pt-BR', { month: 'long' }),
                 ano: dataVencimento.getFullYear(),
                 valor: formatarParaReais(valor_mensalidade - _desconto),
+                valorMatricula: formatarParaReais(_valorMatricula - _descontoMatricula),
                 dataVencimento: dataVencimento.toLocaleDateString('pt-BR'),
+                dataMatricula: dataMatricula.toLocaleDateString('pt-BR'),
+                mesMatricula: dataMatricula.toLocaleString('pt-BR', { month: 'long' }),
             });
         }
     
@@ -135,7 +141,16 @@ function PaginaFinanceiro({ dadosData }) {
                     </div>
                     <div className={styles.containerboletos}>
                         <ul>
+                            <li>{}</li>
                             {boletos.map((boleto) => (
+                                <>
+                                <ListaBoletos
+                                    key={boleto.matricula}
+                                    mes_referente={boleto.mesMatricula}
+                                    vencimento={boleto.dataMatricula}
+                                    valor={boleto.valorMatricula}
+                                    icone={<AiOutlineEdit />}
+                                />
                                 <ListaBoletos
                                     key={boleto.matricula}
                                     mes_referente={boleto.mes}
@@ -143,6 +158,9 @@ function PaginaFinanceiro({ dadosData }) {
                                     valor={boleto.valor}
                                     icone={<AiOutlineEdit />}
                                 />
+                                
+                                </>
+                                
                             ))}
                         </ul>
                     </div>

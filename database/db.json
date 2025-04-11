@@ -1,23 +1,6 @@
 {
   "alunos": [
     {
-      "id": "ca39bc76-e9da-4cf5-9bb6-cb02fc1fb05c",
-      "nome": "Francisco João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
-      "matricula": 1,
-      "data_matricula": "2025-04-03T21:45:10.097Z",
-      "naturalidade": "olinda",
-      "turma": {
-        "id": "1",
-        "nome": "Maternal II"
-      },
-      "nome_do_pai": "asd",
-      "bairro_do_pai": "123",
-      "data": "1839-10-12"
-    },
-    {
       "id": "89d2b6e8-3336-49f4-9c4f-6dc01a406c25",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
@@ -46,6 +29,24 @@
       "matricula": 3,
       "data_matricula": "2025-04-09T20:16:51.777Z",
       "cpf": "12312312312"
+    },
+    {
+      "id": "570a01d6-4de0-4e1b-8bd1-2a528349c8ff",
+      "nome": "teste",
+      "matricula": 4,
+      "data_matricula": "2025-04-11T20:56:52.326Z"
+    },
+    {
+      "id": "936c4e1d-fc15-466c-aa00-29c54a48b631",
+      "nome": "teste1",
+      "matricula": 5,
+      "data_matricula": "2025-04-11T20:58:41.727Z"
+    },
+    {
+      "id": "04713e1a-5c8f-4ffc-a7a1-4ad9369ca917",
+      "nome": "teste imagem3",
+      "matricula": 6,
+      "data_matricula": "2025-04-11T20:59:26.086Z"
     }
   ],
   "opcoesturma": [
@@ -153,15 +154,6 @@
   ],
   "financeiro": [
     {
-      "id": "ca39bc76-e9da-4cf5-9bb6-cb02fc1fb05c",
-      "meses": {
-        "id": "9",
-        "nome": "Setembro"
-      },
-      "valor_mensalidade": 1111.11,
-      "desconto": 110
-    },
-    {
       "id": "89d2b6e8-3336-49f4-9c4f-6dc01a406c25",
       "valor_mensalidade": 11.11,
       "desconto": 1.22,
@@ -169,6 +161,42 @@
       "meses": {
         "id": "10",
         "nome": "Outubro"
+      }
+    },
+    {
+      "id": "570a01d6-4de0-4e1b-8bd1-2a528349c8ff",
+      "valor_matricula": "R$ 123,33",
+      "desconto_matricula": "R$ 21,22",
+      "valor_mensalidade": 12.22,
+      "meses": {
+        "id": "11",
+        "nome": "Novembro"
+      },
+      "desconto": 1.11,
+      "dia_vencimento": "12"
+    },
+    {
+      "id": "936c4e1d-fc15-466c-aa00-29c54a48b631",
+      "valor_matricula": 1222.22,
+      "desconto_matricula": 122.22,
+      "valor_mensalidade": 12.22,
+      "meses": {
+        "id": "11",
+        "nome": "Novembro"
+      },
+      "desconto": 1.11,
+      "dia_vencimento": "12"
+    },
+    {
+      "id": "04713e1a-5c8f-4ffc-a7a1-4ad9369ca917",
+      "valor_matricula": 600,
+      "desconto_matricula": 30,
+      "valor_mensalidade": 12333.31,
+      "desconto": 1233.33,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "11",
+        "nome": "Novembro"
       }
     }
   ]

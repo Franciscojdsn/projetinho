@@ -16,7 +16,7 @@ export default function ListaBoletos({ key, mes_referente, vencimento, valor, ic
                         <p>{valor}</p>
                     </div>
                     <div>
-                            <p>{icone}</p>
+                        <p>{icone}</p>
                     </div>
                 </li>
             </div>

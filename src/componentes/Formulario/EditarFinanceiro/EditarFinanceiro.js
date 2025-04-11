@@ -11,7 +11,7 @@ import Botao from '../../Botao/index'
 
 
 export default function EditarFinanceiro({ aluno, setIsEditing }) {
-
+    
     const [dados, setDados] = useState({
         ...aluno,
         valor_mensalidade: formatarParaReais(aluno.valor_mensalidade),
@@ -21,6 +21,26 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
     const navigate = useNavigate()
     const { id } = useParams();
+
+    const total = (() => {
+        const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        return valorMensalidade - desconto;
+    })();
+    
+    useEffect(() => {
+        fetch('http://localhost:5000/meses', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                setMeses(data)
+            })
+            .catch((err) => console.log(err))
+    
+    }, [])
 
     function formatarParaReais(valor) {
         return new Intl.NumberFormat('pt-BR', {
@@ -62,7 +82,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             alert('O campo "Valor da Mensalidade" é obrigatório.');
             return; // Impede o envio do formulário
         }
-    
+
         if (!dados.desconto || dados.desconto.trim() === '') {
             alert('O campo "Desconto" é obrigatório.');
             return; // Impede o envio do formulário
@@ -73,7 +93,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             return; // Impede o envio do formulário
         }
 
-        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {    
+        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {
             alert('O campo "dia do vencimento" é obrigatório.');
             return; // Impede o envio do formulário
         }
@@ -105,19 +125,14 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         console.log(dados)
     }
 
-    useEffect(() => {
-        fetch('http://localhost:5000/meses', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setMeses(data)
-            })
-            .catch((err) => console.log(err))
+    function handleInputLimit(e, maxLength) {
+        const value = e.target.value;
 
-    }, [])
+        if (value.length > maxLength) {
+            e.target.value = value.slice(0, maxLength); // Limita o valor ao máximo permitido
+        }
+    }
+
 
     function onSave(dadosAtualizados) {
         fetch(`http://localhost:5000/financeiro/${dadosAtualizados.id}`, {
@@ -176,6 +191,9 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             placeholder="00"
                             handleOnChange={handleChange}
                             value={dados.dia_vencimento ? dados.dia_vencimento : ''}
+                            onInput={(e) => handleInputLimit(e, 2)}
+                            min="1"
+                            max="31"
                         />
                     </div>
                     <div className={styles.div4}>
@@ -187,6 +205,15 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             handleOnChange={handleSelectMes}
                             value={dados.meses ? dados.meses.id : ''}
                         />
+                    </div>
+                    <div className={styles.div5}>
+                        <label htmlFor="total">Total:</label><br />
+                        <span name="total" id="total">
+                            {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            }).format(total)} {/* Exibe o total formatado */}
+                        </span>
                     </div>
                     <div className={styles.div6}>
                         <Botao

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { TfiSave } from "react-icons/tfi";
+import { useNavbar } from '../../../context/NavbarContext';
 
 import Botao from '../../Botao';
 import styles from './FormularioFinanceiro.module.css'
@@ -18,13 +19,26 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
     const location = useLocation();
     const [message, setMessage] = useState(location.state?.message || null);
+    const { setIsNavbarDisabled } = useNavbar();
 
     const [meses, setMeses] = useState([])
+
+    const total = (() => {
+        const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        return valorMensalidade - desconto;
+    })();
+
+    const total_matricula = (() => {
+        const valorMensalidade = parseFloat(dados.valor_matricula?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        const desconto = parseFloat(dados.desconto_matricula?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        return valorMensalidade - desconto;
+    })();
 
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
-    
+
             // Limpa o estado da mensagem no location para evitar reutilização
             navigate(location.pathname, { replace: true, state: {} });
         }
@@ -54,6 +68,16 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
     }, [])
 
+    useEffect(() => {
+        // Bloqueia a navbar ao montar o componente
+        setIsNavbarDisabled(true);
+
+        return () => {
+            // Desbloqueia a navbar ao desmontar o componente
+            setIsNavbarDisabled(false);
+        };
+    }, [setIsNavbarDisabled]);
+
     const submit = (e) => {
         e.preventDefault()
         //console.log(dados)
@@ -67,16 +91,16 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
     function handleChangeReais(e) {
         const { name, value } = e.target;
-    
+
         // Remove caracteres não numéricos
         const numericValue = value.replace(/\D/g, '');
-    
+
         // Formata o valor como reais
         const formattedValue = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
         }).format(numericValue / 100); // Divide por 100 para considerar os centavos
-    
+
         // Atualiza o estado com o valor formatado
         setDados({ ...dados, [name]: formattedValue });
         console.log({ ...dados, [name]: formattedValue });
@@ -92,13 +116,21 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         console.log(dados)
     }
 
+    function handleInputLimit(e, maxLength) {
+        const value = e.target.value;
+
+        if (value.length > maxLength) {
+            e.target.value = value.slice(0, maxLength); // Limita o valor ao máximo permitido
+        }
+    }
+
     function handleSubmit(dados) {
         // Verifica se os campos obrigatórios estão preenchidos
         if (!dados.valor_mensalidade || dados.valor_mensalidade.trim() === '') {
             alert('O campo "Valor da Mensalidade" é obrigatório.');
             return; // Impede o envio do formulário
         }
-    
+
         if (!dados.desconto || dados.desconto.trim() === '') {
             alert('O campo "Desconto" é obrigatório.');
             return; // Impede o envio do formulário
@@ -109,21 +141,23 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
             return; // Impede o envio do formulário
         }
 
-        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {    
+        if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {
             alert('O campo "dia do vencimento" é obrigatório.');
             return; // Impede o envio do formulário
         }
-    
+
         const dadosAtualizados = {
             ...dados,
             valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            valor_matricula: parseFloat(dados.valor_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            desconto_matricula: parseFloat(dados.desconto_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             meses: {
                 id: dados.meses.id,
                 nome: dados.meses.nome,
             },
         };
-    
+
         fetch('http://localhost:5000/financeiro', {
             method: 'POST',
             headers: {
@@ -147,6 +181,37 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                 {/* Resto do código da página */}
             </div>
             <form onSubmit={submit}>
+            <div className={styles.container}>
+                <div className={styles.div1}>
+                    <Input
+                        type="text"
+                        text="Valor da Matrícula:"
+                        name="valor_matricula"
+                        placeholder="R$ 0,00"
+                        handleOnChange={handleChangeReais}
+                        value={dados.valor_matricula ? dados.valor_matricula : ''}
+                    />
+                </div>
+                <div className={styles.div2}>
+                    <Input
+                        type="text"
+                        text="Desconto:"
+                        name="desconto_matricula"
+                        placeholder="R$ 0,00"
+                        handleOnChange={handleChangeReais}
+                        value={dados.desconto_matricula ? dados.desconto_matricula : ''}
+                    />
+                </div>
+                <div className={styles.div5}>
+                    <label htmlFor="total">Total:</label><br></br>
+                    <span name="total" id="total">
+                        {new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL',
+                        }).format(total_matricula)} {/* Exibe o total formatado */}
+                    </span>
+                </div>
+            </div>
                 <div className={styles.container}>
                     <div className={styles.div1}>
                         <Input
@@ -163,7 +228,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             type="text"
                             text="Desconto:"
                             name="desconto"
-                            placeholder="000.000.000-00"
+                            placeholder="R$ 0,00"
                             handleOnChange={handleChangeReais}
                             value={dados.desconto ? dados.desconto : ''}
                         />
@@ -173,10 +238,12 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             type="number"
                             text="Dia de vencimento:"
                             name="dia_vencimento"
-                            placeholder="000.000.000-00"
+                            placeholder="00"
                             handleOnChange={handleChange}
                             value={dados.dia_vencimento ? dados.dia_vencimento : ''}
-
+                            onInput={(e) => handleInputLimit(e, 2)}
+                            min="1"
+                            max="31"
                         />
                     </div>
                     <div className={styles.div4}>
@@ -189,7 +256,26 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.meses ? dados.meses.id : ''}
                         />
                     </div>
+                    <div className={styles.div5}>
+                        <label htmlFor="total">Total:</label><br></br>
+                        <span name="total" id="total">
+                            {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            }).format(total)} {/* Exibe o total formatado */}
+                        </span>
+                    </div>
                     <div className={styles.div6}>
+                        <Select
+                            name="turno"
+                            label="Atividade Complementar:"
+                            text="Atividade Complementar:"
+                            options={meses}
+                            handleOnChange={handleSelectMes}
+                            value={dados.meses ? dados.meses.id : ''}
+                        />
+                    </div>
+                    <div className={styles.div7}>
                         <Botao
                             title="Salvar"
                             icone={<TfiSave />}
