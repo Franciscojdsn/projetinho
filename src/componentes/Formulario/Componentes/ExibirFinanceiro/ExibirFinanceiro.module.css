@@ -16,7 +16,7 @@
     display: grid;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
+    gap: 20px;
 }
 
 .container span {
@@ -74,8 +74,8 @@
 }
 
 .div6 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 17;
+    grid-column: span 6 / span 6;
+    grid-column-start: 6;
     grid-row-start: 2;
 }
 

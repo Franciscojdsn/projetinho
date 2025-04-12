@@ -1,6 +1,6 @@
 import styles from './ExibirFinanceiro.module.css'
 
-export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_vencimento, meses, total, turno }) {
+export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_vencimento, meses, total, atividade }) {
 
     return (
 
@@ -26,6 +26,10 @@ export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_venc
                     <div className={styles.div5}>
                         <label htmlFor={total}>Total:</label><br></br>
                         <span name={total} id={total}>{total}</span>
+                    </div>                   
+                    <div className={styles.div6}>
+                        <label htmlFor={atividade}>Atividade Complementar:</label><br></br>
+                        <span name={atividade} id={atividade}>{atividade}</span>
                     </div>                   
                 </div>
             </form>

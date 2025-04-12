@@ -29,12 +29,6 @@
       "matricula": 3,
       "data_matricula": "2025-04-09T20:16:51.777Z",
       "cpf": "12312312312"
-    },
-    {
-      "id": "2333c225-3e30-4877-9b54-f560a8608956",
-      "nome": "teste imagem",
-      "matricula": 4,
-      "data_matricula": "2025-04-12T21:33:29.126Z"
     }
   ],
   "opcoesturma": [
@@ -147,36 +141,26 @@
       "desconto": 1.22,
       "dia_vencimento": "12",
       "meses": {
-        "id": "10",
-        "nome": "Outubro"
+        "id": "9",
+        "nome": "Setembro"
       }
     }
   ],
   "renda_complementar": [
     {
-      "id": "1",
-      "nome_atividade": "Transporte 1",
-      "valor_atividade": 302.22
+      "id": 1,
+      "nome_atividade": "teste",
+      "valor_atividade": 350
     },
     {
-      "id": "2",
-      "nome_atividade": "Transporte 1",
+      "id": 2,
+      "nome_atividade": "Transporte",
       "valor_atividade": 250
     },
     {
-      "id": "3",
-      "nome_atividade": "Transporte 2",
-      "valor_atividade": 300
-    },
-    {
-      "id": "4",
-      "nome_atividade": "Transporte",
-      "valor_atividade": 20
-    },
-    {
-      "id": "41",
-      "nome_atividade": "Judô",
-      "valor_atividade": 50
+      "id": 3,
+      "nome_atividade": "Transporte 1",
+      "valor_atividade": 30
     }
   ]
 }

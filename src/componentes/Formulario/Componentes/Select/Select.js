@@ -1,4 +1,4 @@
-export default function Select({ text, label, name, options, handleOnChange, value }) {
+export default function SelectAtividades({ text, label, name, options, handleOnChange, value }) {
 
     return (
 

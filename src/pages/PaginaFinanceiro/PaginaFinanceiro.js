@@ -15,33 +15,33 @@ import Loading from '../../componentes/Formulario/Componentes/Loading/Loading';
 function PaginaFinanceiro({ dadosData }) {
 
     const { id } = useParams();
-    
+
     const [dados, setDados] = useState({ dadosData, id })
     const [alunos, setAlunos] = useState(null);
-    
+
     const navigate = useNavigate()
     const location = useLocation();
     const [message, setMessage] = useState(location.state?.message || null);
-    
+
     const [boletos, setBoletos] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const gerarBoletos = useCallback((financeiro) => {
         const boletosGerados = [];
         const { meses, valor_mensalidade, dia_vencimento, desconto, valor_matricula, desconto_matricula } = financeiro;
-    
+
         if (!meses || !meses.id) return;
-    
+
         const mesInicio = parseInt(meses.id); // ID do mês de início (ex.: 1 = Janeiro)
         const anoAtual = new Date().getFullYear();
-        const _desconto = parseFloat(desconto) || 0; 
+        const _desconto = parseFloat(desconto) || 0;
         const _descontoMatricula = parseFloat(desconto_matricula) || 0;
         const _valorMatricula = parseFloat(valor_matricula) || 0;
 
         for (let i = mesInicio; i < 12; i++) { // Gera 12 boletos (1 ano)
             const mes = i; // Calcula o mês (1 a 12)
-    
+
             const dataVencimento = new Date(anoAtual, mes, dia_vencimento || 1); // Define a data de vencimento
             const dataMatricula = new Date; // Data de matrícula
             boletosGerados.push({
@@ -55,10 +55,10 @@ function PaginaFinanceiro({ dadosData }) {
                 mesMatricula: dataMatricula.toLocaleString('pt-BR', { month: 'long' }),
             });
         }
-    
+
         setBoletos(boletosGerados);
     }, [setBoletos]);
-    
+
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
     }
@@ -130,37 +130,43 @@ function PaginaFinanceiro({ dadosData }) {
                                     <h1>Responsável: {alunos.resp_financeiro}</h1>
                                 </div>
                                 <img
-                                    src={alunos.imagem} 
+                                    src={alunos.imagem}
                                     alt="Foto do Aluno"
                                 />
                             </div>
                         </>
                     )}
                     <div>
-                        {message && <div className={styles.successmessage}>{message}</div>} 
+                        {message && <div className={styles.successmessage}>{message}</div>}
                     </div>
                     <div className={styles.containerboletos}>
                         <ul>
-                            <li>{}</li>
+
+
+                            {boletos.length > 0 && (
+                                <>
+                                    <ListaBoletos
+                                        key={boletos[0].matricula}
+                                        mes_referente={boletos[0].mesMatricula}
+                                        vencimento={boletos[0].dataMatricula}
+                                        valor={boletos[0].valorMatricula}
+                                        icone={<AiOutlineEdit />}
+                                    />
+                                </>
+
+                            )}
                             {boletos.map((boleto) => (
                                 <>
-                                <ListaBoletos
-                                    key={boleto.matricula}
-                                    mes_referente={boleto.mesMatricula}
-                                    vencimento={boleto.dataMatricula}
-                                    valor={boleto.valorMatricula}
-                                    icone={<AiOutlineEdit />}
-                                />
-                                <ListaBoletos
-                                    key={boleto.matricula}
-                                    mes_referente={boleto.mes}
-                                    vencimento={boleto.dataVencimento}
-                                    valor={boleto.valor}
-                                    icone={<AiOutlineEdit />}
-                                />
-                                
+                                    <ListaBoletos
+                                        key={boleto.matricula}
+                                        mes_referente={boleto.mes}
+                                        vencimento={boleto.dataVencimento}
+                                        valor={boleto.valor}
+                                        icone={<AiOutlineEdit />}
+                                    />
+
                                 </>
-                                
+
                             ))}
                         </ul>
                     </div>
@@ -177,6 +183,7 @@ function PaginaFinanceiro({ dadosData }) {
                                 dia_vencimento={dados.dia_vencimento}
                                 meses={dados.meses ? dados.meses.nome : ''}
                                 total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
+                                atividade={dados.renda_complementar ? dados.renda_complementar.nome_atividade : 'tae'}
                                 handleOnChange={handleChange}
                             />
                         </div>
