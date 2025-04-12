@@ -14,6 +14,14 @@
     margin: 0 auto;
     margin-top: 1em;
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
+}
+
+.container label {
+    font-family: "Aldrich", sans-serif;
+    font-size: 1em;
+}
+
+.container {
     background-color: rgba(0, 0, 0, 0.021);
     padding: 1em;
     align-items: center;
@@ -21,11 +29,6 @@
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(1, 1fr);
     gap: 8px;
-}
-
-.container label {
-    font-family: "Aldrich", sans-serif;
-    font-size: 1em;
 }
 
 .container input {
@@ -45,7 +48,7 @@
     width: 60vw;
     background-color: #d4edda;
     color: #188d00;
-    padding-top: 10px;
+    padding: 10px;
     border: 1px solid #c3e6cb;
     border-radius: 5px;
     margin: 0 auto;
@@ -53,20 +56,33 @@
     text-align: center;
 }
 
-.containerlista {
-    width: 70vw;
-    margin: 0 auto;
-    align-items: center;
+.div1 {
+    grid-column: span 6 / span 6;
+    grid-column-start: 1;
+    grid-row-start: 1;
+}
+
+.div1 input {
+    width: 10em;
+}
+
+.div2 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 5;
+    grid-row-start: 1;
+}
+
+.div2 input {
+    width: 10em;
+}
+
+.div3 {
+    grid-column: span 4 / span 4;
+    grid-column-start: 16;
+    grid-row-start: 1;
     display: flex;
-
 }
 
-.containerlista ul {
-    width: 100%;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
 
 .botao {
     font-size: 1.5em;
@@ -90,11 +106,10 @@
 }
 
 .botao3 {
-    align-items: center;
     font-size: 1em;
     padding: .3em;
     border: none;
-    background-color: rgba(145, 211, 223, 0.781);
+    background-color: rgba(145, 223, 145, 0.781);
     border-radius: .3em;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
     font-family: "Outfit", sans-serif;
@@ -105,7 +120,7 @@
     margin-right: .4em;
 }
 .botao3:hover {
-    background-color: rgba(53, 202, 195, 0.781);
+    background-color: rgba(145, 223, 145, 0.781);
     color: rgb(255, 255, 255);
     transition: .4s;
 }

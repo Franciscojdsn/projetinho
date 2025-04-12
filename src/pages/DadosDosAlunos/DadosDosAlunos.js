@@ -48,7 +48,6 @@ const DadosDosAlunos = () => {
                     : 0;
                 const novaMatricula = ultimaMatricula + 1;
     
-                // Adiciona o número de matrícula ao objeto `dados`
                 dados.matricula = novaMatricula;
     
                 // Adiciona o ID único ao objeto `dados`

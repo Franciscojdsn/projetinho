@@ -31,22 +31,10 @@
       "cpf": "12312312312"
     },
     {
-      "id": "570a01d6-4de0-4e1b-8bd1-2a528349c8ff",
-      "nome": "teste",
+      "id": "2333c225-3e30-4877-9b54-f560a8608956",
+      "nome": "teste imagem",
       "matricula": 4,
-      "data_matricula": "2025-04-11T20:56:52.326Z"
-    },
-    {
-      "id": "936c4e1d-fc15-466c-aa00-29c54a48b631",
-      "nome": "teste1",
-      "matricula": 5,
-      "data_matricula": "2025-04-11T20:58:41.727Z"
-    },
-    {
-      "id": "04713e1a-5c8f-4ffc-a7a1-4ad9369ca917",
-      "nome": "teste imagem3",
-      "matricula": 6,
-      "data_matricula": "2025-04-11T20:59:26.086Z"
+      "data_matricula": "2025-04-12T21:33:29.126Z"
     }
   ],
   "opcoesturma": [
@@ -162,42 +150,33 @@
         "id": "10",
         "nome": "Outubro"
       }
+    }
+  ],
+  "renda_complementar": [
+    {
+      "id": "1",
+      "nome_atividade": "Transporte 1",
+      "valor_atividade": 302.22
     },
     {
-      "id": "570a01d6-4de0-4e1b-8bd1-2a528349c8ff",
-      "valor_matricula": "R$ 123,33",
-      "desconto_matricula": "R$ 21,22",
-      "valor_mensalidade": 12.22,
-      "meses": {
-        "id": "11",
-        "nome": "Novembro"
-      },
-      "desconto": 1.11,
-      "dia_vencimento": "12"
+      "id": "2",
+      "nome_atividade": "Transporte 1",
+      "valor_atividade": 250
     },
     {
-      "id": "936c4e1d-fc15-466c-aa00-29c54a48b631",
-      "valor_matricula": 1222.22,
-      "desconto_matricula": 122.22,
-      "valor_mensalidade": 12.22,
-      "meses": {
-        "id": "11",
-        "nome": "Novembro"
-      },
-      "desconto": 1.11,
-      "dia_vencimento": "12"
+      "id": "3",
+      "nome_atividade": "Transporte 2",
+      "valor_atividade": 300
     },
     {
-      "id": "04713e1a-5c8f-4ffc-a7a1-4ad9369ca917",
-      "valor_matricula": 600,
-      "desconto_matricula": 30,
-      "valor_mensalidade": 12333.31,
-      "desconto": 1233.33,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "11",
-        "nome": "Novembro"
-      }
+      "id": "4",
+      "nome_atividade": "Transporte",
+      "valor_atividade": 20
+    },
+    {
+      "id": "41",
+      "nome_atividade": "Judô",
+      "valor_atividade": 50
     }
   ]
 }
