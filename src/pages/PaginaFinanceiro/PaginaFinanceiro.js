@@ -183,7 +183,7 @@ function PaginaFinanceiro({ dadosData }) {
                                 dia_vencimento={dados.dia_vencimento}
                                 meses={dados.meses ? dados.meses.nome : ''}
                                 total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
-                                atividade={dados.renda_complementar ? dados.renda_complementar.nome_atividade : 'tae'}
+                                atividade={dados.renda_complementar || []}
                                 handleOnChange={handleChange}
                             />
                         </div>

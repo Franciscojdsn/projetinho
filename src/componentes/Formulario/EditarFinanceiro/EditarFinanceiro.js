@@ -11,13 +11,15 @@ import Botao from '../../Botao/index'
 
 
 export default function EditarFinanceiro({ aluno, setIsEditing }) {
-    
+
     const [dados, setDados] = useState({
         ...aluno,
         valor_mensalidade: formatarParaReais(aluno.valor_mensalidade),
         desconto: formatarParaReais(aluno.desconto),
     });
     const [meses, setMeses] = useState([])
+    const [atividades, setAtividades] = useState([]);
+    const [atividadeSelecionada, setAtividadeSelecionada] = useState(null);
 
     const navigate = useNavigate()
     const { id } = useParams();
@@ -27,7 +29,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         return valorMensalidade - desconto;
     })();
-    
+
     useEffect(() => {
         fetch('http://localhost:5000/meses', {
             method: "GET",
@@ -39,8 +41,22 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 setMeses(data)
             })
             .catch((err) => console.log(err))
-    
+
     }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:5000/renda_complementar', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                setAtividades(data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
 
     function formatarParaReais(valor) {
         return new Intl.NumberFormat('pt-BR', {
@@ -101,6 +117,9 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         // Prepara os dados para envio
         const dadosAtualizados = {
             ...dados,
+            atividades: atividades.filter((atividade) =>
+                dados.atividades?.some((a) => a.id === atividade.id)
+            ),
             valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             meses: {
@@ -131,6 +150,26 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         if (value.length > maxLength) {
             e.target.value = value.slice(0, maxLength); // Limita o valor ao máximo permitido
         }
+    }
+
+    function handleExcluirAtividade(idAtividade) {
+        fetch(`http://localhost:5000/atividades/${idAtividade}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => {
+                if (resp.ok) {
+                    alert('Atividade excluída com sucesso!');
+                    setAtividades((prevAtividades) =>
+                        prevAtividades.filter((atividade) => atividade.id !== idAtividade)
+                    );
+                } else {
+                    alert('Erro ao excluir a atividade.');
+                }
+            })
+            .catch((err) => console.log('Erro ao excluir a atividade:', err));
     }
 
 
@@ -205,6 +244,33 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             handleOnChange={handleSelectMes}
                             value={dados.meses ? dados.meses.id : ''}
                         />
+                    </div>
+                    <div className={styles.div7}>
+                        <Select
+                            name="atividade"
+                            label="Atividade Complementar:"
+                            text="Selecione uma atividade:"
+                            options={atividades}
+                            handleOnChange={(e) => setAtividadeSelecionada(e.target.value)}
+                            value={atividadeSelecionada || ''}
+                        />
+                    </div>
+                    <div className={styles.div8}>
+                        <h3>Atividades Selecionadas:</h3>
+                        <ul>
+                            {dados.atividades?.map((atividade) => (
+                                <li key={atividade.id}>
+                                    {atividade.nome}
+                                    <button
+                                        type="button"
+                                        onClick={() => handleExcluirAtividade(atividade.id)}
+                                        className={styles.botaoExcluir}
+                                    >
+                                        Excluir
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                     <div className={styles.div5}>
                         <label htmlFor="total">Total:</label><br />

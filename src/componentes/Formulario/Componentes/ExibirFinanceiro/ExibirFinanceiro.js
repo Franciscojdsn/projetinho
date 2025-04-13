@@ -26,11 +26,18 @@ export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_venc
                     <div className={styles.div5}>
                         <label htmlFor={total}>Total:</label><br></br>
                         <span name={total} id={total}>{total}</span>
-                    </div>                   
+                    </div>
                     <div className={styles.div6}>
                         <label htmlFor={atividade}>Atividade Complementar:</label><br></br>
-                        <span name={atividade} id={atividade}>{atividade}</span>
-                    </div>                   
+                        <span name={atividade} id={atividade}>
+                            {Array.isArray(atividade) && atividade.length > 0 ? (
+                            atividade.map((renda, index) => (
+                                <li key={index}>{renda.nome}</li>
+                            ))
+                        ) : (
+                            <li>Nenhuma renda complementar cadastrada</li>
+                        )}</span>
+                    </div>
                 </div>
             </form>
         </>

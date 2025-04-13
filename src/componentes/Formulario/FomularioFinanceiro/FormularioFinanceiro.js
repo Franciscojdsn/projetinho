@@ -24,12 +24,13 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
     const [meses, setMeses] = useState([])
     const [rendaComplementar, setRendaComplementar] = useState([]);
+    const [atividadesSelecionadas, setAtividadesSelecionadas] = useState([]);
 
     const total = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
-        const valorAtividade = dados.renda_complementar?.valor_atividade || 0; // Adiciona o valor da atividade complementar
-        return valorMensalidade - desconto + valorAtividade;
+        const valorAtividades = atividadesSelecionadas.reduce((acc, atividade) => acc + atividade.valor_atividade, 0); // Soma os valores das atividades
+        return valorMensalidade - desconto + valorAtividades;
     })();
 
     const total_matricula = (() => {
@@ -42,7 +43,6 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         if (location.state?.message) {
             setMessage(location.state.message);
 
-            // Limpa o estado da mensagem no location para evitar reutilização
             navigate(location.pathname, { replace: true, state: {} });
         }
     }, [location, navigate]);
@@ -79,7 +79,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         })
             .then((resp) => resp.json())
             .then((data) => {
-                console.log("Renda Complementar:", data); // Verifique os dados carregados
+                console.log("Renda Complementar carregada:", data); // Verifique os dados carregados
                 setRendaComplementar(data);
             })
             .catch((err) => console.log(err));
@@ -95,11 +95,6 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         };
     }, [setIsNavbarDisabled]);
 
-    const submit = (e) => {
-        e.preventDefault()
-        //console.log(dados)
-        handleSubmit(dados)
-    }
 
     function handleChange(e) {
         setDados({ ...dados, [e.target.name]: e.target.value })
@@ -133,12 +128,39 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         console.log(dados)
     }
 
+    function handleSelectAtividade(e) {
+        const selectedId = e.target.value; // Não converta para número ainda
+        console.log("ID selecionado:", selectedId); // Log para depuração
+
+        const selectedAtividade = rendaComplementar.find(renda => renda.id.toString() === selectedId.toString());
+        console.log("Atividade selecionada:", selectedAtividade); // Log para depuração
+
+        if (selectedAtividade && !atividadesSelecionadas.some(atividade => atividade.id === selectedAtividade.id)) {
+            setAtividadesSelecionadas([...atividadesSelecionadas, selectedAtividade]); // Adiciona a atividade selecionada
+            console.log("Atividades selecionadas atualizadas:", [...atividadesSelecionadas, selectedAtividade]); // Log para depuração
+        }
+        if (!selectedAtividade) {
+            console.error("Atividade não encontrada para o ID:", selectedId);
+            return;
+        }
+    }
+
+    function removeAtividade(id) {
+        setAtividadesSelecionadas(atividadesSelecionadas.filter(atividade => atividade.id !== id)); // Remove a atividade pelo ID
+    }
+
     function handleInputLimit(e, maxLength) {
         const value = e.target.value;
 
         if (value.length > maxLength) {
             e.target.value = value.slice(0, maxLength); // Limita o valor ao máximo permitido
         }
+    }
+
+    const submit = (e) => {
+        e.preventDefault()
+        //console.log(dados)
+        handleSubmit(dados)
     }
 
     function handleSubmit(dados) {
@@ -163,6 +185,16 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
             return; // Impede o envio do formulário
         }
 
+        if (!dados.valor_matricula || dados.valor_matricula === '' || dados.valor_matricula > 31 || dados.valor_matricula < 1) {
+            alert('O campo "Valor da Matrícula" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
+        if (!dados.desconto_matricula || dados.desconto_matricula === '' || dados.desconto_matricula > 31 || dados.desconto_matricula < 1) {
+            alert('O campo "Desconto da Matrícula" é obrigatório.');
+            return; // Impede o envio do formulário
+        }
+
         const dadosAtualizados = {
             ...dados,
             valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
@@ -173,7 +205,11 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                 id: dados.meses.id,
                 nome: dados.meses.nome,
             },
-            renda_complementar: dados.renda_complementar || null, // Inclui a renda complementar
+            renda_complementar: atividadesSelecionadas.map((atividade) => ({
+                id: atividade.id,
+                nome: atividade.nome_atividade,
+                valor: atividade.valor_atividade,
+            })),
         };
 
         fetch('http://localhost:5000/financeiro', {
@@ -220,7 +256,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.desconto_matricula ? dados.desconto_matricula : ''}
                         />
                     </div>
-                    <div className={styles.div5}>
+                    <div className={styles.div3}>
                         <label htmlFor="total">Total:</label><br></br>
                         <span name="total" id="total">
                             {new Intl.NumberFormat('pt-BR', {
@@ -230,8 +266,8 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                         </span>
                     </div>
                 </div>
-                <div className={styles.container}>
-                    <div className={styles.div1}>
+                <div className={styles.container1}>
+                    <div className={styles.div4}>
                         <Input
                             type="text"
                             text="Valor da Mensalidade:"
@@ -241,7 +277,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.valor_mensalidade ? dados.valor_mensalidade : ''}
                         />
                     </div>
-                    <div className={styles.div2}>
+                    <div className={styles.div5}>
                         <Input
                             type="text"
                             text="Desconto:"
@@ -251,7 +287,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.desconto ? dados.desconto : ''}
                         />
                     </div>
-                    <div className={styles.div3}>
+                    <div className={styles.div6}>
                         <Input
                             type="number"
                             text="Dia de vencimento:"
@@ -264,7 +300,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             max="31"
                         />
                     </div>
-                    <div className={styles.div4}>
+                    <div className={styles.div7}>
                         <Select
                             name="turno"
                             label="Mês de início:"
@@ -274,7 +310,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             value={dados.meses ? dados.meses.id : ''}
                         />
                     </div>
-                    <div className={styles.div5}>
+                    <div className={styles.div8}>
                         <label htmlFor="total">Total:</label><br></br>
                         <span name="total" id="total">
                             {new Intl.NumberFormat('pt-BR', {
@@ -283,41 +319,47 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             }).format(total)} {/* Exibe o total formatado */}
                         </span>
                     </div>
-                    <div className={styles.div6}>
-                        <div className={styles.div4}>
-                            <SelectAtividades
-                                name="renda_complementar"
-                                label="Renda Complementar:"
-                                text="Renda complementar:"
-                                options={rendaComplementar.map((renda) => {
-                                    return {
-                                        id: renda.id,
-                                        name: `${renda.nome_atividade} - ${new Intl.NumberFormat('pt-BR', {
-                                            style: 'currency',
-                                            currency: 'BRL',
-                                        }).format(renda.valor_atividade)}`,
-                                    };
-                                })}
-                                handleOnChange={(e) => {
-                                    const selectedRenda = rendaComplementar.find(renda => renda.id === parseInt(e.target.value));
-                                    setDados({
-                                        ...dados,
-                                        renda_complementar: selectedRenda,
-                                    });
-                                }}
-                                value={dados.renda_complementar ? dados.renda_complementar.id : ''}
-                            />
-                        </div>
-                    </div>
-
-                    <div className={styles.div7}>
-                        <Botao
-                            title="Salvar"
-                            icone={<TfiSave />}
-                            classname={styles.botao}
+                    <div className={styles.div9}>
+                        <SelectAtividades
+                            name="renda_complementar"
+                            label="Renda Complementar:"
+                            text="Renda complementar:"
+                            options={rendaComplementar.map((renda) => {
+                                return {
+                                    id: renda.id,
+                                    name: `${renda.nome_atividade} - ${new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }).format(renda.valor_atividade)}`,
+                                };
+                            })}
+                            handleOnChange={handleSelectAtividade} // Certifique-se de que está vinculado corretamente
+                            value=""
                         />
+                        {atividadesSelecionadas.map((atividade) => (
+                            <li key={atividade.id} >
+                                {atividade.nome_atividade} - {new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL',
+                                }).format(atividade.valor_atividade)}
+                                <Botao
+                                    title=""
+                                    icone={<TfiSave />}
+                                    classname={styles.botao2}
+                                    onclick={() => removeAtividade(atividade.id)}
+                                />
+                            </li>
+                        ))}
                     </div>
+                <div className={styles.div10}>
+                    <Botao
+                        title="Salvar"
+                        icone={<TfiSave />}
+                        classname={styles.botao}
+                    />
                 </div>
+                </div>
+
             </form>
         </>
     )
