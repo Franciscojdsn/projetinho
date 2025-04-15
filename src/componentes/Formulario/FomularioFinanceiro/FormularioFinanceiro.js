@@ -30,7 +30,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const valorAtividades = atividadesSelecionadas.reduce((acc, atividade) => acc + atividade.valor_atividade, 0); // Soma os valores das atividades
-        return valorMensalidade - desconto + valorAtividades;
+        return (valorMensalidade + valorAtividades) - desconto ;
     })();
 
     const total_matricula = (() => {
@@ -197,7 +197,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
         const dadosAtualizados = {
             ...dados,
-            valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            valor_mensalidade: parseFloat(total) || 0,
             desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             valor_matricula: parseFloat(dados.valor_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto_matricula: parseFloat(dados.desconto_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
@@ -336,29 +336,31 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             handleOnChange={handleSelectAtividade} // Certifique-se de que está vinculado corretamente
                             value=""
                         />
-                        {atividadesSelecionadas.map((atividade) => (
-                            <li key={atividade.id} >
-                                {atividade.nome_atividade} - {new Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL',
-                                }).format(atividade.valor_atividade)}
-                                <Botao
-                                    title=""
-                                    icone={<TfiSave />}
-                                    classname={styles.botao2}
-                                    onclick={() => removeAtividade(atividade.id)}
-                                />
-                            </li>
-                        ))}
                     </div>
-                <div className={styles.div10}>
-                    <Botao
-                        title="Salvar"
-                        icone={<TfiSave />}
-                        classname={styles.botao}
-                    />
+                    <div className={styles.div10}>
+                        <Botao
+                            title="Salvar"
+                            icone={<TfiSave />}
+                            classname={styles.botao}
+                        />
+                    </div>
                 </div>
-                </div>
+                <ul className={styles.container}>
+                    {atividadesSelecionadas.map((atividade) => (
+                        <li key={atividade.id} >
+                            {atividade.nome_atividade} - {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL',
+                            }).format(atividade.valor_atividade)}
+                            <Botao
+                                title=""
+                                icone={<TfiSave />}
+                                classname={styles.botao2}
+                                onclick={() => removeAtividade(atividade.id)}
+                            />
+                        </li>
+                    ))}
+                </ul>
 
             </form>
         </>

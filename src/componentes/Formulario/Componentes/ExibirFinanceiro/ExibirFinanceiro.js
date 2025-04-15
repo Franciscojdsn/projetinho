@@ -2,6 +2,7 @@ import styles from './ExibirFinanceiro.module.css'
 
 export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_vencimento, meses, total, atividade }) {
 
+    
     return (
 
         <>
@@ -27,19 +28,21 @@ export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_venc
                         <label htmlFor={total}>Total:</label><br></br>
                         <span name={total} id={total}>{total}</span>
                     </div>
-                    <div className={styles.div6}>
-                        <label htmlFor={atividade}>Atividade Complementar:</label><br></br>
-                        <span name={atividade} id={atividade}>
-                            {Array.isArray(atividade) && atividade.length > 0 ? (
-                            atividade.map((renda, index) => (
-                                <li key={index}>{renda.nome}</li>
-                            ))
-                        ) : (
-                            <li>Nenhuma renda complementar cadastrada</li>
-                        )}</span>
-                    </div>
                 </div>
             </form>
+            <div className={styles.container}>
+                <label htmlFor={atividade}>Atividade Complementar:</label><br></br>
+                <span name={atividade} id={atividade}>
+                    {Array.isArray(atividade) && atividade.length > 0 ? (
+                        atividade.map((renda, valor, index) => (
+                            <ul>
+                                <li key={index}>{renda.nome + '-' + renda.valor}</li>
+                            </ul>
+                        ))
+                    ) : (
+                        <li>Nenhuma renda complementar cadastrada</li>
+                    )}</span>
+            </div>
         </>
 
     )

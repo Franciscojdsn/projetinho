@@ -31,13 +31,12 @@
       "cpf": "12312312312"
     },
     {
-      "id": "4ad5c1c1-c77a-4a86-adeb-7fb4cfd7c7d6",
+      "id": "691f2c8e-d759-4366-a158-996c20b95fba",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
-      "matricula": 4,
-      "data_matricula": "2025-04-13T23:30:41.622Z"
+      "matricula": 4
     }
   ],
   "opcoesturma": [
@@ -155,27 +154,17 @@
       }
     },
     {
-      "id": "4ad5c1c1-c77a-4a86-adeb-7fb4cfd7c7d6",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 1.23,
-      "valor_mensalidade": 123.33,
-      "desconto": 1.23,
+      "id": "691f2c8e-d759-4366-a158-996c20b95fba",
+      "valor_matricula": 110,
+      "desconto_matricula": 10,
+      "valor_mensalidade": 100,
+      "desconto": 30,
       "dia_vencimento": "12",
       "meses": {
-        "id": "9",
-        "nome": "Setembro"
+        "id": "10",
+        "nome": "Outubro"
       },
       "renda_complementar": [
-        {
-          "id": "2",
-          "nome": "Transporte",
-          "valor": 250
-        },
-        {
-          "id": "1",
-          "nome": "teste",
-          "valor": 350
-        },
         {
           "id": "3",
           "nome": "Transporte 1",
@@ -185,11 +174,6 @@
     }
   ],
   "renda_complementar": [
-    {
-      "id": "1",
-      "nome_atividade": "teste",
-      "valor_atividade": 350
-    },
     {
       "id": "2",
       "nome_atividade": "Transporte",

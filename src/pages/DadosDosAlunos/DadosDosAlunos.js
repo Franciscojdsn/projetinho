@@ -53,8 +53,6 @@ const DadosDosAlunos = () => {
                 // Adiciona o ID único ao objeto `dados`
                 dados.id = uuid();
 
-                const dataAtual = new Date();
-                dados.data_matricula = dataAtual.toISOString();
     
                 // Envia os dados para o servidor
                 return fetch('http://localhost:5000/alunos', {

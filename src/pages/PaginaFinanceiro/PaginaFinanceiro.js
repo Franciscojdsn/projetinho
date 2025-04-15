@@ -48,7 +48,7 @@ function PaginaFinanceiro({ dadosData }) {
                 id: i + 1,
                 mes: dataVencimento.toLocaleString('pt-BR', { month: 'long' }),
                 ano: dataVencimento.getFullYear(),
-                valor: formatarParaReais(valor_mensalidade - _desconto),
+                valor: formatarParaReais(valor_mensalidade),
                 valorMatricula: formatarParaReais(_valorMatricula - _descontoMatricula),
                 dataVencimento: dataVencimento.toLocaleDateString('pt-BR'),
                 dataMatricula: dataMatricula.toLocaleDateString('pt-BR'),
@@ -59,6 +59,11 @@ function PaginaFinanceiro({ dadosData }) {
         setBoletos(boletosGerados);
     }, [setBoletos]);
 
+    function calcularTotal(valorMensalidade, desconto, rendaComplementar) {
+        const totalRendaComplementar = rendaComplementar.reduce((acc, renda) => acc + parseFloat(renda.valor || 0), 0);
+        return valorMensalidade - desconto + totalRendaComplementar;
+    }
+
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
     }
@@ -66,7 +71,6 @@ function PaginaFinanceiro({ dadosData }) {
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
-            // Limpa o estado da mensagem no location para evitar reutilização
             navigate(location.pathname, { replace: true, state: {} });
         }
     }, [location, navigate]);
@@ -74,14 +78,14 @@ function PaginaFinanceiro({ dadosData }) {
     useEffect(() => {
         if (message) {
             const timer = setTimeout(() => {
-                setMessage(null); // Remove a mensagem após 5 segundos
+                setMessage(null);
             }, 5000);
 
-            return () => clearTimeout(timer); // Limpa o temporizador ao desmontar o componente
+            return () => clearTimeout(timer);
         }
     }, [message]);
 
-    useEffect(() => { // Busca os dados do aluno pelo ID
+    useEffect(() => { 
         fetch(`http://localhost:5000/alunos/${id}`)
             .then((resp) => resp.json())
             .then((data) => {
@@ -114,7 +118,7 @@ function PaginaFinanceiro({ dadosData }) {
         }).format(valor);
     }
 
-
+    
 
     return (
         <>
@@ -141,8 +145,6 @@ function PaginaFinanceiro({ dadosData }) {
                     </div>
                     <div className={styles.containerboletos}>
                         <ul>
-
-
                             {boletos.length > 0 && (
                                 <>
                                     <ListaBoletos
@@ -182,7 +184,7 @@ function PaginaFinanceiro({ dadosData }) {
                                 desconto={formatarParaReais(dados.desconto)}
                                 dia_vencimento={dados.dia_vencimento}
                                 meses={dados.meses ? dados.meses.nome : ''}
-                                total={formatarParaReais(dados.valor_mensalidade - dados.desconto)}
+                                total={formatarParaReais(calcularTotal(dados.valor_mensalidade, dados.desconto, dados.renda_complementar || []))}
                                 atividade={dados.renda_complementar || []}
                                 handleOnChange={handleChange}
                             />

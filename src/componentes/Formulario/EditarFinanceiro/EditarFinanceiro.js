@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { TfiSave } from "react-icons/tfi";
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { IoTrashBinOutline } from "react-icons/io5";
 
 import styles from './EditarFinanceiro.module.css';
 import Input from '../Componentes/Input/Input';
@@ -26,8 +26,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
     const total = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
-        const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
-        return valorMensalidade - desconto;
+        return valorMensalidade;
     })();
 
     useEffect(() => {
@@ -117,9 +116,6 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         // Prepara os dados para envio
         const dadosAtualizados = {
             ...dados,
-            atividades: atividades.filter((atividade) =>
-                dados.atividades?.some((a) => a.id === atividade.id)
-            ),
             valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             meses: {
@@ -144,32 +140,13 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         console.log(dados)
     }
 
+
     function handleInputLimit(e, maxLength) {
         const value = e.target.value;
 
         if (value.length > maxLength) {
             e.target.value = value.slice(0, maxLength); // Limita o valor ao máximo permitido
         }
-    }
-
-    function handleExcluirAtividade(idAtividade) {
-        fetch(`http://localhost:5000/atividades/${idAtividade}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((resp) => {
-                if (resp.ok) {
-                    alert('Atividade excluída com sucesso!');
-                    setAtividades((prevAtividades) =>
-                        prevAtividades.filter((atividade) => atividade.id !== idAtividade)
-                    );
-                } else {
-                    alert('Erro ao excluir a atividade.');
-                }
-            })
-            .catch((err) => console.log('Erro ao excluir a atividade:', err));
     }
 
 
@@ -187,15 +164,57 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                         setIsEditing(false);
                     }, 1000);
                 } else {
-                    alert('Erro ao atualizar os dados financeiros.');
+                    alert('Erross ao atualizar os dados financeiros.');
                 }
             })
             .then(() => {
                 window.location.reload(); // Recarrega a página após o redirecionamento
                 navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
             })
-
             .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
+    }
+
+    function removeAtividade(id) {
+        // Encontra a atividade a ser removida
+        const atividadeRemovida = atividades.find((atividade) => atividade.id === id);
+    
+        if (atividadeRemovida) {
+            // Subtrai o valor da atividade removida do valor da mensalidade
+            const valorAtividade = isNaN(atividadeRemovida.valor_atividade) ? 0 : parseFloat(atividadeRemovida.valor_atividade);
+            const valorMensalidadeAtual = isNaN(dados.valor_mensalidade) ? 0 : parseFloat(dados.valor_mensalidade);
+            const novoValorMensalidade = valorMensalidadeAtual - valorAtividade;
+    
+            // Atualiza os dados do aluno no servidor
+            const dadosAtualizados = {
+                ...dados,
+                valor_mensalidade: novoValorMensalidade,
+                atividades: atividades.filter((atividade) => atividade.id !== id), // Remove a atividade do aluno
+            };
+    
+            // Atualiza o banco de dados
+            fetch(`http://localhost:5000/financeiro/${dados.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dadosAtualizados),
+            })
+                .then((resp) => {
+                    if (resp.ok) {
+                        // Atualiza o estado local
+                        setDados((prevDados) => ({
+                            ...prevDados,
+                            valor_mensalidade: formatarParaReais(novoValorMensalidade),
+                        }));
+                        setAtividades(dadosAtualizados);
+                    } else {
+                        alert('Erro ao atualizar os dados financeiros no servidor.');
+                    }
+                })
+                .catch((err) => {
+                    console.log(`Erro ao atualizar os dados financeiros para o ID ${dados.id}:`, err);
+                });
+        }
     }
 
     return (
@@ -255,23 +274,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             value={atividadeSelecionada || ''}
                         />
                     </div>
-                    <div className={styles.div8}>
-                        <h3>Atividades Selecionadas:</h3>
-                        <ul>
-                            {dados.atividades?.map((atividade) => (
-                                <li key={atividade.id}>
-                                    {atividade.nome}
-                                    <button
-                                        type="button"
-                                        onClick={() => handleExcluirAtividade(atividade.id)}
-                                        className={styles.botaoExcluir}
-                                    >
-                                        Excluir
-                                    </button>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+
                     <div className={styles.div5}>
                         <label htmlFor="total">Total:</label><br />
                         <span name="total" id="total">
@@ -289,6 +292,28 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             classname={styles.botao}
                         />
                     </div>
+                </div>
+                
+                <div className={styles.container}>
+                    <label htmlFor="atividades">Atividade Complementar:</label><br></br>
+                    <span name="atividades" id="atividades">
+                        {atividades.length > 0 ? (
+                            atividades.map((renda, index) => (
+                                <>
+                                    <ul>
+                                        <li key={index}>{renda.nome_atividade + '-' + renda.valor_atividade}
+                                            <Botao
+                                                classname={styles.botao3}
+                                                icone={<IoTrashBinOutline />}
+                                                onclick={() => removeAtividade(renda.id)}
+                                            />
+                                        </li>
+                                    </ul>
+                                </>
+                            ))
+                        ) : (
+                            <li>Nenhuma renda complementar cadastrada</li>
+                        )}</span>
                 </div>
             </form>
         </>
