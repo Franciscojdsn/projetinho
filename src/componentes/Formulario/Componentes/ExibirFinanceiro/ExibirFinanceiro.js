@@ -36,7 +36,7 @@ export default function ExibirFinanceiro({ valor_mensalidade, desconto, dia_venc
                     {Array.isArray(atividade) && atividade.length > 0 ? (
                         atividade.map((renda, valor, index) => (
                             <ul>
-                                <li key={index}>{renda.nome + '-' + renda.valor}</li>
+                                <li key={index}>{renda.nome + '-' + "R$" + renda.valor}</li>
                             </ul>
                         ))
                     ) : (

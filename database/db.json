@@ -1,42 +1,20 @@
 {
   "alunos": [
     {
-      "id": "89d2b6e8-3336-49f4-9c4f-6dc01a406c25",
+      "id": "df0a069d-4d03-43a0-89fe-ac19cc466470",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
-      "data": "1997-02-18",
-      "sexo": "M",
-      "turma": {
-        "id": "1",
-        "nome": "Maternal II"
-      },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "nome_da_mae": "Francisco João da Silva Neto Boni",
-      "telefone1_da_mae": "81971199800",
-      "endereco_da_mae": "Abreu e Lima",
-      "cidade_da_mae": "Recife",
-      "cep_da_mae": "53580760",
-      "resp_financeiro": "Francisco João da Silva Neto Boni",
-      "telefone1_financeiro": "81971199800",
-      "endereco_financeiro": "Abreu e Lima",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "53580760",
-      "matricula": 3,
-      "data_matricula": "2025-04-09T20:16:51.777Z",
-      "cpf": "12312312312"
+      "matricula": 1
     },
     {
-      "id": "691f2c8e-d759-4366-a158-996c20b95fba",
+      "id": "2b257b6f-8d9e-4ab4-959a-7718dca3560c",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
-      "matricula": 4
+      "matricula": 2
     }
   ],
   "opcoesturma": [
@@ -144,31 +122,54 @@
   ],
   "financeiro": [
     {
-      "id": "89d2b6e8-3336-49f4-9c4f-6dc01a406c25",
-      "valor_mensalidade": 11.11,
-      "desconto": 1.22,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "9",
-        "nome": "Setembro"
-      }
-    },
-    {
-      "id": "691f2c8e-d759-4366-a158-996c20b95fba",
-      "valor_matricula": 110,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 100,
-      "desconto": 30,
-      "dia_vencimento": "12",
+      "id": "df0a069d-4d03-43a0-89fe-ac19cc466470",
+      "valor_matricula": 12.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 30,
+      "desconto": 10,
+      "dia_vencimento": 10,
       "meses": {
         "id": "10",
         "nome": "Outubro"
       },
+      "total_mensalidade": 300,
+      "total_matricula": 11.1,
       "renda_complementar": [
         {
           "id": "3",
           "nome": "Transporte 1",
           "valor": 30
+        },
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ]
+    },
+    {
+      "id": "2b257b6f-8d9e-4ab4-959a-7718dca3560c",
+      "valor_matricula": 100,
+      "desconto_matricula": 10,
+      "valor_mensalidade": 120,
+      "desconto": 0,
+      "dia_vencimento": 8,
+      "meses": {
+        "id": "4",
+        "nome": "Abril"
+      },
+      "total_mensalidade": 400,
+      "total_matricula": 90,
+      "renda_complementar": [
+        {
+          "id": "3",
+          "nome": "Transporte 1",
+          "valor": 30
+        },
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
         }
       ]
     }

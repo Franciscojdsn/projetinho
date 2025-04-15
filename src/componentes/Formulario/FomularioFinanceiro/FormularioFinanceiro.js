@@ -26,7 +26,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
     const [rendaComplementar, setRendaComplementar] = useState([]);
     const [atividadesSelecionadas, setAtividadesSelecionadas] = useState([]);
 
-    const total = (() => {
+    const total_mensalidade = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const valorAtividades = atividadesSelecionadas.reduce((acc, atividade) => acc + atividade.valor_atividade, 0); // Soma os valores das atividades
@@ -197,10 +197,12 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
         const dadosAtualizados = {
             ...dados,
-            valor_mensalidade: parseFloat(total) || 0,
+            valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             valor_matricula: parseFloat(dados.valor_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
             desconto_matricula: parseFloat(dados.desconto_matricula.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            total_mensalidade: parseFloat(total_mensalidade) || 0,
+            total_matricula: parseFloat(total_matricula) || 0,
             meses: {
                 id: dados.meses.id,
                 nome: dados.meses.nome,
@@ -316,7 +318,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                             {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
-                            }).format(total)} {/* Exibe o total formatado */}
+                            }).format(total_mensalidade)} {/* Exibe o total formatado */}
                         </span>
                     </div>
                     <div className={styles.div9}>

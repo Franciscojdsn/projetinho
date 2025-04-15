@@ -29,7 +29,7 @@ function PaginaFinanceiro({ dadosData }) {
 
     const gerarBoletos = useCallback((financeiro) => {
         const boletosGerados = [];
-        const { meses, valor_mensalidade, dia_vencimento, desconto, valor_matricula, desconto_matricula } = financeiro;
+        const { meses,total_mensalidade, valor_mensalidade, dia_vencimento, desconto, valor_matricula, desconto_matricula } = financeiro;
 
         if (!meses || !meses.id) return;
 
@@ -48,7 +48,7 @@ function PaginaFinanceiro({ dadosData }) {
                 id: i + 1,
                 mes: dataVencimento.toLocaleString('pt-BR', { month: 'long' }),
                 ano: dataVencimento.getFullYear(),
-                valor: formatarParaReais(valor_mensalidade),
+                valor: formatarParaReais(total_mensalidade),
                 valorMatricula: formatarParaReais(_valorMatricula - _descontoMatricula),
                 dataVencimento: dataVencimento.toLocaleDateString('pt-BR'),
                 dataMatricula: dataMatricula.toLocaleDateString('pt-BR'),
@@ -58,11 +58,6 @@ function PaginaFinanceiro({ dadosData }) {
 
         setBoletos(boletosGerados);
     }, [setBoletos]);
-
-    function calcularTotal(valorMensalidade, desconto, rendaComplementar) {
-        const totalRendaComplementar = rendaComplementar.reduce((acc, renda) => acc + parseFloat(renda.valor || 0), 0);
-        return valorMensalidade - desconto + totalRendaComplementar;
-    }
 
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
@@ -184,7 +179,7 @@ function PaginaFinanceiro({ dadosData }) {
                                 desconto={formatarParaReais(dados.desconto)}
                                 dia_vencimento={dados.dia_vencimento}
                                 meses={dados.meses ? dados.meses.nome : ''}
-                                total={formatarParaReais(calcularTotal(dados.valor_mensalidade, dados.desconto, dados.renda_complementar || []))}
+                                total={formatarParaReais(dados.total_mensalidade)}
                                 atividade={dados.renda_complementar || []}
                                 handleOnChange={handleChange}
                             />

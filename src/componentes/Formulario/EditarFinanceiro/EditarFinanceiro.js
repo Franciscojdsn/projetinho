@@ -29,6 +29,26 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         return valorMensalidade;
     })();
 
+    const desconto = (() => {
+        const valorDesconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        return valorDesconto;
+    })();
+
+    const diaVencimento = (() => {
+        const diaVencimento = parseFloat(dados.dia_vencimento);
+        return diaVencimento;
+    })();
+
+    const total_mensalidade = (() => {
+        const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
+        const valorAtividades = dados.renda_complementar
+            ? dados.renda_complementar.reduce((total, item) => total + item.valor, 0)
+            : 10000;
+
+        return (valorMensalidade + valorAtividades) - desconto;
+    })();
+
     useEffect(() => {
         fetch('http://localhost:5000/meses', {
             method: "GET",
@@ -116,12 +136,15 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         // Prepara os dados para envio
         const dadosAtualizados = {
             ...dados,
-            valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
-            desconto: parseFloat(dados.desconto.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
+            valor_mensalidade: parseFloat(total),
+            desconto: parseFloat(desconto),
+            dia_vencimento: parseFloat(diaVencimento),
+            total_mensalidade: parseFloat(total_mensalidade),
             meses: {
                 id: dados.meses.id,
                 nome: dados.meses.nome,
             },
+
         };
 
         console.log("Dados enviados:", dadosAtualizados);
@@ -177,20 +200,20 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     function removeAtividade(id) {
         // Encontra a atividade a ser removida
         const atividadeRemovida = atividades.find((atividade) => atividade.id === id);
-    
+
         if (atividadeRemovida) {
             // Subtrai o valor da atividade removida do valor da mensalidade
             const valorAtividade = isNaN(atividadeRemovida.valor_atividade) ? 0 : parseFloat(atividadeRemovida.valor_atividade);
             const valorMensalidadeAtual = isNaN(dados.valor_mensalidade) ? 0 : parseFloat(dados.valor_mensalidade);
             const novoValorMensalidade = valorMensalidadeAtual - valorAtividade;
-    
+
             // Atualiza os dados do aluno no servidor
             const dadosAtualizados = {
                 ...dados,
                 valor_mensalidade: novoValorMensalidade,
                 atividades: atividades.filter((atividade) => atividade.id !== id), // Remove a atividade do aluno
             };
-    
+
             // Atualiza o banco de dados
             fetch(`http://localhost:5000/financeiro/${dados.id}`, {
                 method: 'PATCH',
@@ -281,7 +304,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
-                            }).format(total)} {/* Exibe o total formatado */}
+                            }).format(dados.total_mensalidade)} {/* Exibe o total formatado */}
                         </span>
                     </div>
                     <div className={styles.div6}>
@@ -293,27 +316,25 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                         />
                     </div>
                 </div>
-                
+
                 <div className={styles.container}>
                     <label htmlFor="atividades">Atividade Complementar:</label><br></br>
                     <span name="atividades" id="atividades">
-                        {atividades.length > 0 ? (
-                            atividades.map((renda, index) => (
-                                <>
-                                    <ul>
-                                        <li key={index}>{renda.nome_atividade + '-' + renda.valor_atividade}
-                                            <Botao
-                                                classname={styles.botao3}
-                                                icone={<IoTrashBinOutline />}
-                                                onclick={() => removeAtividade(renda.id)}
-                                            />
-                                        </li>
-                                    </ul>
-                                </>
-                            ))
-                        ) : (
-                            <li>Nenhuma renda complementar cadastrada</li>
-                        )}</span>
+                        {dados.renda_complementar.map((item) => (
+                            <div key={item.id}>
+                                <ul>
+                                    <li>{item.nome}
+                                        <Botao
+                                            icone={<TfiSave />}
+                                            classname={styles.botao3}
+                                            onclick={removeAtividade}
+                                        />
+                                    </li>
+                                </ul>
+
+                            </div>
+                        ))}
+                    </span>
                 </div>
             </form>
         </>
