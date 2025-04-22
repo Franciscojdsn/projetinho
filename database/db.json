@@ -1,20 +1,12 @@
 {
   "alunos": [
     {
-      "id": "df0a069d-4d03-43a0-89fe-ac19cc466470",
+      "id": "c94c3942-d4db-4746-adc0-171bc618cd93",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
       "matricula": 1
-    },
-    {
-      "id": "2b257b6f-8d9e-4ab4-959a-7718dca3560c",
-      "nome": "Francisco João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
-      "matricula": 2
     }
   ],
   "opcoesturma": [
@@ -122,54 +114,28 @@
   ],
   "financeiro": [
     {
-      "id": "df0a069d-4d03-43a0-89fe-ac19cc466470",
-      "valor_matricula": 12.33,
-      "desconto_matricula": 1.23,
-      "valor_mensalidade": 30,
-      "desconto": 10,
-      "dia_vencimento": 10,
+      "id": "c94c3942-d4db-4746-adc0-171bc618cd93",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 12.33,
+      "valor_mensalidade": 120,
+      "desconto": 12.33,
+      "dia_vencimento": 12,
       "meses": {
         "id": "10",
         "nome": "Outubro"
       },
-      "total_mensalidade": 300,
-      "total_matricula": 11.1,
+      "total_mensalidade": 397.67,
+      "total_matricula": 111,
       "renda_complementar": [
-        {
-          "id": "3",
-          "nome": "Transporte 1",
-          "valor": 30
-        },
         {
           "id": "2",
           "nome": "Transporte",
           "valor": 250
-        }
-      ]
-    },
-    {
-      "id": "2b257b6f-8d9e-4ab4-959a-7718dca3560c",
-      "valor_matricula": 100,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 120,
-      "desconto": 0,
-      "dia_vencimento": 8,
-      "meses": {
-        "id": "4",
-        "nome": "Abril"
-      },
-      "total_mensalidade": 400,
-      "total_matricula": 90,
-      "renda_complementar": [
+        },
         {
           "id": "3",
           "nome": "Transporte 1",
-          "valor": 30
-        },
-        {
-          "id": "2",
-          "nome": "Transporte",
-          "valor": 250
+          "valor": 40
         }
       ]
     }
@@ -183,7 +149,7 @@
     {
       "id": "3",
       "nome_atividade": "Transporte 1",
-      "valor_atividade": 30
+      "valor_atividade": 40
     }
   ]
 }

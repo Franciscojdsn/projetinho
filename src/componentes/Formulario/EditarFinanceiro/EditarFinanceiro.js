@@ -191,53 +191,44 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 }
             })
             .then(() => {
-                window.location.reload(); // Recarrega a página após o redirecionamento
                 navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
             })
             .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
     }
 
     function removeAtividade(id) {
-        // Encontra a atividade a ser removida
-        const atividadeRemovida = atividades.find((atividade) => atividade.id === id);
-
-        if (atividadeRemovida) {
-            // Subtrai o valor da atividade removida do valor da mensalidade
-            const valorAtividade = isNaN(atividadeRemovida.valor_atividade) ? 0 : parseFloat(atividadeRemovida.valor_atividade);
-            const valorMensalidadeAtual = isNaN(dados.valor_mensalidade) ? 0 : parseFloat(dados.valor_mensalidade);
-            const novoValorMensalidade = valorMensalidadeAtual - valorAtividade;
-
-            // Atualiza os dados do aluno no servidor
-            const dadosAtualizados = {
-                ...dados,
-                valor_mensalidade: novoValorMensalidade,
-                atividades: atividades.filter((atividade) => atividade.id !== id), // Remove a atividade do aluno
-            };
-
-            // Atualiza o banco de dados
-            fetch(`http://localhost:5000/financeiro/${dados.id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dadosAtualizados),
+        // Encontra a atividade a ser removida pelo ID
+        const atividadeRemovida = dados.renda_complementar.find((atividade) => atividade.id === id);
+    
+        const totalValorMensalidade = atividadeRemovida ? dados.total_mensalidade - atividadeRemovida.valor : dados.total_mensalidade;
+    
+        const novaRendaComplementar = dados.renda_complementar.filter((atividade) => atividade.id !== id); // Atualiza a lista de rendas complementares
+    
+        const dadosAtualizados = {
+            ...dados,
+            renda_complementar: novaRendaComplementar,
+            total_mensalidade: totalValorMensalidade,
+        }; // Prepara os dados atualizados
+    
+        fetch(`http://localhost:5000/financeiro/${dados.id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosAtualizados),
+        })
+            .then((resp) => {
+                if (resp.ok) {
+                    setDados((prevDados) => ({
+                        ...prevDados,
+                        total_mensalidade: totalValorMensalidade,
+                        renda_complementar: novaRendaComplementar,
+                    }));
+                } else {
+                    alert('Erro ao atualizar os dados financeiros no servidor.');
+                }
             })
-                .then((resp) => {
-                    if (resp.ok) {
-                        // Atualiza o estado local
-                        setDados((prevDados) => ({
-                            ...prevDados,
-                            valor_mensalidade: formatarParaReais(novoValorMensalidade),
-                        }));
-                        setAtividades(dadosAtualizados);
-                    } else {
-                        alert('Erro ao atualizar os dados financeiros no servidor.');
-                    }
-                })
-                .catch((err) => {
-                    console.log(`Erro ao atualizar os dados financeiros para o ID ${dados.id}:`, err);
-                });
-        }
+            .catch((err) => {
+                console.error('Erro ao atualizar os dados financeiros:', err);
+            });
     }
 
     return (
@@ -327,7 +318,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                                         <Botao
                                             icone={<TfiSave />}
                                             classname={styles.botao3}
-                                            onclick={removeAtividade}
+                                            onclick={() => removeAtividade(item.id)}
                                         />
                                     </li>
                                 </ul>
