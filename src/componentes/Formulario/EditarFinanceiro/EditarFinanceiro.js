@@ -8,6 +8,7 @@ import styles from './EditarFinanceiro.module.css';
 import Input from '../Componentes/Input/Input';
 import Select from '../Componentes/Select/Select';
 import Botao from '../../Botao/index'
+import SelectAtividades from '../Componentes/Select/Select';
 
 
 export default function EditarFinanceiro({ aluno, setIsEditing }) {
@@ -18,8 +19,14 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         desconto: formatarParaReais(aluno.desconto),
     });
     const [meses, setMeses] = useState([])
-    const [atividades, setAtividades] = useState([]);
-    const [atividadeSelecionada, setAtividadeSelecionada] = useState(null);
+    const [rendaComplementar, setRendaComplementar] = useState([]);
+    const [atividadesSelecionadas, setAtividadesSelecionadas] = useState([]);
+    const [valorTotal, setValorTotal] = useState(0);
+
+    const [isLoading, setIsLoading] = useState(true); // Para indicar o estado de carregamento
+    const [error, setError] = useState(null); // Para lidar com erros
+
+
 
     const navigate = useNavigate()
     const { id } = useParams();
@@ -39,12 +46,13 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         return diaVencimento;
     })();
 
+    const valorAtividades = Array.isArray(dados.renda_complementar)
+        ? dados.renda_complementar.reduce((total, item) => total + (item.valor || 0), 0)
+        : 0; // Aqui define 0 caso não seja um array.
+
     const total_mensalidade = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
-        const valorAtividades = dados.renda_complementar
-            ? dados.renda_complementar.reduce((total, item) => total + item.valor, 0)
-            : 10000;
 
         return (valorMensalidade + valorAtividades) - desconto;
     })();
@@ -64,17 +72,31 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     }, [])
 
     useEffect(() => {
-        fetch('http://localhost:5000/renda_complementar', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
+        const fetchRendaComplementar = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/renda_complementar', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro ao buscar os dados: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                console.log('Dados recebidos:', data); // Para depuração
+                setRendaComplementar(data); // Atualiza o estado com os dados recebidos
+            } catch (err) {
+                console.error('Erro na requisição:', err); // Log para depuração
+                setError(err.message); // Define a mensagem de erro
+            } finally {
+                setIsLoading(false); // Indica que o carregamento terminou
             }
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                setAtividades(data);
-            })
-            .catch((err) => console.log(err));
+        };
+
+        fetchRendaComplementar(); // Chama a função ao montar o componente
     }, []);
 
     function formatarParaReais(valor) {
@@ -147,7 +169,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
         };
 
-        console.log("Dados enviados:", dadosAtualizados);
+        console.log("Dados enviados: handle submit", dadosAtualizados);
 
         // Chama a função de salvar
         onSave(dadosAtualizados);
@@ -161,6 +183,35 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             },
         })
         console.log(dados)
+    }
+
+    function handleSelectAtividade(e) {
+        const selectedId = e.target.value;
+        console.log("ID selecionado:", selectedId); // Para depuração
+
+        const selectedAtividade = rendaComplementar.find(
+            (renda) => renda.id.toString() === selectedId.toString()
+        );
+        console.log("Atividade selecionada:", selectedAtividade); // Para depuração
+
+        if (selectedAtividade && !atividadesSelecionadas.some((atividade) => atividade.id === selectedAtividade.id)) {
+            setAtividadesSelecionadas([...atividadesSelecionadas, selectedAtividade]);
+            setValorTotal(valorTotal + selectedAtividade.valor_atividade);
+        }
+
+        if (!selectedAtividade) {
+            console.error("Atividade não encontrada para o ID:", selectedId);
+            return;
+        }
+    }
+
+
+    function removerAtividade(id) {
+        const atividadeRemovida = atividadesSelecionadas.find((atividade) => atividade.id === id);
+        if (atividadeRemovida) {
+            setAtividadesSelecionadas(atividadesSelecionadas.filter((atividade) => atividade.id !== id));
+            setValorTotal(valorTotal - atividadeRemovida.valor_atividade);
+        }
     }
 
 
@@ -191,6 +242,8 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 }
             })
             .then(() => {
+                console.log("dados atualizados:", dadosAtualizados)
+                window.location.reload();
                 navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
             })
             .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
@@ -199,17 +252,17 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     function removeAtividade(id) {
         // Encontra a atividade a ser removida pelo ID
         const atividadeRemovida = dados.renda_complementar.find((atividade) => atividade.id === id);
-    
+
         const totalValorMensalidade = atividadeRemovida ? dados.total_mensalidade - atividadeRemovida.valor : dados.total_mensalidade;
-    
+
         const novaRendaComplementar = dados.renda_complementar.filter((atividade) => atividade.id !== id); // Atualiza a lista de rendas complementares
-    
+
         const dadosAtualizados = {
             ...dados,
             renda_complementar: novaRendaComplementar,
             total_mensalidade: totalValorMensalidade,
         }; // Prepara os dados atualizados
-    
+
         fetch(`http://localhost:5000/financeiro/${dados.id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
@@ -233,6 +286,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
     return (
         <>
+
             <form onSubmit={handleSubmit}>
                 <div className={styles.container}>
                     <div className={styles.div1}>
@@ -279,13 +333,21 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                         />
                     </div>
                     <div className={styles.div7}>
-                        <Select
-                            name="atividade"
-                            label="Atividade Complementar:"
-                            text="Selecione uma atividade:"
-                            options={atividades}
-                            handleOnChange={(e) => setAtividadeSelecionada(e.target.value)}
-                            value={atividadeSelecionada || ''}
+                        <SelectAtividades
+                            name="renda_complementar"
+                            label="Renda Complementar:"
+                            text="Renda complementar:"
+                            options={rendaComplementar.map((renda) => {
+                                return {
+                                    id: renda.id,
+                                    nome: `${renda.nome_atividade} - ${new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL',
+                                    }).format(renda.valor_atividade)}`,
+                                };
+                            })}
+                            handleOnChange={handleSelectAtividade} // Certifique-se de que está vinculado corretamente
+                            value={dados.renda_complementar ? dados.renda_complementar.nome_atividade : "erro"}
                         />
                     </div>
 
@@ -307,6 +369,25 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                         />
                     </div>
                 </div>
+                <h3>Atividades Selecionadas:</h3>
+                <ul>
+                    {atividadesSelecionadas.map((atividade) => (
+                        <li key={atividade.id}>
+                            {`${atividade.nome_atividade} - ${new Intl.NumberFormat("pt-BR", {
+                                style: "currency",
+                                currency: "BRL",
+                            }).format(atividade.valor_atividade)}`}
+                            <button onClick={() => removerAtividade(atividade.id)}>Remover</button>
+                        </li>
+                    ))}
+                </ul>
+
+                {/* Total acumulado */}
+                <h4>Total: {new Intl.NumberFormat("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                }).format(valorTotal)}</h4>
+
 
                 <div className={styles.container}>
                     <label htmlFor="atividades">Atividade Complementar:</label><br></br>
@@ -316,6 +397,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                                 <ul>
                                     <li>{item.nome}
                                         <Botao
+                                            type='button'
                                             icone={<TfiSave />}
                                             classname={styles.botao3}
                                             onclick={() => removeAtividade(item.id)}
