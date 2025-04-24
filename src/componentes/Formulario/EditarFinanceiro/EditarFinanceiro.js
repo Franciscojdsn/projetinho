@@ -20,8 +20,11 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     });
     const [meses, setMeses] = useState([])
     const [rendaComplementar, setRendaComplementar] = useState([]);
-    const [atividadesSelecionadas, setAtividadesSelecionadas] = useState([]);
-    const [valorTotal, setValorTotal] = useState(0);
+    const [atividadesSelecionadas, setAtividadesSelecionadas] = useState(dados.renda_complementar || []);
+
+    const [somaRendaComplementar, setSomaRendaComplementar] = useState(0);
+    const [totalMensalidade, setTotalMensalidade] = useState(0);
+
 
     const [isLoading, setIsLoading] = useState(true); // Para indicar o estado de carregamento
     const [error, setError] = useState(null); // Para lidar com erros
@@ -31,7 +34,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
     const navigate = useNavigate()
     const { id } = useParams();
 
-    const total = (() => {
+    const mensalidade = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         return valorMensalidade;
     })();
@@ -46,16 +49,35 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         return diaVencimento;
     })();
 
-    const valorAtividades = Array.isArray(dados.renda_complementar)
-        ? dados.renda_complementar.reduce((total, item) => total + (item.valor || 0), 0)
-        : 0; // Aqui define 0 caso não seja um array.
-
     const total_mensalidade = (() => {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
-
-        return (valorMensalidade + valorAtividades) - desconto;
+        return (valorMensalidade + somaRendaComplementar) - desconto;
     })();
+
+    // Recalcular a soma da renda complementar (inclui salvas e novas)
+    useEffect(() => {
+        const soma = atividadesSelecionadas.reduce(
+            (acumulador, atividade) => acumulador + (atividade.valor || atividade.valor_atividade || 0),
+            0
+        );
+        setSomaRendaComplementar(soma);
+    }, [atividadesSelecionadas]);
+
+    // Atualizar total mensalidade dinamicamente
+    useEffect(() => {
+        const valorMensalidade = parseFloat(
+            dados.valor_mensalidade?.replace(/[^\d,]/g, "").replace(",", ".") || 0
+        );
+        const desconto = parseFloat(
+            dados.desconto?.replace(/[^\d,]/g, "").replace(",", ".") || 0
+        );
+
+        const total = valorMensalidade + somaRendaComplementar - desconto;
+        setTotalMensalidade(total);
+    }, [somaRendaComplementar, dados]);
+
+
 
     useEffect(() => {
         fetch('http://localhost:5000/meses', {
@@ -158,7 +180,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         // Prepara os dados para envio
         const dadosAtualizados = {
             ...dados,
-            valor_mensalidade: parseFloat(total),
+            valor_mensalidade: parseFloat(mensalidade),
             desconto: parseFloat(desconto),
             dia_vencimento: parseFloat(diaVencimento),
             total_mensalidade: parseFloat(total_mensalidade),
@@ -166,10 +188,24 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 id: dados.meses.id,
                 nome: dados.meses.nome,
             },
+            renda_complementar: atividadesSelecionadas.map((atividade) => {
+                // Encontre se já existe uma entrada correspondente no array existente
+                const rendaExistente = dados.renda_complementar.find((renda) => renda.id === atividade.id);
+
+                // Retorne os dados existentes se encontrados, ou os novos se não
+                return {
+                    id: atividade.id,
+                    nome: rendaExistente?.nome || atividade.nome_atividade,
+                    valor: rendaExistente?.valor || atividade.valor_atividade,
+                };
+            }),
 
         };
 
         console.log("Dados enviados: handle submit", dadosAtualizados);
+        console.log('total mensalidade', total_mensalidade)
+        console.log('total atividades', rendaComplementar)
+        console.log('total mensalidade db', dados.total_mensalidade)
 
         // Chama a função de salvar
         onSave(dadosAtualizados);
@@ -185,35 +221,27 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
         console.log(dados)
     }
 
-    function handleSelectAtividade(e) {
+    const handleSelectAtividade = (e) => {
         const selectedId = e.target.value;
-        console.log("ID selecionado:", selectedId); // Para depuração
-
         const selectedAtividade = rendaComplementar.find(
             (renda) => renda.id.toString() === selectedId.toString()
         );
-        console.log("Atividade selecionada:", selectedAtividade); // Para depuração
 
-        if (selectedAtividade && !atividadesSelecionadas.some((atividade) => atividade.id === selectedAtividade.id)) {
-            setAtividadesSelecionadas([...atividadesSelecionadas, selectedAtividade]);
-            setValorTotal(valorTotal + selectedAtividade.valor_atividade);
-        }
-
-        if (!selectedAtividade) {
+        if (
+            selectedAtividade &&
+            !atividadesSelecionadas.some((atividade) => atividade.id === selectedAtividade.id)
+        ) {
+            setAtividadesSelecionadas((prevState) => [...prevState, selectedAtividade]);
+        } else if (!selectedAtividade) {
             console.error("Atividade não encontrada para o ID:", selectedId);
-            return;
         }
-    }
+    };
 
-
-    function removerAtividade(id) {
-        const atividadeRemovida = atividadesSelecionadas.find((atividade) => atividade.id === id);
-        if (atividadeRemovida) {
-            setAtividadesSelecionadas(atividadesSelecionadas.filter((atividade) => atividade.id !== id));
-            setValorTotal(valorTotal - atividadeRemovida.valor_atividade);
-        }
-    }
-
+    const removerAtividade = (id) => {
+        setAtividadesSelecionadas((prevState) =>
+            prevState.filter((atividade) => atividade.id !== id)
+        );
+    };
 
     function handleInputLimit(e, maxLength) {
         const value = e.target.value;
@@ -247,41 +275,6 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
             })
             .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
-    }
-
-    function removeAtividade(id) {
-        // Encontra a atividade a ser removida pelo ID
-        const atividadeRemovida = dados.renda_complementar.find((atividade) => atividade.id === id);
-
-        const totalValorMensalidade = atividadeRemovida ? dados.total_mensalidade - atividadeRemovida.valor : dados.total_mensalidade;
-
-        const novaRendaComplementar = dados.renda_complementar.filter((atividade) => atividade.id !== id); // Atualiza a lista de rendas complementares
-
-        const dadosAtualizados = {
-            ...dados,
-            renda_complementar: novaRendaComplementar,
-            total_mensalidade: totalValorMensalidade,
-        }; // Prepara os dados atualizados
-
-        fetch(`http://localhost:5000/financeiro/${dados.id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dadosAtualizados),
-        })
-            .then((resp) => {
-                if (resp.ok) {
-                    setDados((prevDados) => ({
-                        ...prevDados,
-                        total_mensalidade: totalValorMensalidade,
-                        renda_complementar: novaRendaComplementar,
-                    }));
-                } else {
-                    alert('Erro ao atualizar os dados financeiros no servidor.');
-                }
-            })
-            .catch((err) => {
-                console.error('Erro ao atualizar os dados financeiros:', err);
-            });
     }
 
     return (
@@ -347,7 +340,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                                 };
                             })}
                             handleOnChange={handleSelectAtividade} // Certifique-se de que está vinculado corretamente
-                            value={dados.renda_complementar ? dados.renda_complementar.nome_atividade : "erro"}
+                            value=""
                         />
                     </div>
 
@@ -357,7 +350,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                             {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL',
-                            }).format(dados.total_mensalidade)} {/* Exibe o total formatado */}
+                            }).format(totalMensalidade)} {/* Exibe o total formatado */}
                         </span>
                     </div>
                     <div className={styles.div6}>
@@ -369,45 +362,19 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                         />
                     </div>
                 </div>
-                <h3>Atividades Selecionadas:</h3>
-                <ul>
-                    {atividadesSelecionadas.map((atividade) => (
-                        <li key={atividade.id}>
-                            {`${atividade.nome_atividade} - ${new Intl.NumberFormat("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                            }).format(atividade.valor_atividade)}`}
-                            <button onClick={() => removerAtividade(atividade.id)}>Remover</button>
-                        </li>
-                    ))}
-                </ul>
-
-                {/* Total acumulado */}
-                <h4>Total: {new Intl.NumberFormat("pt-BR", {
-                    style: "currency",
-                    currency: "BRL",
-                }).format(valorTotal)}</h4>
-
-
                 <div className={styles.container}>
-                    <label htmlFor="atividades">Atividade Complementar:</label><br></br>
-                    <span name="atividades" id="atividades">
-                        {dados.renda_complementar.map((item) => (
-                            <div key={item.id}>
-                                <ul>
-                                    <li>{item.nome}
-                                        <Botao
-                                            type='button'
-                                            icone={<TfiSave />}
-                                            classname={styles.botao3}
-                                            onclick={() => removeAtividade(item.id)}
-                                        />
-                                    </li>
-                                </ul>
-
-                            </div>
+                    <h3>Atividades Selecionadas:</h3>
+                    <ul>
+                        {atividadesSelecionadas.map((atividade) => (
+                            <li key={atividade.id}>
+                                {`${atividade.nome_atividade || atividade.nome} - ${new Intl.NumberFormat("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL",
+                                }).format(atividade.valor_atividade || atividade.valor)}`}
+                                <button onClick={() => removerAtividade(atividade.id)}>Remover</button>
+                            </li>
                         ))}
-                    </span>
+                    </ul>
                 </div>
             </form>
         </>

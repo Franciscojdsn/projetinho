@@ -1,20 +1,12 @@
 {
   "alunos": [
     {
-      "id": "823e5c1c-b268-4536-a574-4c61737ef8e0",
+      "id": "5d5641e7-2c51-4cac-8bbf-cd18b66ae6c8",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
       "matricula": 1
-    },
-    {
-      "id": "34f15f8b-ae03-4358-bfd3-3ebf7a8d25cb",
-      "nome": "Francisco João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
-      "matricula": 2
     }
   ],
   "opcoesturma": [
@@ -122,32 +114,17 @@
   ],
   "financeiro": [
     {
-      "id": "823e5c1c-b268-4536-a574-4c61737ef8e0",
+      "id": "5d5641e7-2c51-4cac-8bbf-cd18b66ae6c8",
       "valor_matricula": 123.33,
       "desconto_matricula": 12.33,
-      "valor_mensalidade": 160,
-      "desconto": 10,
-      "dia_vencimento": 20,
-      "meses": {
-        "id": "6",
-        "nome": "Junho"
-      },
-      "total_mensalidade": 150,
-      "total_matricula": 111,
-      "renda_complementar": []
-    },
-    {
-      "id": "34f15f8b-ae03-4358-bfd3-3ebf7a8d25cb",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 12.33,
-      "valor_mensalidade": 100,
-      "desconto": 1.11,
+      "valor_mensalidade": 400,
+      "desconto": 15,
       "dia_vencimento": 12,
       "meses": {
-        "id": "4",
-        "nome": "Abril"
+        "id": "11",
+        "nome": "Novembro"
       },
-      "total_mensalidade": 138.89,
+      "total_mensalidade": 425,
       "total_matricula": 111,
       "renda_complementar": [
         {
