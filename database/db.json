@@ -1,7 +1,7 @@
 {
   "alunos": [
     {
-      "id": "115db60a-5e4f-4bd7-9922-00dc5f5a4de4",
+      "id": "384b858a-fbaa-4788-be87-b6eef03395d7",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
@@ -114,18 +114,18 @@
   ],
   "financeiro": [
     {
-      "id": "115db60a-5e4f-4bd7-9922-00dc5f5a4de4",
-      "valor_matricula": 100,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 100,
-      "desconto": 10,
-      "dia_vencimento": "12",
+      "id": "384b858a-fbaa-4788-be87-b6eef03395d7",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 12.33,
+      "valor_mensalidade": 12.33,
+      "desconto": 1.23,
       "meses": {
-        "id": "8",
-        "nome": "Agosto"
+        "id": "2",
+        "nome": "Fevereiro"
       },
-      "total_mensalidade": 340,
-      "total_matricula": 90,
+      "dia_vencimento": "12",
+      "total_mensalidade": 261.09999999999997,
+      "total_matricula": 111,
       "renda_complementar": [
         {
           "id": "2",
@@ -133,10 +133,35 @@
           "valor": 250
         }
       ],
-      "boletos_pagos": {
-        "valor": 340,
-        "mes": "teste"
-      }
+      "boletos_pagos": [
+        {
+          "id": "216c4aea-8f5a-49c2-abb6-f0b6cbf84d21",
+          "boletoOriginalId": "eaa0e061-d72e-4ebe-b389-cab55ace201c",
+          "valor": "R$ 261,10",
+          "dataVencimento": "12/03/2025",
+          "mes": "março",
+          "ano": 2025,
+          "dataPagamento": "26/04/2025"
+        },
+        {
+          "id": "c2a0c8e9-bb5d-4aa6-964b-258cc332312c",
+          "boletoOriginalId": "bfa2dfb1-08f2-4eb4-9901-f3e2966f6e3e",
+          "valor": "R$ 261,10",
+          "dataVencimento": "12/04/2025",
+          "mes": "abril",
+          "ano": 2025,
+          "dataPagamento": "26/04/2025"
+        },
+        {
+          "id": "a34b45ad-ed5e-4d7b-a40c-487fd5ac64ef",
+          "boletoOriginalId": "77392715-cca8-48ac-8e6a-964cf134bca8",
+          "valor": "R$ 261,10",
+          "dataVencimento": "12/05/2025",
+          "mes": "maio",
+          "ano": 2025,
+          "dataPagamento": "26/04/2025"
+        }
+      ]
     }
   ],
   "renda_complementar": [

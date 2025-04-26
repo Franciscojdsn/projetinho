@@ -5,6 +5,7 @@ import { IoTrashBinOutline } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from './PaginaFinanceiro.module.css';
 import Botao from '../../componentes/Botao';
@@ -12,6 +13,7 @@ import ExibirFinanceiro from '../../componentes/Formulario/Componentes/ExibirFin
 import EditarFinanceiro from '../../componentes/Formulario/EditarFinanceiro/EditarFinanceiro';
 import ListaBoletos from '../../componentes/ListaBoletos/ListaBoletos';
 import Loading from '../../componentes/Formulario/Componentes/Loading/Loading';
+import ListaBoletosPagos from '../../componentes/ListaBoletosPagos/ListaBoletosPagos';
 
 function PaginaFinanceiro({ dadosData }) {
 
@@ -27,50 +29,45 @@ function PaginaFinanceiro({ dadosData }) {
     const [boletos, setBoletos] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    
-    
+
+
     const gerarBoletos = useCallback((financeiro) => {
-        const boletosGerados = [];
-        const { meses, total_mensalidade, dia_vencimento, desconto, valor_matricula, desconto_matricula } = financeiro;
-        
-        if (!meses || !meses.id) return;
-        
-        const mesInicio = parseInt(meses.id); // ID do mês de início (ex.: 1 = Janeiro)
+        if (!financeiro?.meses?.id) return;
+
         const anoAtual = new Date().getFullYear();
-        const _desconto = parseFloat(desconto) || 0;
-        const _descontoMatricula = parseFloat(desconto_matricula) || 0;
-        const _valorMatricula = parseFloat(valor_matricula) || 0;
-        
-        for (let i = mesInicio; i < 12; i++) { // Gera 12 boletos (1 ano)
-            const mes = i; // Calcula o mês (1 a 12)
-            
-            const dataVencimento = new Date(anoAtual, mes, dia_vencimento || 1); // Define a data de vencimento
-            const dataMatricula = new Date; // Data de matrícula
-            boletosGerados.push({
-                id: i + 1,
+        const {
+            meses: { id: mesInicio },
+            total_mensalidade,
+            dia_vencimento = 1,
+            desconto = 0,
+            valor_matricula = 0,
+            desconto_matricula = 0,
+        } = financeiro;
+
+        const boletosGerados = Array.from({ length: 12 - parseInt(mesInicio) }, (_, idx) => {
+            const mes = parseInt(mesInicio) + idx;
+            const dataVencimento = new Date(anoAtual, mes, dia_vencimento);
+            const dataMatricula = new Date();
+
+            return {
+                id: uuidv4(),
                 mes: dataVencimento.toLocaleString('pt-BR', { month: 'long' }),
                 ano: dataVencimento.getFullYear(),
                 valor: formatarParaReais(total_mensalidade),
-                valorMatricula: formatarParaReais(_valorMatricula - _descontoMatricula),
+                valorMatricula: formatarParaReais(parseFloat(valor_matricula) - parseFloat(desconto_matricula)),
                 dataVencimento: dataVencimento.toLocaleDateString('pt-BR'),
                 dataMatricula: dataMatricula.toLocaleDateString('pt-BR'),
                 mesMatricula: dataMatricula.toLocaleString('pt-BR', { month: 'long' }),
-            });
-        }
-        
+            };
+        });
+
         setBoletos(boletosGerados);
-        
     }, [setBoletos]);
-    
-    const valorBoleto = (() => {
-        const valorBoleto = boletos.valor;
-        return valorBoleto
-    })();
-    
+
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
     }
-    
+
     useEffect(() => {
         if (location.state?.message) {
             setMessage(location.state.message);
@@ -83,11 +80,11 @@ function PaginaFinanceiro({ dadosData }) {
             const timer = setTimeout(() => {
                 setMessage(null);
             }, 5000);
-            
+
             return () => clearTimeout(timer);
         }
     }, [message]);
-    
+
     useEffect(() => {
         fetch(`http://localhost:5000/alunos/${id}`)
             .then((resp) => resp.json())
@@ -96,18 +93,18 @@ function PaginaFinanceiro({ dadosData }) {
             })
             .catch((err) => console.log(err));
     }, [id]);
-    
+
     useEffect(() => {// Busca os dados do financeiro pelo ID
         setIsLoading(true);
         fetch(`http://localhost:5000/financeiro/${id}`)
-        .then((resp) => resp.json())
-        .then((data) => {
+            .then((resp) => resp.json())
+            .then((data) => {
                 setDados(data);
                 gerarBoletos(data);
             })
             .catch((err) => console.log(err))
             .finally(() => setIsLoading(false))
-        }, [id, gerarBoletos]);
+    }, [id, gerarBoletos]);
 
     function handleChange(e) {
         setDados({ ...dados, [e.target.name]: e.target.value })
@@ -120,35 +117,61 @@ function PaginaFinanceiro({ dadosData }) {
             currency: 'BRL',
         }).format(valor);
     }
-    
-    console.log("boletos:", dados)
-    
-    function boletoPago(e) {
-        e.preventDefault()
-        
-        const dadosAtualizados = {
-            ...dados,
-            boletos_pagos: {
-                valor: dados.total_mensalidade,
-                mes: "teste",
-                ano: boletos.ano,
-            },
-            
-        };
-        
-        fetch(`http://localhost:5000/financeiro/${id}`, {
-            method: 'PATCH', // Use PATCH para atualizar os dados
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(dadosAtualizados),
-        })
-            .then(() => {
-                console.log("dados atualizados:", dadosAtualizados)
-                window.location.reload();
-                navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
-            })
-            .catch((err) => console.log('Erro ao salvar os dados financeiros:', err));
+
+    console.log("boletos:", boletos)
+
+    async function boletoPago(boleto) {
+        try {
+            // 1. Buscar dados atuais
+            const response = await fetch(`http://localhost:5000/financeiro/${id}`);
+            const financeiroAtualizado = await response.json();
+
+            const boletosPagos = financeiroAtualizado.boletos_pagos || [];
+
+            // 2. Verificar se já existe boleto pago com esse mesmo dataVencimento e mês
+            const boletoJaPago = boletosPagos.some(pago =>
+                pago.dataVencimento === boleto.dataVencimento &&
+                pago.mes.toLowerCase() === boleto.mes.toLowerCase()
+            );
+
+            if (boletoJaPago) {
+                alert('Este boleto já foi pago!');
+                return; // Não salva se já existe
+            }
+
+            // 3. Montar novo boleto pago
+            const novoBoletoPago = {
+                id: uuidv4(),
+                boletoOriginalId: boleto.id, // Guarda a origem (boa prática)
+                valor: boleto.valor,
+                dataVencimento: boleto.dataVencimento,
+                mes: boleto.mes,
+                ano: boleto.ano,
+                dataPagamento: new Date().toLocaleDateString('pt-BR'),
+            };
+
+            // 4. Atualizar com novo pagamento
+            const dadosAtualizados = {
+                ...financeiroAtualizado,
+                boletos_pagos: [
+                    ...boletosPagos,
+                    novoBoletoPago,
+                ],
+            };
+            // 5. Enviar PATCH
+            await fetch(`http://localhost:5000/financeiro/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(dadosAtualizados),
+            });
+            console.log("dados atualizados:", dadosAtualizados);
+            navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
+            window.location.reload();
+        } catch (err) {
+            console.error('Erro ao salvar os dados financeiros:', err);
+        }
     }
 
     return (
@@ -188,6 +211,21 @@ function PaginaFinanceiro({ dadosData }) {
                                 </>
 
                             )}
+                            {dados?.boletos_pagos?.length > 0 && (
+                                <>
+                                    {dados.boletos_pagos.map((boletoPago) => (
+                                        <ListaBoletosPagos
+                                        key={boletos[0].matricula}
+                                        mes_referente={boletoPago.mes} 
+                                        vencimento={boletoPago.dataVencimento}
+                                        valor={boletoPago.valor}
+                                        dia={boletoPago.dataPagamento}
+                                        botao={"✅"}
+                                    />
+                                    ))}
+                                </>
+
+                            )}
                             {boletos.map((boleto) => (
                                 <>
                                     <ListaBoletos
@@ -198,7 +236,7 @@ function PaginaFinanceiro({ dadosData }) {
                                         botao={<Botao
                                             title={<IoTrashBinOutline />}
                                             classname={styles.botao2}
-                                            onclick={boletoPago}
+                                            onclick={() => boletoPago(boleto)}
                                         />}
                                     />
 
