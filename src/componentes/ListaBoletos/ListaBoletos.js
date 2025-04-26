@@ -1,6 +1,8 @@
 import stilo from "./ListaBoletos.module.css";
+import Botao from "../Botao/index"
+import { IoTrashBinOutline } from "react-icons/io5";
 
-export default function ListaBoletos({ key, mes_referente, vencimento, valor, icone }) {
+export default function ListaBoletos({ key, mes_referente, vencimento, valor, botao }) {
 
     return (
         <>
@@ -16,7 +18,7 @@ export default function ListaBoletos({ key, mes_referente, vencimento, valor, ic
                         <p>{valor}</p>
                     </div>
                     <div>
-                        <p>{icone}</p>
+                        {botao}          
                     </div>
                 </li>
             </div>

@@ -30,7 +30,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
         const valorMensalidade = parseFloat(dados.valor_mensalidade?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const desconto = parseFloat(dados.desconto?.replace(/[^\d,]/g, '').replace(',', '.') || 0);
         const valorAtividades = atividadesSelecionadas.reduce((acc, atividade) => acc + atividade.valor_atividade, 0); // Soma os valores das atividades
-        return (valorMensalidade + valorAtividades) - desconto ;
+        return (valorMensalidade + valorAtividades) - desconto;
     })();
 
     const total_matricula = (() => {

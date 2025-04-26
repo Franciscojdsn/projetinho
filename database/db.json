@@ -1,7 +1,7 @@
 {
   "alunos": [
     {
-      "id": "5d5641e7-2c51-4cac-8bbf-cd18b66ae6c8",
+      "id": "115db60a-5e4f-4bd7-9922-00dc5f5a4de4",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
@@ -114,25 +114,29 @@
   ],
   "financeiro": [
     {
-      "id": "5d5641e7-2c51-4cac-8bbf-cd18b66ae6c8",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 12.33,
-      "valor_mensalidade": 400,
-      "desconto": 15,
-      "dia_vencimento": 12,
+      "id": "115db60a-5e4f-4bd7-9922-00dc5f5a4de4",
+      "valor_matricula": 100,
+      "desconto_matricula": 10,
+      "valor_mensalidade": 100,
+      "desconto": 10,
+      "dia_vencimento": "12",
       "meses": {
-        "id": "11",
-        "nome": "Novembro"
+        "id": "8",
+        "nome": "Agosto"
       },
-      "total_mensalidade": 425,
-      "total_matricula": 111,
+      "total_mensalidade": 340,
+      "total_matricula": 90,
       "renda_complementar": [
         {
-          "id": "3",
-          "nome": "Transporte 1",
-          "valor": 40
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
         }
-      ]
+      ],
+      "boletos_pagos": {
+        "valor": 340,
+        "mes": "teste"
+      }
     }
   ],
   "renda_complementar": [
