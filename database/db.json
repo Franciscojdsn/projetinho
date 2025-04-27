@@ -1,7 +1,7 @@
 {
   "alunos": [
     {
-      "id": "384b858a-fbaa-4788-be87-b6eef03395d7",
+      "id": "96bf5251-aa4c-40f2-bad2-b75f3d7e5137",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
@@ -114,18 +114,18 @@
   ],
   "financeiro": [
     {
-      "id": "384b858a-fbaa-4788-be87-b6eef03395d7",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 12.33,
-      "valor_mensalidade": 12.33,
-      "desconto": 1.23,
+      "id": "96bf5251-aa4c-40f2-bad2-b75f3d7e5137",
+      "valor_matricula": 12.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 123.31,
+      "desconto": 20,
+      "dia_vencimento": 21,
       "meses": {
-        "id": "2",
-        "nome": "Fevereiro"
+        "id": "10",
+        "nome": "Outubro"
       },
-      "dia_vencimento": "12",
-      "total_mensalidade": 261.09999999999997,
-      "total_matricula": 111,
+      "total_mensalidade": 353.31,
+      "total_matricula": 11.1,
       "renda_complementar": [
         {
           "id": "2",
@@ -133,32 +133,34 @@
           "valor": 250
         }
       ],
+      "boletos": [
+        {
+          "id": "03abdee9-4362-4035-bb09-38745f3d8637",
+          "valor": 353.31,
+          "dia_pagamento": "26/04/2025",
+          "dia_vencimento": 21,
+          "data_vencimento": "21/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ],
       "boletos_pagos": [
         {
-          "id": "216c4aea-8f5a-49c2-abb6-f0b6cbf84d21",
-          "boletoOriginalId": "eaa0e061-d72e-4ebe-b389-cab55ace201c",
-          "valor": "R$ 261,10",
-          "dataVencimento": "12/03/2025",
-          "mes": "março",
-          "ano": 2025,
+          "id": "c89eff66-87bd-4375-9573-e6ea449224bb",
+          "boletoOriginalId": "1dbf0ff4-afd8-4700-afdb-c158b8d752bb",
+          "valor": 261.09999999999997,
+          "dataVencimento": "22/10/2025",
+          "mes": "outubro",
+          "mes_id": "10",
           "dataPagamento": "26/04/2025"
         },
         {
-          "id": "c2a0c8e9-bb5d-4aa6-964b-258cc332312c",
-          "boletoOriginalId": "bfa2dfb1-08f2-4eb4-9901-f3e2966f6e3e",
-          "valor": "R$ 261,10",
-          "dataVencimento": "12/04/2025",
-          "mes": "abril",
-          "ano": 2025,
-          "dataPagamento": "26/04/2025"
-        },
-        {
-          "id": "a34b45ad-ed5e-4d7b-a40c-487fd5ac64ef",
-          "boletoOriginalId": "77392715-cca8-48ac-8e6a-964cf134bca8",
-          "valor": "R$ 261,10",
-          "dataVencimento": "12/05/2025",
-          "mes": "maio",
-          "ano": 2025,
+          "id": "57d28989-59c3-4b80-883e-0581ba1573ea",
+          "boletoOriginalId": "94da01a2-edf7-47be-8dbc-e1388a0a4dd0",
+          "valor": 353.31,
+          "dataVencimento": "21/11/2025",
+          "mes": "novembro",
+          "mes_id": "11",
           "dataPagamento": "26/04/2025"
         }
       ]

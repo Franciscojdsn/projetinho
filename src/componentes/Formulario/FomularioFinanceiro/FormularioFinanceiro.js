@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { TfiSave } from "react-icons/tfi";
 import { useNavbar } from '../../../context/NavbarContext';
+import { v4 as uuidv4 } from 'uuid';
 
 import Botao from '../../Botao';
 import styles from './FormularioFinanceiro.module.css'
@@ -195,6 +196,39 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
             return; // Impede o envio do formulário
         }
 
+        const anoAtual = new Date().getFullYear();
+        const mesInicio = parseInt(dados.meses.id); // mês de início em número
+        const diaVencimento = parseInt(dados.dia_vencimento);
+
+        const gerarBoletos = () => {
+            const boletos = [];
+            for (let i = mesInicio + 1; i <= 12; i++) {
+                const mesCorrente = i > 12 ? i - 12 : i;
+                const anoCorrente = i > 12 ? anoAtual + 1 : anoAtual;
+
+                const dataVencimento = new Date(anoCorrente, mesCorrente - 1, diaVencimento);
+
+                boletos.push({
+                    id: uuidv4(),
+                    valor: parseFloat(total_mensalidade),
+                    dia_pagamento: new Date().toLocaleDateString('pt-BR'), // Data atual como pagamento (pode ajustar)
+                    dia_vencimento: diaVencimento,
+                    data_vencimento: dataVencimento.toLocaleDateString('pt-BR'), // Formato brasileiro
+                    mes_id: mesCorrente.toString(),
+                    mes: nomeDoMes(mesCorrente),
+                });
+            }
+            return boletos;
+        };
+
+        const nomeDoMes = (numeroMes) => {
+            const meses = [
+                "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+                "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+            ];
+            return meses[numeroMes - 1];
+        };
+
         const dadosAtualizados = {
             ...dados,
             valor_mensalidade: parseFloat(dados.valor_mensalidade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
@@ -212,6 +246,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
                 nome: atividade.nome_atividade,
                 valor: atividade.valor_atividade,
             })),
+            boletos: gerarBoletos(),
         };
 
         fetch('http://localhost:5000/financeiro', {

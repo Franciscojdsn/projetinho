@@ -122,57 +122,50 @@ function PaginaFinanceiro({ dadosData }) {
 
     async function boletoPago(boleto) {
         try {
-            // 1. Buscar dados atuais
-            const response = await fetch(`http://localhost:5000/financeiro/${id}`);
-            const financeiroAtualizado = await response.json();
-
-            const boletosPagos = financeiroAtualizado.boletos_pagos || [];
-
-            // 2. Verificar se já existe boleto pago com esse mesmo dataVencimento e mês
-            const boletoJaPago = boletosPagos.some(pago =>
-                pago.dataVencimento === boleto.dataVencimento &&
-                pago.mes.toLowerCase() === boleto.mes.toLowerCase()
-            );
-
-            if (boletoJaPago) {
-                alert('Este boleto já foi pago!');
-                return; // Não salva se já existe
-            }
-
-            // 3. Montar novo boleto pago
-            const novoBoletoPago = {
-                id: uuidv4(),
-                boletoOriginalId: boleto.id, // Guarda a origem (boa prática)
-                valor: boleto.valor,
-                dataVencimento: boleto.dataVencimento,
-                mes: boleto.mes,
-                ano: boleto.ano,
-                dataPagamento: new Date().toLocaleDateString('pt-BR'),
-            };
-
-            // 4. Atualizar com novo pagamento
-            const dadosAtualizados = {
-                ...financeiroAtualizado,
-                boletos_pagos: [
-                    ...boletosPagos,
-                    novoBoletoPago,
-                ],
-            };
-            // 5. Enviar PATCH
-            await fetch(`http://localhost:5000/financeiro/${id}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(dadosAtualizados),
-            });
-            console.log("dados atualizados:", dadosAtualizados);
-            navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Financeiro editado com sucesso!' } });
-            window.location.reload();
+          const res = await fetch(`http://localhost:5000/financeiro/${id}`);
+          const financeiro = await res.json();
+      
+          const boletosPendentes = financeiro.boletos || [];
+          const boletosPagos = financeiro.boletos_pagos || [];
+      
+          // Verifica se já foi pago
+          if (boletosPagos.some(p => p.boletoOriginalId === boleto.id)) {
+            alert('Este boleto já foi pago!');
+            return;
+          }
+      
+          // Novo boleto pago
+          const novoPago = {
+            id: crypto.randomUUID(),
+            boletoOriginalId: boleto.id,
+            valor: boleto.valor,
+            dataVencimento: boleto.data_vencimento,
+            mes: boleto.mes,
+            mes_id: boleto.mes_id,
+            ano: boleto.ano,
+            dataPagamento: new Date().toLocaleDateString('pt-BR'),
+          };
+      
+          // Atualiza financeiro: remove do pendente e adiciona ao pago
+          const dadosAtualizados = {
+            boletos: boletosPendentes.filter(b => b.id !== boleto.id),
+            boletos_pagos: [...boletosPagos, novoPago],
+          };
+      
+          // Salva as alterações
+          await fetch(`http://localhost:5000/financeiro/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(dadosAtualizados),
+          });
+      
+          navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Boleto marcado como pago!' } });
+          window.location.reload();
         } catch (err) {
-            console.error('Erro ao salvar os dados financeiros:', err);
+          console.error('Erro ao marcar boleto como pago:', err);
+          alert('Erro ao processar pagamento. Tente novamente.');
         }
-    }
+      }
 
     return (
         <>
@@ -215,24 +208,43 @@ function PaginaFinanceiro({ dadosData }) {
                                 <>
                                     {dados.boletos_pagos.map((boletoPago) => (
                                         <ListaBoletosPagos
-                                        key={boletos[0].matricula}
-                                        mes_referente={boletoPago.mes} 
-                                        vencimento={boletoPago.dataVencimento}
-                                        valor={boletoPago.valor}
-                                        dia={boletoPago.dataPagamento}
-                                        botao={"✅"}
-                                    />
+                                            key={boletos[0].matricula}
+                                            mes_referente={boletoPago.mes}
+                                            vencimento={boletoPago.dataVencimento}
+                                            valor={formatarParaReais(boletoPago.valor)}
+                                            dia={boletoPago.dataPagamento}
+                                            botao={"✅"}
+                                        />
                                     ))}
                                 </>
 
                             )}
-                            {boletos.map((boleto) => (
+                            {dados?.boletos?.length > 0 && (
+                                <>
+                                    {dados.boletos.map((boletos) => (
+                                        <ListaBoletos
+                                            key={boletos.matricula}
+                                            mes_referente={boletos.mes}
+                                            vencimento={boletos.data_vencimento}
+                                            valor={formatarParaReais(boletos.valor)}
+                                            botao={<Botao
+                                                title={<IoTrashBinOutline />}
+                                                classname={styles.botao2}
+                                                onclick={() => boletoPago(boletos)}
+                                            />}
+                                        />
+
+                                    ))}
+                                </>
+
+                            )}
+                            {dados?.boletos?.length > 0 && ((boleto) => (
                                 <>
                                     <ListaBoletos
                                         key={boleto.matricula}
                                         mes_referente={boleto.mes}
-                                        vencimento={boleto.dataVencimento}
-                                        valor={boleto.valor}
+                                        vencimento={boleto.data_vencimento}
+                                        valor={formatarParaReais(boleto.valor)}
                                         botao={<Botao
                                             title={<IoTrashBinOutline />}
                                             classname={styles.botao2}
