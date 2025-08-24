@@ -1,5 +1,4 @@
 import Botao from "../../componentes/Botao";
-import InfoDosAlunos from "../../componentes/Formulario/InfoDosAlunos/InfoDosAlunos";
 import Perfil from "../../assets/imagens/perfil.jpg"
 import Notas from "../../componentes/Formulario/Notas";
 
@@ -19,7 +18,6 @@ export default function Historico() {
 
             <div className="cabecalho1">
                 <img src={Perfil} alt="perfil" />
-                <InfoDosAlunos />
             </div>
             <div className="container-nota">
                 <h2>2025</h2>

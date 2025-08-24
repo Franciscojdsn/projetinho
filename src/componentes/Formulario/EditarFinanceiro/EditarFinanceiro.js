@@ -62,7 +62,7 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             setDadosOriginal(dados);
         }
     }, [dados]);
-    
+
     // Recalcular a soma da renda complementar (inclui salvas e novas)
     useEffect(() => {
         const soma = atividadesSelecionadas.reduce(
@@ -116,7 +116,6 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
                 }
 
                 const data = await response.json();
-                console.log('Dados recebidos:', data); // Para depuração
                 setRendaComplementar(data); // Atualiza o estado com os dados recebidos
             } catch (err) {
                 console.error('Erro na requisição:', err); // Log para depuração
@@ -135,7 +134,6 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             currency: 'BRL',
         }).format(valor || 0); // Garante que valores nulos ou indefinidos sejam tratados como 0
     }
-
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -167,36 +165,36 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
 
         if (dados.boletos_pagos && dados.boletos_pagos.length > 0) {
             // Se mudou o mês de início
-            if (dados.meses.id !== dadosOriginal.meses.id) { 
+            if (dados.meses.id !== dadosOriginal.meses.id) {
                 alert('Não é permitido alterar o mês de início pois já existem boletos pagos.');
                 return;
             }
         }
-    
+
         if (!dados.valor_mensalidade || dados.valor_mensalidade.trim() === '') {
             alert('O campo "Valor da Mensalidade" é obrigatório.');
             return;
         }
-    
+
         if (!dados.desconto || dados.desconto.trim() === '') {
             alert('O campo "Desconto" é obrigatório.');
             return;
         }
-    
+
         if (!dados.meses || dados.meses === '') {
             alert('O campo "Mês" é obrigatório.');
             return;
         }
-    
+
         if (!dados.dia_vencimento || dados.dia_vencimento === '' || dados.dia_vencimento > 31 || dados.dia_vencimento < 1) {
             alert('O campo "Dia do Vencimento" é obrigatório.');
             return;
         }
-    
+
         const anoAtual = new Date().getFullYear();
         const mesInicio = parseInt(dados.meses.id);
         const diaVencimento = parseInt(dados.dia_vencimento);
-    
+
         const nomeDoMes = (numeroMes) => {
             const meses = [
                 "janeiro", "fevereiro", "março", "abril", "maio", "junho",
@@ -204,38 +202,49 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             ];
             return meses[numeroMes - 1];
         };
-    
+
         const gerarBoletos = () => {
             const boletos = [];
-        
+
             for (let i = mesInicio + 1; i <= 12; i++) {
                 const mesCorrente = i > 12 ? i - 12 : i;
                 const anoCorrente = i > 12 ? anoAtual + 1 : anoAtual;
-        
+
                 const dataVencimento = new Date(anoCorrente, mesCorrente - 1, diaVencimento);
-        
+
                 const boletoExistente = dados.boletos?.find(
                     (b) => parseInt(b.mes_id) === mesCorrente
                 );
-        
+
+                const hoje = new Date();
+                const vencimento = dataVencimento;
+                const estaVencido = vencimento < hoje ? true : false;
+                console.log("vencimento", vencimento)
+
                 if (boletoExistente) {
+                    const valorFinal = estaVencido===true
+                        ? boletoExistente.valor // mantém o valor original
+                        : parseFloat(total_mensalidade); // novo valor
+                        console.log("boleto existente", boletoExistente.valor)
+                        console.log("final", valorFinal)
+                
                     boletos.push({
-                        ...boletoExistente, // mantém tudo que já tem
-                        valor: parseFloat(total_mensalidade), // atualiza valor
-                        dia_vencimento: diaVencimento,         // atualiza dia vencimento
-                        data_vencimento: dataVencimento.toLocaleDateString('pt-BR'), // atualiza data vencimento
-                        mes: nomeDoMes(mesCorrente),            // atualiza nome do mês
+                        ...boletoExistente, // mantém os demais dados
+                        valor: valorFinal,
+                        dia_vencimento: diaVencimento,
+                        data_vencimento: dataVencimento.toLocaleDateString('pt-BR'),
+                        mes: nomeDoMes(mesCorrente),
                     });
                 }
                 // Não cria novos boletos!
             }
-        
+
             return boletos;
         };
-    
+
         // Gera boletos atualizados mantendo ID se possível
         const boletosAtualizados = gerarBoletos();
-    
+
         const dadosAtualizados = {
             ...dados,
             valor_mensalidade: parseFloat(mensalidade),
@@ -256,13 +265,13 @@ export default function EditarFinanceiro({ aluno, setIsEditing }) {
             }),
             boletos: boletosAtualizados,
         };
-    
+
         console.log("Dados enviados: handleSubmit", dadosAtualizados);
-    
+
         // Chama a função de salvar
         onSave(dadosAtualizados);
     }
-    
+
 
 
     function handleSelectMes(e) {

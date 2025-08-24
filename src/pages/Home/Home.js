@@ -11,6 +11,7 @@ import Loading from '../../componentes/Formulario/Componentes/Loading/Loading';
 const Home = () => {
 
     const [alunos, setAlunos] = useState([])
+    const [alunosPendentes, setAlunosPendentes] = useState([])
 
     const navigate = useNavigate()
     const location = useLocation();
@@ -38,17 +39,40 @@ const Home = () => {
 
     useEffect(() => {
         setIsLoading(true);
-        fetch('http://localhost:5000/alunos', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setAlunos(data)
+        // Busca alunos e dados financeiros em paralelo
+        Promise.all([
+            fetch('http://localhost:5000/alunos', {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((resp) => resp.json()),
+            fetch('http://localhost:5000/financeiro', {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((resp) => resp.json())
+        ])
+            .then(([alunosData, financeiroData]) => {
+                setAlunos(alunosData);
+                // Cria um Set com IDs dos alunos que têm ao menos um boleto vencido
+                const hoje = new Date();
+                const idsPendentes = new Set(
+                    financeiroData.filter(fin => {
+                        if (!fin.boletos || !Array.isArray(fin.boletos)) return false;
+                        return fin.boletos.some(boleto => {
+                            if (!boleto.data_vencimento) return false;
+                            const [dia, mes, ano] = boleto.data_vencimento.split('/');
+                            const dataVencimento = new Date(`${ano}-${mes}-${dia}`);
+                            return dataVencimento < hoje;
+                        });
+                    }).map(fin => fin.id)
+                );
+                setAlunosPendentes(idsPendentes);
             })
             .catch((err) => console.log(err))
-            .finally(() => setIsLoading(false))
+            .finally(() => setIsLoading(false));
     }, [])
 
     return (
@@ -58,20 +82,21 @@ const Home = () => {
                 <Loading />
             ) : (
                 <>
-
                     <InfoAlunos />
                     <div className={styles.sucessmessage}>
-                        {message && <div className={styles.successmessage}>{message}</div>} {/* Exibe a mensagem, se existir */}
-                        {/* Resto do código da página */}
+                        {message && <div className={styles.successmessage}>{message}</div>}
                     </div>
                     <ul>
                         <TituloLista />
                         {alunos.length > 0 &&
                             alunos.map((aluno) => {
+                                // Verifica se o aluno está pendente
+                                const estaPendente = alunosPendentes.has(aluno.id);
                                 return (
                                     <ListaAlunos
                                         key={aluno.matricula}
                                         id={aluno.matricula}
+                                        vencido={estaPendente ? <span style={{color:'red', fontWeight:'bold'}} title="Boleto vencido">⚠️</span> : null}
                                         nome={aluno.nome}
                                         responsavel={aluno.resp_financeiro ? aluno.resp_financeiro : ''}
                                         data={aluno.data ? (() => {
@@ -88,8 +113,6 @@ const Home = () => {
                                     />
                                 );
                             })}
-
-
                     </ul>
                 </>
             )}

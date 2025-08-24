@@ -202,7 +202,7 @@ function FormularioFinanceiro({ handleSubmit, dadosData }) {
 
         const gerarBoletos = () => {
             const boletos = [];
-            for (let i = mesInicio + 1; i <= 12; i++) {
+            for (let i = mesInicio; i <= 12; i++) {
                 const mesCorrente = i > 12 ? i - 12 : i;
                 const anoCorrente = i > 12 ? anoAtual + 1 : anoAtual;
 

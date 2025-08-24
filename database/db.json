@@ -1,12 +1,487 @@
 {
   "alunos": [
     {
-      "id": "96bf5251-aa4c-40f2-bad2-b75f3d7e5137",
+      "id": "dbca10c0-f5c2-473e-968e-b562dd0588ec",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
       "matricula": 1
+    },
+    {
+      "id": "d09891d4-8a7e-4cf6-b274-5001bacd983e",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "matricula": 2
+    },
+    {
+      "id": "3c74950d-7ac5-4eba-a5fe-d11c031f3925",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "nome_do_pai": "Francisco João da Silva Neto Boni",
+      "telefone1_do_pai": "81971199800",
+      "endereco_do_pai": "Abreu e Lima",
+      "cidade_do_pai": "Recife",
+      "cep_do_pai": "53580760",
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "matricula": 3
+    },
+    {
+      "id": "d84c3d3e-b2b2-42c5-9667-17070f5eea2d",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "matricula": 4
+    },
+    {
+      "id": "6e868ad0-e099-42e4-b8f8-0f50ef9d2ace",
+      "nome": "Francisco João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "nome_do_pai": "Francisco João da Silva Neto Boni",
+      "telefone1_do_pai": "81971199800",
+      "endereco_do_pai": "Abreu e Lima",
+      "cidade_do_pai": "Recife",
+      "cep_do_pai": "53580760",
+      "data": "2000-05-12",
+      "sexo": "M",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "resp_financeiro": "Francisco João da Silva Neto Boni",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "matricula": 5
+    }
+  ],
+  "financeiro": [
+    {
+      "id": "dbca10c0-f5c2-473e-968e-b562dd0588ec",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 100,
+      "desconto": 1.23,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "3",
+        "nome": "Março"
+      },
+      "total_mensalidade": 348.77,
+      "total_matricula": 122.1,
+      "renda_complementar": [
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "2f8669e1-b584-47a2-8c0f-47c17fba8ed7",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "6c3288cb-0f0c-4fa9-afe4-ee59b57869af",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "2aa10240-599a-44e4-a011-b8528c35ca87",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "d645e62a-aced-49a0-b779-c2e5153e1e7b",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ],
+      "boletos_pagos": [
+        {
+          "id": "d2520e60-f1b0-4a2b-aa78-1f28a5ee7306",
+          "boletoOriginalId": "84b792b1-e931-4bb6-a8ae-99c178365777",
+          "valor": 348.77,
+          "dataVencimento": "12/03/2025",
+          "mes": "março",
+          "mes_id": "3",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "d3914a55-a6b3-4d77-8faf-482907fc1d9d",
+          "boletoOriginalId": "fdbca212-e9d0-460b-80f7-91e6ffc921c6",
+          "valor": 348.77,
+          "dataVencimento": "12/04/2025",
+          "mes": "abril",
+          "mes_id": "4",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "c01e6583-e886-4789-ad3e-c42934150dd5",
+          "boletoOriginalId": "f4024504-a4b6-4894-b738-ebf00597af2f",
+          "valor": 348.77,
+          "dataVencimento": "12/05/2025",
+          "mes": "maio",
+          "mes_id": "5",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "8997fdc0-e69e-42e2-bdf1-b36099640a65",
+          "boletoOriginalId": "0a64c76f-7551-4734-91cd-96d3b66db0cd",
+          "valor": 348.77,
+          "dataVencimento": "12/06/2025",
+          "mes": "junho",
+          "mes_id": "6",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "a714a576-f613-4c18-83c5-abfa71bb84b3",
+          "boletoOriginalId": "e3ae2db3-f20c-4b6a-ba6a-e392726f03be",
+          "valor": 348.77,
+          "dataVencimento": "12/07/2025",
+          "mes": "julho",
+          "mes_id": "7",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "f651bdda-6ec3-420d-873d-8dd611c0ce23",
+          "boletoOriginalId": "1bbe8ca1-ffaf-4522-8512-3bbe944d852b",
+          "valor": 348.77,
+          "dataVencimento": "12/08/2025",
+          "mes": "agosto",
+          "mes_id": "8",
+          "dataPagamento": "24/08/2025"
+        }
+      ]
+    },
+    {
+      "id": "d09891d4-8a7e-4cf6-b274-5001bacd983e",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 100,
+      "desconto": 1.23,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "9",
+        "nome": "Setembro"
+      },
+      "total_mensalidade": 348.77,
+      "total_matricula": 122.1,
+      "renda_complementar": [
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "0869385f-9804-415b-8cf9-aab1cfc3830f",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "cecbca68-2603-4dd4-a54b-74806cd6d1dc",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "cc59b746-9dcb-4318-96d7-924dcbee077c",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "c9283733-c9e3-4689-91d2-b82e7e18be68",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "3c74950d-7ac5-4eba-a5fe-d11c031f3925",
+      "valor_matricula": 100,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 100,
+      "desconto": 1.23,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "8",
+        "nome": "Agosto"
+      },
+      "total_mensalidade": 348.77,
+      "total_matricula": 98.77,
+      "renda_complementar": [
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "5e02be74-0e8e-4d06-80d2-9b1cacb6f58b",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "6bd7409c-752a-471a-b413-51d48626d27c",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "c5d69dc1-02e2-4e85-9b22-33d79cbb9ec8",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "f4f2b832-58e0-4650-a87e-28131a30d6d7",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ],
+      "boletos_pagos": [
+        {
+          "id": "4036ae56-ce45-4f77-bba2-a4003f117ff3",
+          "boletoOriginalId": "e383dfad-a2e6-41cc-9e96-a80c63aec216",
+          "valor": 348.77,
+          "dataVencimento": "12/08/2025",
+          "mes": "agosto",
+          "mes_id": "8",
+          "dataPagamento": "24/08/2025"
+        }
+      ]
+    },
+    {
+      "id": "d84c3d3e-b2b2-42c5-9667-17070f5eea2d",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 12.33,
+      "desconto": 1.23,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "8",
+        "nome": "Agosto"
+      },
+      "total_mensalidade": 11.1,
+      "total_matricula": 122.1,
+      "renda_complementar": [],
+      "boletos": [
+        {
+          "id": "3f6de9e6-7a2e-4ff3-b099-2d07e4278364",
+          "valor": 11.1,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "fe3bb01d-3246-46d8-9c9f-999f113059c1",
+          "valor": 11.1,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "a2ae296a-7f06-4c7f-8664-52f32260540d",
+          "valor": 11.1,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "2f3ef976-e5f5-4d62-91cb-0d9f6f2ee238",
+          "valor": 11.1,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ],
+      "boletos_pagos": [
+        {
+          "id": "599b63cd-1943-4eb0-96d6-24c81211c3ef",
+          "boletoOriginalId": "3c60337a-e644-4e69-9d73-bf84e4620f71",
+          "valor": 11.1,
+          "dataVencimento": "12/08/2025",
+          "mes": "agosto",
+          "mes_id": "8",
+          "dataPagamento": "24/08/2025"
+        }
+      ]
+    },
+    {
+      "id": "6e868ad0-e099-42e4-b8f8-0f50ef9d2ace",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 100,
+      "desconto": 1.23,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "6",
+        "nome": "Junho"
+      },
+      "total_mensalidade": 348.77,
+      "total_matricula": 122.1,
+      "renda_complementar": [
+        {
+          "id": "2",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "cf0d0e99-2a23-4af2-8276-04070b6546c0",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "f34469b6-45f5-480c-b2f8-630a26fd12cd",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "dece3558-6841-44d0-936f-440848cf2d1b",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "e3911043-a20d-46b3-95cd-87aeae77e415",
+          "valor": 348.77,
+          "dia_pagamento": "24/08/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ],
+      "boletos_pagos": [
+        {
+          "id": "9abe14e2-2bfe-42cb-be7c-7b24ec7d5a5c",
+          "boletoOriginalId": "64dfc144-da35-46b5-9000-3fd09c9cdddb",
+          "valor": 348.77,
+          "dataVencimento": "12/06/2025",
+          "mes": "junho",
+          "mes_id": "6",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "ca0b2df8-493a-492c-9a04-43efae9ba33b",
+          "boletoOriginalId": "23af69c0-7b54-42bc-a48e-5fd42ec83a16",
+          "valor": 348.77,
+          "dataVencimento": "12/07/2025",
+          "mes": "julho",
+          "mes_id": "7",
+          "dataPagamento": "24/08/2025"
+        },
+        {
+          "id": "e20a78c0-fa6b-4bf4-9ba7-5c8b3148e23a",
+          "boletoOriginalId": "7ddce420-7762-4f58-8804-f93bdabab564",
+          "valor": 348.77,
+          "dataVencimento": "12/08/2025",
+          "mes": "agosto",
+          "mes_id": "8",
+          "dataPagamento": "24/08/2025"
+        }
+      ]
     }
   ],
   "opcoesturma": [
@@ -110,60 +585,6 @@
     {
       "id": "12",
       "nome": "Dezembro"
-    }
-  ],
-  "financeiro": [
-    {
-      "id": "96bf5251-aa4c-40f2-bad2-b75f3d7e5137",
-      "valor_matricula": 12.33,
-      "desconto_matricula": 1.23,
-      "valor_mensalidade": 123.31,
-      "desconto": 20,
-      "dia_vencimento": 21,
-      "meses": {
-        "id": "10",
-        "nome": "Outubro"
-      },
-      "total_mensalidade": 353.31,
-      "total_matricula": 11.1,
-      "renda_complementar": [
-        {
-          "id": "2",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "03abdee9-4362-4035-bb09-38745f3d8637",
-          "valor": 353.31,
-          "dia_pagamento": "26/04/2025",
-          "dia_vencimento": 21,
-          "data_vencimento": "21/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ],
-      "boletos_pagos": [
-        {
-          "id": "c89eff66-87bd-4375-9573-e6ea449224bb",
-          "boletoOriginalId": "1dbf0ff4-afd8-4700-afdb-c158b8d752bb",
-          "valor": 261.09999999999997,
-          "dataVencimento": "22/10/2025",
-          "mes": "outubro",
-          "mes_id": "10",
-          "dataPagamento": "26/04/2025"
-        },
-        {
-          "id": "57d28989-59c3-4b80-883e-0581ba1573ea",
-          "boletoOriginalId": "94da01a2-edf7-47be-8dbc-e1388a0a4dd0",
-          "valor": 353.31,
-          "dataVencimento": "21/11/2025",
-          "mes": "novembro",
-          "mes_id": "11",
-          "dataPagamento": "26/04/2025"
-        }
-      ]
     }
   ],
   "renda_complementar": [

@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
-import { IoTrashBinOutline } from "react-icons/io5";
+import { IoTrashBinOutline, IoWarningOutline } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -101,6 +101,7 @@ function PaginaFinanceiro({ dadosData }) {
             .then((data) => {
                 setDados(data);
                 gerarBoletos(data);
+                
             })
             .catch((err) => console.log(err))
             .finally(() => setIsLoading(false))
@@ -118,54 +119,58 @@ function PaginaFinanceiro({ dadosData }) {
         }).format(valor);
     }
 
-    console.log("boletos:", boletos)
+    function parseDataBR(dataStr) {
+        const [dia, mes, ano] = dataStr.split('/');
+        return new Date(`${ano}-${mes}-${dia}`);
+    }
+
 
     async function boletoPago(boleto) {
         try {
-          const res = await fetch(`http://localhost:5000/financeiro/${id}`);
-          const financeiro = await res.json();
-      
-          const boletosPendentes = financeiro.boletos || [];
-          const boletosPagos = financeiro.boletos_pagos || [];
-      
-          // Verifica se já foi pago
-          if (boletosPagos.some(p => p.boletoOriginalId === boleto.id)) {
-            alert('Este boleto já foi pago!');
-            return;
-          }
-      
-          // Novo boleto pago
-          const novoPago = {
-            id: crypto.randomUUID(),
-            boletoOriginalId: boleto.id,
-            valor: boleto.valor,
-            dataVencimento: boleto.data_vencimento,
-            mes: boleto.mes,
-            mes_id: boleto.mes_id,
-            ano: boleto.ano,
-            dataPagamento: new Date().toLocaleDateString('pt-BR'),
-          };
-      
-          // Atualiza financeiro: remove do pendente e adiciona ao pago
-          const dadosAtualizados = {
-            boletos: boletosPendentes.filter(b => b.id !== boleto.id),
-            boletos_pagos: [...boletosPagos, novoPago],
-          };
-      
-          // Salva as alterações
-          await fetch(`http://localhost:5000/financeiro/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(dadosAtualizados),
-          });
-      
-          navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Boleto marcado como pago!' } });
-          window.location.reload();
+            const res = await fetch(`http://localhost:5000/financeiro/${id}`);
+            const financeiro = await res.json();
+
+            const boletosPendentes = financeiro.boletos || [];
+            const boletosPagos = financeiro.boletos_pagos || [];
+
+            // Verifica se já foi pago
+            if (boletosPagos.some(p => p.boletoOriginalId === boleto.id)) {
+                alert('Este boleto já foi pago!');
+                return;
+            }
+
+            // Novo boleto pago
+            const novoPago = {
+                id: crypto.randomUUID(),
+                boletoOriginalId: boleto.id,
+                valor: boleto.valor,
+                dataVencimento: boleto.data_vencimento,
+                mes: boleto.mes,
+                mes_id: boleto.mes_id,
+                ano: boleto.ano,
+                dataPagamento: new Date().toLocaleDateString('pt-BR'),
+            };
+
+            // Atualiza financeiro: remove do pendente e adiciona ao pago
+            const dadosAtualizados = {
+                boletos: boletosPendentes.filter(b => b.id !== boleto.id),
+                boletos_pagos: [...boletosPagos, novoPago],
+            };
+
+            // Salva as alterações
+            await fetch(`http://localhost:5000/financeiro/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosAtualizados),
+            });
+
+            navigate(`/PaginaFinanceiro/${id}`, { state: { message: 'Boleto marcado como pago!' } });
+            window.location.reload();
         } catch (err) {
-          console.error('Erro ao marcar boleto como pago:', err);
-          alert('Erro ao processar pagamento. Tente novamente.');
+            console.error('Erro ao marcar boleto como pago:', err);
+            alert('Erro ao processar pagamento. Tente novamente.');
         }
-      }
+    }
 
     return (
         <>
@@ -221,20 +226,32 @@ function PaginaFinanceiro({ dadosData }) {
                             )}
                             {dados?.boletos?.length > 0 && (
                                 <>
-                                    {dados.boletos.map((boletos) => (
-                                        <ListaBoletos
-                                            key={boletos.matricula}
-                                            mes_referente={boletos.mes}
-                                            vencimento={boletos.data_vencimento}
-                                            valor={formatarParaReais(boletos.valor)}
-                                            botao={<Botao
-                                                title={<IoTrashBinOutline />}
-                                                classname={styles.botao2}
-                                                onclick={() => boletoPago(boletos)}
-                                            />}
-                                        />
+                                    {dados.boletos.map((boletos) => {
+                                        const hoje = new Date();
+                                        const vencimento = parseDataBR(boletos.data_vencimento);
+                                        const estaVencido = vencimento < hoje;
 
-                                    ))}
+                                        return (
+                                            <ListaBoletos
+                                                key={boletos.matricula}
+                                                mes_referente={boletos.mes}
+                                                vencimento={boletos.data_vencimento}
+                                                valor={formatarParaReais(boletos.valor)}
+                                                iconeVencido={
+                                                    estaVencido ? (
+                                                        <IoWarningOutline color="red" title="Boleto vencido" />
+                                                    ) : null                                                   
+                                                }
+                                                botao={
+                                                    <Botao
+                                                        title={<IoTrashBinOutline />}
+                                                        classname={styles.botao2}
+                                                        onclick={() => boletoPago(boletos)}
+                                                    />
+                                                }
+                                            />
+                                        );
+                                    })}
                                 </>
 
                             )}

@@ -1,7 +1,7 @@
 import styles from "./ListaAluno.module.css"
 import { Link } from "react-router-dom"
 
-export default function ListaAlunos({key, link, id, nome, responsavel, data, turma, turno, icone, category }) {
+export default function ListaAlunos({key, link, id, nome, responsavel, data, turma, turno, icone, category, vencido }) {
 
     return (
         <>
@@ -26,6 +26,7 @@ export default function ListaAlunos({key, link, id, nome, responsavel, data, tur
                         <p>{turno}</p>
                     </div>
                     <div className={styles.div7}>
+                        {vencido}
                         <Link to={link}>
                             <p>{icone}</p>
                         </Link>

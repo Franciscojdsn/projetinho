@@ -1,0 +1,10 @@
+.containercabecalho2 {
+    display: flex;
+    justify-content: space-around;
+    margin: 2em;
+    align-items: center;
+}
+
+.containercabecalho2 img {
+    width: 10em;
+}

@@ -165,11 +165,13 @@ function PaginaAluno() {
                                                 alt="Foto do Aluno"
                                             />
                                             <div>
-                                                <Botao
-                                                    title="Histórico"
-                                                    classname={styles.botao3}
-                                                    icone={<AiOutlineEdit />}
-                                                />
+                                                <Link to={`/Historico/${id}`}>
+                                                    <Botao
+                                                        title="Histórico"
+                                                        classname={styles.botao3}
+                                                        icone={<AiOutlineEdit />}
+                                                    />
+                                                </Link>
                                                 <Link to={`/PaginaFinanceiro/${id}`}>
                                                     <Botao
                                                         title="Financeiro"
