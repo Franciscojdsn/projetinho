@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai"; // Importa ícone de deletar
 
 import styles from "./Financeiro.module.css"
 import DadosFinanceiros from "../../componentes/DadosFinanceiros/DadosFinanceiros";
@@ -144,6 +145,29 @@ const Financeiro = () => {
             .finally(() => setIsLoading(false));
     }
 
+    // Função para excluir uma renda complementar
+    function handleDeleteRenda(id) {
+        if (window.confirm("Tem certeza que deseja excluir esta renda complementar?")) {
+            setIsLoading(true);
+            fetch(`http://localhost:5000/renda_complementar/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+                .then((resp) => {
+                    if (resp.ok) {
+                        navigate(`/Financeiro`, { state: { message: 'Renda complementar excluída com sucesso!' } });
+                        window.scrollTo(0, 0);
+                        window.location.reload();
+                    } else {
+                        alert('Erro ao excluir a renda complementar.');
+                    }
+                })
+                .catch((err) => console.log(err))
+                .finally(() => setIsLoading(false));
+        }
+    }
 
     return (
         <>
@@ -173,11 +197,13 @@ const Financeiro = () => {
 
                     {isEditing && atividadeEditando && (
                         <EditarPopup
-                            atividade={atividadeEditando}
-                            setIsEditing={setIsEditing}
+                        // Editar atividade complementar
+                        atividade={atividadeEditando}
+                        setIsEditing={setIsEditing}
                         />
                     )}
                     {showPopup && (
+                    // Popup para adicionar/editar nova renda complementar
                         <Popup
                             showPopup={showPopup}
                             dados={dados}
@@ -199,12 +225,20 @@ const Financeiro = () => {
                                                 nome={data.nome_atividade}
                                                 valor={formatarParaReais(data.valor_atividade)}
                                                 icone={
-                                                    <Botao
-                                                        title="Editar"
-                                                        classname={styles.botao3}
-                                                        onclick={() => toggleEditMode(data)}
-                                                        icone={<AiOutlineEdit />}
-                                                    />
+                                                    <div style={{ display: "flex", gap: "8px" }}>
+                                                        <Botao
+                                                            title="Editar"
+                                                            classname={styles.botao3}
+                                                            onclick={() => toggleEditMode(data)}
+                                                            icone={<AiOutlineEdit />}
+                                                        />
+                                                        <Botao
+                                                            title="Excluir"
+                                                            classname={styles.botao4}
+                                                            onclick={() => handleDeleteRenda(data.id)}
+                                                            icone={<AiOutlineDelete />}
+                                                        />
+                                                    </div>
                                                 }
                                             />
                                         );

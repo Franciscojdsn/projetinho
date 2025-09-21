@@ -83,7 +83,6 @@ export default function EditarPopup({ atividade, setIsEditing }) {
                 console.log("Resposta do servidor:", resp);
                 if (resp.ok) {
                     window.location.reload(); 
-                    alert('Atividade atualizada com sucesso!');
                     setIsEditing(false);
                     navigate(`/Financeiro`, { state: { message: 'Atividade editada com sucesso!' } });
                 } else {
@@ -127,6 +126,7 @@ export default function EditarPopup({ atividade, setIsEditing }) {
                             icone={<MdFormatListBulletedAdd />}
                             title="Cancelar"
                             classname={styles.botao4}
+                            onclick={() => setIsEditing(false)}
                         />
                     </div>
                 </div>

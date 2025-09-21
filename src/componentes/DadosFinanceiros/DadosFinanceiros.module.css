@@ -5,3 +5,54 @@
     width: 80vw;
     margin: 1em auto;
 }
+
+.popupExtra {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.formExtra {
+  background: #fff;
+  padding: 24px 32px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 250px;
+}
+.botoesExtra {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.listaExtras {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.itemExtra {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+.itemExtra button {
+  margin-left: 4px;
+  background: #eee;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+.itemExtra button:hover {
+  background: #ddd;
+}

@@ -2,6 +2,16 @@
     margin-top: 2em;
     border: 1px solid black;
     border-radius: 1em;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s;
+}
+
+.containerdados:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
 }
 
 .containerdadoscontainer {
@@ -9,32 +19,89 @@
     background-color: rgba(181, 213, 223, 0.514);
     border-top-left-radius: 1em;
     border-top-right-radius: 1em;
+    overflow: hidden;
 }
 
 .containerdadosdados {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     font-size: 2em;
+    padding: 1em 0.5em;
+    gap: 1em;
+    flex-wrap: wrap;
 }
 
 .containerdados h4 {
     padding: 1.2em;
+    margin: 0;
+    font-size: 1.1em;
+    text-align: center;
+    font-weight: 600;
 }
 
 .containerdados p {
     padding: .3em;
+    margin: 0;
+    word-break: break-word;
+    min-width: 80px;
+    text-align: center;
 }
 
 .entrada {
     display: flex;
+    flex: 1 1 0;
     background-color: rgba(0, 128, 0, 0.664);
     border-top-left-radius: 1em;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    transition: background 0.2s;
+}
+
+.entrada:hover {
+    background-color: rgba(0, 128, 0, 0.8);
 }
 
 .segunda {
     display: flex;
+    flex: 1 1 0;
     background-color: rgb(221, 82, 82);
     border-top-right-radius: 1em;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    transition: background 0.2s;
+}
+
+.segunda:hover {
+    background-color: rgb(200, 60, 60);
+}
+
+@media (max-width: 600px) {
+    .containerdados {
+        max-width: 98vw;
+        margin: 1em auto;
+        border-radius: 0.7em;
+    }
+    .containerdadoscontainer {
+        flex-direction: column;
+        border-radius: 0.7em 0.7em 0 0;
+    }
+    .entrada, .segunda {
+        border-radius: 0;
+        border-top-left-radius: 0.7em;
+        border-top-right-radius: 0.7em;
+        min-width: unset;
+        width: 100%;
+        padding: 0.8em 0;
+    }
+    .containerdadosdados {
+        flex-direction: column;
+        gap: 0.5em;
+        font-size: 1.3em;
+        padding: 0.7em 0.2em;
+    }
 }
 
 

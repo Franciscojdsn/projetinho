@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import Botao from '../Botao'
 import styles from './InfoFuncionarios.module.css'
 
@@ -14,11 +16,13 @@ export default function InfoFuncionarios() {
                     <h1>Funcionários</h1>
                 </div>
                 <div>
-                    <Botao
-                        title="Novo Funcionário"
-                        icone=""
-                        classname={styles.botao}>
-                    </Botao>
+                    <Link to="DadosDosFuncionarios">
+                        <Botao
+                            title="Novo Funcionário"
+                            icone=""
+                            classname={styles.botao}>
+                        </Botao>
+                    </Link>
                 </div>
             </div>
 

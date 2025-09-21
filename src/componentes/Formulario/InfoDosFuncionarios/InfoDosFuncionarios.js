@@ -1,18 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { TfiSave } from "react-icons/tfi";
 import { IoTrashBinOutline } from "react-icons/io5";
 
 import Input from '../Componentes/Input/Input';
 import Radio from '../Componentes/Radio/Radio';
-import Select from '../Componentes/Select/Select'
-import styles from './InfoDosAlunos.module.css'
+import styles from './InfoDosFuncionarios.module.css'
 import Botao from '../../Botao';
 
 function InfoDosAlunos({ handleSubmit, dadosData }) {
 
-
-    const [opcoesturma, setOpcoesturma] = useState([])
-    const [turno, setTurno] = useState([])
     const [dados, setDados] = useState(dadosData || {})
 
     const anoAtual = new Date().getFullYear();
@@ -22,66 +18,42 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
     const dataMinima = `${anoMinimo}-01-01`;
     const dataMaxima = `${anoMaximo}-12-31`;
 
-    useEffect(() => {
-        fetch('http://localhost:5000/opcoesturma', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setOpcoesturma(data)
-            })
-            .catch((err) => console.log(err))
-
-        fetch('http://localhost:5000/turnos', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setTurno(data)
-            })
-            .catch((err) => console.log(err))
-    }, [])
-
     const submit = (e) => {
         e.preventDefault();
-    
+
         const dadosSemFormatacao = removerFormatacao(dados);
-    
+
         console.log(dadosSemFormatacao);
         handleSubmit(dadosSemFormatacao);
     };
 
     function formatCPF(value) {
         return value
-        .replace(/\D/g, '') // Remove tudo que não for número
-        .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o primeiro ponto
-        .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o segundo ponto
-        .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o primeiro ponto
+            .replace(/(\d{3})(\d)/, '$1.$2') // Adiciona o segundo ponto
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
     }
-    
+
     function formatRG(value) {
         return value
             .replace(/\D/g, '') // Remove tudo que não for número
             .replace(/(\d{1})(\d{3})(\d{3})$/, '$1.$2.$3'); // Adiciona os pontos
     }
-    
+
     function formatTelefone(value) {
         return value
             .replace(/\D/g, '') // Remove tudo que não for número
             .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses no DDD
             .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona o traço
     }
-    
+
     function formatCEP(value) {
         return value
             .replace(/\D/g, '') // Remove tudo que não for número
             .replace(/(\d{5})(\d{3})$/, '$1-$2'); // Adiciona o traço
     }
-    
+
     function handleCPFChange(e) {
         const formattedCPF = formatCPF(e.target.value);
         setDados({ ...dados, [e.target.name]: formattedCPF });
@@ -94,7 +66,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
         setDados({ ...dados, [e.target.name]: formattedTelefone });
         console.log(dados);
     }
-    
+
     function handleCEPChange(e) {
         const formattedCEP = formatCEP(e.target.value);
         setDados({ ...dados, [e.target.name]: formattedCEP });
@@ -115,15 +87,15 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
             'cep', 'cep_da_mae', 'cep_do_pai', 'cep_financeiro',
             'rg_da_mae', 'rg_do_pai', 'rg_financeiro'
         ];
-    
+
         const dadosSemFormatacao = { ...dados };
-    
+
         camposParaRemoverFormatacao.forEach((campo) => {
             if (dadosSemFormatacao[campo]) {
                 dadosSemFormatacao[campo] = dadosSemFormatacao[campo].replace(/\D/g, '');
             }
         });
-    
+
         return dadosSemFormatacao;
     }
 
@@ -135,25 +107,6 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
 
     function handleChange(e) {
         setDados({ ...dados, [e.target.name]: e.target.value })
-        console.log(dados)
-    }
-
-    function handleSelectTurma(e) {
-        setDados({
-            ...dados, turma: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
-            },
-        })
-    }
-
-    function handleSelectTurno(e) {
-        setDados({
-            ...dados, turno: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
-            },
-        })
         console.log(dados)
     }
 
@@ -224,7 +177,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                         name="imagem"
                         type="file"
                         accept="image/*"
-                        text='Foto do aluno:'
+                        text='Foto do funcionário:'
                         handleOnChange={handleFileChange}
                         placeholder="Escolha uma imagem"
                     />
@@ -233,7 +186,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     <div className={styles.div1}>
                         <Input
                             type="text"
-                            text="Nome do aluno"
+                            text="Nome do funcionário"
                             name="nome"
                             placeholder="Nome completo"
                             handleOnChange={handleChange}
@@ -244,7 +197,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                         <Input
                             type="date"
                             text="Data de nasc."
-                            name="data"
+                            name="data_funcionario"
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data ? dados.data : ''}
@@ -271,23 +224,25 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                         </fieldset>
                     </div>
                     <div className={styles.div5}>
-                        <Select
-                            name="turma"
-                            label="Turmas:"
-                            text="Selecione a turma"
-                            options={opcoesturma}
-                            handleOnChange={handleSelectTurma}
-                            value={dados.turma ? dados.turma.id : ''}
+                        <Input
+                            type="text"
+                            text="Telefone 1"
+                            name="telefone1_funcionario"
+                            placeholder="Telefone 1"
+                            handleOnChange={handleTelefoneChange}
+                            value={dados.telefone1_funcionario ? dados.telefone1_funcionario : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
-                    <div className={styles.div6}>
-                        <Select
-                            name="turno"
-                            label="Turnos:"
-                            text="Selecione o turno"
-                            options={turno}
-                            handleOnChange={handleSelectTurno}
-                            value={dados.turno ? dados.turno.id : ''}
+                    <div className={styles.divmae5}>
+                        <Input
+                            type="text"
+                            text="Telefone 2:"
+                            name="telefone2_funcionario"
+                            placeholder="Telefone 2"
+                            handleOnChange={handleTelefoneChange}
+                            value={dados.telefone2_funcinario ? dados.telefone2_funcinario : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
                     <div className={styles.div7}>
@@ -352,24 +307,34 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
+                    <div className={styles.divmae11}>
+                        <Input
+                            type="text"
+                            text="E-mail"
+                            name="email_funcionario"
+                            placeholder="E-mail"
+                            handleOnChange={handleChange}
+                            value={dados.email_funcionario ? dados.email_funcionario : ''}
+                        />
+                    </div>
                 </div>
 
                 <div className={styles.container}>
                     <div className={styles.divmae1}>
                         <Input
                             type="text"
-                            text="Nome da mãe"
-                            name="nome_da_mae"
-                            placeholder="Nome completo"
+                            text="Função"
+                            name="funcao"
+                            placeholder="Função do funcionário"
                             handleOnChange={handleChange}
-                            value={dados.nome_da_mae ? dados.nome_da_mae : ''}
+                            value={dados.funcao ? dados.funcao : ''}
                         />
                     </div>
                     <div className={styles.div2}>
                         <Input
                             type="date"
-                            text="Data de nasc."
-                            name="data_da_mae"
+                            text="Data de entrada."
+                            name="data_da_entrada"
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
                             value={dados.data_da_mae ? dados.data_da_mae : ''}
@@ -377,50 +342,26 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             max={dataMaxima}
                         />
                     </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="text"
-                            text="CPF:"
-                            name="cpf_da_mae"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleCPFChange}
-                            value={dados.cpf_da_mae ? dados.cpf_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 14)}
-                        />
-                    </div>
                     <div className={styles.divmae3}>
                         <Input
                             type="text"
-                            text="RG:"
-                            name="rg_da_mae"
-                            placeholder="0.000.000"
-                            handleOnChange={handleRGChange}
-                            value={dados.rg_da_mae ? dados.rg_da_mae : ''}
+                            text="Salário:"
+                            name="salario"
+                            placeholder="R$ 0,00"
                             onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
                     <div className={styles.divmae4}>
                         <Input
                             type="text"
-                            text="Telefone 1"
-                            name="telefone1_da_mae"
-                            placeholder="Telefone 1"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone1_da_mae ? dados.telefone1_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                            text="Pix"
+                            name="pix_funcionario"
+                            placeholder="Pix Funcionário"
+                            handleOnChange={handleChange}
+                            value={dados.pix_funcionario ? dados.pix_funcionario : ''}
                         />
                     </div>
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="text"
-                            text="Telefone 2:"
-                            name="telefone2_da_mae"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
-                        />
-                    </div>
+
                     <div className={styles.divmae12}>
                         <Botao
                             id="copiarDados"
@@ -435,41 +376,41 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                     <div className={styles.divmae6}>
                         <Input
                             type="text"
-                            text="Endereço"
-                            name="endereco_da_mae"
-                            placeholder="Endereço"
+                            text="Nº da Agência"
+                            name="agencia_funcionario"
+                            placeholder="nº da agência"
                             handleOnChange={handleChange}
-                            value={dados.endereco_da_mae ? dados.endereco_da_mae : ''}
+                            value={dados.agencia_funcionario ? dados.agencia_funcionario : ''}
                         />
                     </div>
                     <div className={styles.divmae7}>
                         <Input
                             type="number"
-                            text="Nº"
-                            name="n_da_mae"
-                            placeholder="Nº"
+                            text="Nº da conta"
+                            name="n_conta_funcionario"
+                            placeholder="Nº da conta"
                             handleOnChange={handleChange}
-                            value={dados.n_da_mae ? dados.n_da_mae : ''}
+                            value={dados.n_conta_funcionario ? dados.n_conta_funcionario : ''}
                         />
                     </div>
                     <div className={styles.divmae8}>
                         <Input
                             type="text"
-                            text="Cidade"
-                            name="cidade_da_mae"
-                            placeholder="Cidade"
+                            text="Dígito"
+                            name="digito_funcionario"
+                            placeholder="Dígito"
                             handleOnChange={handleChange}
-                            value={dados.cidade_da_mae ? dados.cidade_da_mae : ''}
+                            value={dados.digito_funcionario ? dados.digito_funcionario : ''}
                         />
                     </div>
                     <div className={styles.divmae9}>
                         <Input
                             type="text"
-                            text="Bairro"
-                            name="bairro_da_mae"
-                            placeholder="Bairro"
+                            text="Banco"
+                            name="banco_funcionario"
+                            placeholder="Banco"
                             handleOnChange={handleChange}
-                            value={dados.bairro_da_mae ? dados.bairro_da_mae : ''}
+                            value={dados.banco_funcionario ? dados.banco_funcionario : ''}
                         />
                     </div>
                     <div className={styles.divmae10}>
@@ -483,16 +424,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_da_mae"
-                            placeholder="E-mail"
-                            handleOnChange={handleChange}
-                            value={dados.email_da_mae ? dados.email_da_mae : ''}
-                        />
-                    </div>
+
                 </div>
 
                 <div className={styles.container}>
@@ -679,17 +611,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
-                    <div className={styles.divmae4}>
-                        <Input
-                            type="text"
-                            text="Telefone 1"
-                            name="telefone1_financeiro"
-                            placeholder="Telefone 1"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone1_financeiro ? dados.telefone1_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
-                        />
-                    </div>
+
                     <div className={styles.divmae5}>
                         <Input
                             type="text"
@@ -777,7 +699,7 @@ function InfoDosAlunos({ handleSubmit, dadosData }) {
                         icone={<TfiSave />}
                         classname={styles.botao}
                     />
-                    alunos
+                    funcionarios
                 </div>
             </form>
         </>

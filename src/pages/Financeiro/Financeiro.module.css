@@ -130,3 +130,13 @@
     color: rgb(255, 255, 255);
     transition: .4s;
 }
+
+/* Remove sublinhado de todos os textos e links dentro desta página */
+*, *:before, *:after {
+  text-decoration: none !important;
+}
+
+/* Remove sublinhado de links especificamente */
+a, a:visited, a:hover, a:active {
+  text-decoration: none !important;
+}
