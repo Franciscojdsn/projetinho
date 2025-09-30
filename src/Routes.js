@@ -12,6 +12,7 @@ import Historico from "./pages/Historico/Historico.js";
 import FinanceiroAluno from "./pages/FinanceiroAluno/FinanceiroAluno.js";
 import PaginaAluno from "./pages/PaginaAluno/PaginaAluno.js";
 import PaginaFinanceiro from "./pages/PaginaFinanceiro/PaginaFinanceiro.js";
+import PaginaFuncionario from "./pages/PaginaFuncionario/PaginaFuncionario.js";
 import DadosDosFuncionarios from "./pages/DadosDosFuncionarios/DadosDosFuncionarios.js";
 
 const AppRoutes = () => {
@@ -31,6 +32,7 @@ const AppRoutes = () => {
                     <Route path="/DadosDosAlunos/Financeiro/:id" element={<FinanceiroAluno />}></Route>
                     <Route path="/PaginaAluno/:id" element={<PaginaAluno />}></Route>
                     <Route path="/PaginaFinanceiro/:id" element={<PaginaFinanceiro />}></Route>
+                    <Route path="/PaginaFuncionario/:id" element={<PaginaFuncionario />}></Route>
                 </Routes>
             </NavbarProvider>
         </Router>

@@ -7,7 +7,7 @@ import InfoDosFuncionarios from "../../componentes/Formulario/InfoDosFuncionario
 import Cabecalho from "../../componentes/Formulario/Cabecalho/Cabecalho";
 
 
-const DadosDosAlunos = () => {
+const DadosDosFuncionarios = () => {
 
     const location = useLocation();
     const [message, setMessage] = useState(location.state?.message || null);
@@ -32,30 +32,30 @@ const DadosDosAlunos = () => {
         }
     }, [message]);
 
-    function addAluno(dados) {
+    function addFuncionario(dados) {
         // Busca todos os alunos para determinar o maior número de matrícula
-        fetch('http://localhost:5000/alunos', {
+        fetch('http://localhost:5000/funcionarios', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
         })
             .then((resp) => resp.json())
-            .then((alunos) => {
+            .then((funcionario) => {
                 // Determina o próximo número de matrícula
-                const ultimaMatricula = alunos.length > 0
-                    ? Math.max(...alunos.map((aluno) => aluno.matricula || 0))
+                const ultimoFuncionario = funcionario.length > 0
+                    ? Math.max(...funcionario.map((aluno) => aluno.matricula || 0))
                     : 0;
-                const novaMatricula = ultimaMatricula + 1;
+                const novoFuncionario = ultimoFuncionario + 1;
     
-                dados.matricula = novaMatricula;
+                dados.matricula = novoFuncionario;
     
                 // Adiciona o ID único ao objeto `dados`
                 dados.id = uuid();
 
     
                 // Envia os dados para o servidor
-                return fetch('http://localhost:5000/alunos', {
+                return fetch('http://localhost:5000/funcionarios', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -65,11 +65,11 @@ const DadosDosAlunos = () => {
             })
             .then((resp) => resp.json())
             .then((data) => {
-                console.log("Aluno criado com sucesso:", data);
-                navigate(`/DadosDosAlunos/Financeiro/${dados.id}`, { state: { message: 'Dados do aluno salvo com sucesso!' } });
+                console.log("funcionario criado com sucesso:", data);
+                navigate(`/Funcionarios`, { state: { message: 'Dados do funcionário salvo com sucesso!' } });
                 window.scrollTo(0, 0);
             })
-            .catch((err) => console.log("Erro ao adicionar aluno:", err));
+            .catch((err) => console.log("Erro ao adicionar funcionário:", err));
     }
 
     return (
@@ -77,7 +77,7 @@ const DadosDosAlunos = () => {
             <div className={styles.containerdados}>
                 <Cabecalho />
                 <InfoDosFuncionarios
-                    handleSubmit={addAluno}
+                    handleSubmit={addFuncionario}
                 />
             </div>
             funcionarios
@@ -85,4 +85,4 @@ const DadosDosAlunos = () => {
     )
 }
 
-export default DadosDosAlunos;
+export default DadosDosFuncionarios;

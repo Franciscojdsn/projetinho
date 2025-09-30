@@ -20,6 +20,7 @@
     grid-template-rows: repeat(2, 1fr);
     gap: 8px;
 }
+
 .container input {
     margin: .5em;
     border: 1px solid rgba(139, 139, 255, 0.301);
@@ -28,40 +29,6 @@
 }
 
 .container select {
-    margin: .5em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    border-radius: .3em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.container1 {
-    background-color: rgba(0, 0, 0, 0.021);
-    padding: 2em;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 8px;
-}
-.container1 {
-    width: 60vw;
-    margin: 0 auto;
-    margin-top: 1em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.container1 label {
-    font-family: "Aldrich", sans-serif;
-    font-size: 1em;
-}
-
-.container1 input {
-    margin: .5em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    border-radius: .3em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.container1 select {
     margin: .5em;
     border: 1px solid rgba(139, 139, 255, 0.301);
     border-radius: .3em;
@@ -87,7 +54,7 @@
 }
 
 .div2 input {
-    width: 7.5em;
+    width: 7em;
 }
 
 .div3 {
@@ -106,14 +73,14 @@
 
 .div5 {
     grid-column: span 2 / span 2;
-    grid-column-start: 7;
-    grid-row-start: 3;
+    grid-column-start: 9;
+    grid-row-start: 1;
 }
 
 .div6 {
     grid-column: span 2 / span 2;
-    grid-column-start: 5;
-    grid-row-start: 3;
+    grid-column-start: 11;
+    grid-row-start: 1;
 }
 
 .div6 input {
@@ -174,7 +141,7 @@
 .div12 {
     grid-column: span 2 / span 2;
     grid-column-start: 11;
-    grid-row-start: 3;
+    grid-row-start: 2;
 }
 
 .div12 input {
@@ -235,7 +202,7 @@ input[type="radio"] {
 .divmae5 {
     grid-column: span 2 / span 2;
     grid-column-start: 10;
-    grid-row-start: 3;
+    grid-row-start: 1;
 }
 
 .divmae5 input {

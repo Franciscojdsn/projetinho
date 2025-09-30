@@ -1,4 +1,27 @@
-@import url(https://fonts.googleapis.com/css2?family=Aldrich&display=swap);
+.containercabecalho {
+    display: flex;
+    justify-content: center;
+    margin: 2em;
+}
+
+.containercabecalho2 {
+    display: flex;
+    justify-content: space-around;
+    margin: 2em;
+    align-items: center;
+}
+
+.containercabecalho2 img {
+    width: 10em;
+}
+
+.containerdados {
+    width: 70vw;
+    margin: 2em auto;
+    border: 1px solid black;
+    border-radius: 1em;
+    box-shadow: 3px 2px 10px 1px rgba(0, 0, 0, 0.192);
+}
 
 .container {
     width: 60vw;
@@ -20,6 +43,7 @@
     grid-template-rows: repeat(2, 1fr);
     gap: 8px;
 }
+
 .container input {
     margin: .5em;
     border: 1px solid rgba(139, 139, 255, 0.301);
@@ -34,47 +58,20 @@
     box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
 }
 
-.container1 {
-    background-color: rgba(0, 0, 0, 0.021);
-    padding: 2em;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 8px;
-}
-.container1 {
+.successmessage {
     width: 60vw;
-    margin: 0 auto;
-    margin-top: 1em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.container1 label {
-    font-family: "Aldrich", sans-serif;
-    font-size: 1em;
-}
-
-.container1 input {
-    margin: .5em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    border-radius: .3em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.container1 select {
-    margin: .5em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    border-radius: .3em;
-    box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.082);
-}
-
-.containerimagem {
-    display: flex;
-    justify-content: center;
+    background-color: #d4edda;
+    color: #188d00;
+    padding: 10px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin: 1em auto;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 .div1 {
-    grid-column: span 4 / span 4;
+    grid-column: span 3 / span 3;
 }
 
 .div1 input {
@@ -87,7 +84,7 @@
 }
 
 .div2 input {
-    width: 7.5em;
+    width: 7em;
 }
 
 .div3 {
@@ -106,14 +103,14 @@
 
 .div5 {
     grid-column: span 2 / span 2;
-    grid-column-start: 7;
-    grid-row-start: 3;
+    grid-column-start: 9;
+    grid-row-start: 1;
 }
 
 .div6 {
     grid-column: span 2 / span 2;
-    grid-column-start: 5;
-    grid-row-start: 3;
+    grid-column-start: 11;
+    grid-row-start: 1;
 }
 
 .div6 input {
@@ -174,7 +171,7 @@
 .div12 {
     grid-column: span 2 / span 2;
     grid-column-start: 11;
-    grid-row-start: 3;
+    grid-row-start: 2;
 }
 
 .div12 input {
@@ -235,7 +232,7 @@ input[type="radio"] {
 .divmae5 {
     grid-column: span 2 / span 2;
     grid-column-start: 10;
-    grid-row-start: 3;
+    grid-row-start: 1;
 }
 
 .divmae5 input {
@@ -326,7 +323,7 @@ input[type="radio"] {
     font-size: 1em;
     padding: 1em;
     border: none;
-    background-color: rgba(156, 223, 156, 0.514);
+    background-color: rgba(156, 221, 223, 0.514);
     border-radius: .3em;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
     font-family: "Outfit", sans-serif;
@@ -338,22 +335,23 @@ input[type="radio"] {
     margin-right: .4em;
 }
 .botao:hover {
-    background-color: rgba(145, 223, 145, 0.781);
+    background-color: rgba(145, 205, 223, 0.781);
     color: rgb(255, 255, 255);
     transition: .4s;
 }
 
 .botao3 {
-    font-size: 1em;
-    padding: .3em;
+    font-size: 1.5em;
+    padding: 1em;
     border: none;
-    background-color: rgba(241, 245, 241, 0.514);
+    background-color: rgba(156, 223, 156, 0.514);
     border-radius: .3em;
     box-shadow: 2px 2px 3px 1px rgba(0, 0, 0, 0.171);
     font-family: "Outfit", sans-serif;
+    margin: 1em;
 }
 
-.botao svg {
+.botao3 svg {
     font-size: 1em;
     margin-right: .4em;
 }

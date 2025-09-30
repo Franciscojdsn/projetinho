@@ -2,28 +2,45 @@
     margin: 0 auto;
     margin-bottom: 1em;
     border-bottom: 1px solid rgba(0, 0, 0, 0.13);
-    width: 60vw;
+    width: 80vw;
     padding-left: 2em;
+}
+
+.titulolista { 
+    width: 80vw;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(1, 1fr);
-    gap: 8px;
+    gap: 6px;
+    margin: 0 auto;
 }
 
 .div2 {
-    grid-column: span 5 / span 5;
-    grid-column-start: 2;
-    margin-left: 2em;
+    grid-column: span 3 / span 3;
 }
 
 .div3 {
     grid-column: span 3 / span 3;
-    grid-column-start: 7;
-    margin-left: 2em;
+    grid-column-start: 5;
 }
 
 .div4 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 11;
+    grid-column-start: 8;
+    padding-left: 1.3em;
 }
-     
+
+.div5 {
+    grid-column-start: 10;
+    padding-left: .3em;
+}
+
+.div6 {
+    grid-column-start: 11;
+    padding-left: 1.7em;
+}
+
+.div7 {
+    grid-column-start: 12;
+    padding-left: 1.5em;
+
+}

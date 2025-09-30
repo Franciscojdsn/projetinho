@@ -1,31 +1,40 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 import { TfiSave } from "react-icons/tfi";
-import { IoTrashBinOutline } from "react-icons/io5";
 
+import styles from './EditarDadosFuncionario.module.css';
 import Input from '../Componentes/Input/Input';
+import Select from '../Componentes/Select/Select';
 import Radio from '../Componentes/Radio/Radio';
-import styles from './InfoDosFuncionarios.module.css'
-import Botao from '../../Botao';
+import Botao from '../../Botao/index'
 
-function InfoDosFuncionarios({ handleSubmit, dadosData }) {
 
-    const [dados, setDados] = useState(dadosData || {})
+export default function EditarDados({ aluno, onSave }) {
+    const [dados, setDados] = useState(aluno);
+
+    const [opcoesturma, setOpcoesturma] = useState([])
+    const [turno, setTurno] = useState([])
 
     const anoAtual = new Date().getFullYear();
-    const anoMinimo = anoAtual - 100;
-    const anoMaximo = anoAtual - 1;
+    const anoMinimo = anoAtual - 100; 
+    const anoMaximo = anoAtual - 1;  
 
-    const dataMinima = `${anoMinimo}-01-01`;
+    const dataMinima = `${anoMinimo}-01-01`; 
     const dataMaxima = `${anoMaximo}-12-31`;
 
-    const submit = (e) => {
+    function handleChange(e) {
+        const { name, value } = e.target;
+        setDados((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
+    }
+
+    function handleSubmit(e) {
         e.preventDefault();
-
         const dadosSemFormatacao = removerFormatacao(dados);
-
-        console.log(dadosSemFormatacao);
-        handleSubmit(dadosSemFormatacao);
-    };
+        onSave(dadosSemFormatacao); // Chama a função de salvar com os dados atualizados
+    }
 
     function formatCPF(value) {
         return value
@@ -35,38 +44,37 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
             .replace(/(\d{3})(\d{1,2})$/, '$1-$2'); // Adiciona o traço
     }
 
-    function formatRG(value) {
-        return value
-            .replace(/\D/g, '') // Remove tudo que não for número
-            .replace(/(\d{1})(\d{3})(\d{3})$/, '$1.$2.$3'); // Adiciona os pontos
-    }
-
     function formatTelefone(value) {
         return value
             .replace(/\D/g, '') // Remove tudo que não for número
             .replace(/(\d{2})(\d)/, '($1) $2') // Adiciona parênteses no DDD
             .replace(/(\d{4,5})(\d{4})$/, '$1-$2'); // Adiciona o traço
     }
-
+    
     function formatCEP(value) {
         return value
             .replace(/\D/g, '') // Remove tudo que não for número
             .replace(/(\d{5})(\d{3})$/, '$1-$2'); // Adiciona o traço
     }
-
+    
     function handleCPFChange(e) {
         const formattedCPF = formatCPF(e.target.value);
         setDados({ ...dados, [e.target.name]: formattedCPF });
         console.log(dados);
     }
 
+    function formatRG(value) {
+        return value
+            .replace(/\D/g, '') // Remove tudo que não for número
+            .replace(/(\d{1})(\d{3})(\d{3})$/, '$1.$2.$3'); // Adiciona os pontos
+    }
 
     function handleTelefoneChange(e) {
         const formattedTelefone = formatTelefone(e.target.value);
         setDados({ ...dados, [e.target.name]: formattedTelefone });
         console.log(dados);
     }
-
+    
     function handleCEPChange(e) {
         const formattedCEP = formatCEP(e.target.value);
         setDados({ ...dados, [e.target.name]: formattedCEP });
@@ -79,7 +87,6 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         console.log(dados);
     }
 
-    // Função de limpar dados (ajeitar)
     function removerFormatacao(dados) {
         const camposParaRemoverFormatacao = [
             'cpf', 'cpf_da_mae', 'cpf_do_pai', 'cpf_financeiro',
@@ -88,15 +95,15 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
             'cep', 'cep_da_mae', 'cep_do_pai', 'cep_financeiro',
             'rg_da_mae', 'rg_do_pai', 'rg_financeiro'
         ];
-
+    
         const dadosSemFormatacao = { ...dados };
-
+    
         camposParaRemoverFormatacao.forEach((campo) => {
             if (dadosSemFormatacao[campo]) {
                 dadosSemFormatacao[campo] = dadosSemFormatacao[campo].replace(/\D/g, '');
             }
         });
-
+    
         return dadosSemFormatacao;
     }
 
@@ -106,8 +113,22 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         }
     }
 
-    function handleChange(e) {
-        setDados({ ...dados, [e.target.name]: e.target.value })
+    function handleSelectTurma(e) {
+        setDados({
+            ...dados, turma: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
+    }
+
+    function handleSelectTurno(e) {
+        setDados({
+            ...dados, turno: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
         console.log(dados)
     }
 
@@ -124,52 +145,48 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         }
     };
 
-    function handleClear() {
-        const camposLimpos = Object.keys(dados).reduce((acc, key) => {
-            acc[key] = ''; // Define cada campo como uma string vazia
-            return acc;
-        }, {});
+    useEffect(() => {
+        fetch('http://localhost:5000/opcoesturma', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                setOpcoesturma(data)
+            })
+            .catch((err) => console.log(err))
 
-        setDados(camposLimpos);
-        console.log("Todos os campos foram limpos!");
-    }
-
-    function handleClick() {
-        setDados((prevDados) => ({
-            ...prevDados,
-            resp_financeiro: prevDados.nome_da_mae,
-            data_financeiro: prevDados.data_da_mae,
-            cpf_financeiro: prevDados.cpf_da_mae,
-            rg_financeiro: prevDados.rg_da_mae,
-            telefone1_financeiro: prevDados.telefone1_da_mae,
-            telefone2_financeiro: prevDados.telefone2_da_mae,
-            endereco_financeiro: prevDados.endereco_da_mae,
-            n_financeiro: prevDados.n_da_mae,
-            cidade_financeiro: prevDados.cidade_da_mae,
-            bairro_financeiro: prevDados.bairro_da_mae,
-            cep_financeiro: prevDados.cep_da_mae,
-            email_financeiro: prevDados.email_da_mae,
-        }));
-    }
+        fetch('http://localhost:5000/turnos', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                setTurno(data)
+            })
+            .catch((err) => console.log(err))
+    }, [])
 
     return (
         <>
-            <form onSubmit={submit}>
-                <div className={styles.containerimagem}>
+            <form onSubmit={handleSubmit}>
+            <div className={styles.containerimagem}>
                     <Input
                         name="imagem"
                         type="file"
                         accept="image/*"
-                        text='Foto do funcionário:'
+                        text='Foto do aluno:'
                         handleOnChange={handleFileChange}
                         placeholder="Escolha uma imagem"
                     />
                 </div>
-                <div className={styles.container1}>
+                <div className={styles.container}>
                     <div className={styles.div1}>
                         <Input
                             type="text"
-                            text="Nome do funcionário"
+                            text="Nome do aluno"
                             name="nome_funcionario"
                             placeholder="Nome completo"
                             handleOnChange={handleChange}
@@ -180,10 +197,10 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="date"
                             text="Data de nasc."
-                            name="data_funcionario"
+                            name="data"
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
-                            value={dados.data_funcionario ? dados.data_funcionario : ''}
+                            value={dados.data ? dados.data : ''}
                             min={dataMinima}
                             max={dataMaxima}
                         />
@@ -192,10 +209,10 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="text"
                             text="Naturalidade:"
-                            name="naturalidade_funcionario"
+                            name="naturalidade"
                             placeholder="Local"
                             handleOnChange={handleChange}
-                            value={dados.naturalidade_funcionario ? dados.naturalidade_funcionario : ''}
+                            value={dados.naturalidade ? dados.naturalidade : ''}
                         />
                     </div>
                     <div className={styles.div4}>
@@ -207,110 +224,85 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         </fieldset>
                     </div>
                     <div className={styles.div5}>
-                        <Input
-                            type="text"
-                            text="Telefone 1"
-                            name="telefone1_funcionario"
-                            placeholder="Telefone 1"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone1_funcionario ? dados.telefone1_funcionario : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                        <Select
+                            name="turma"
+                            label="Turmas:"
+                            text="Selecione a turma"
+                            options={opcoesturma}
+                            handleOnChange={handleSelectTurma}
+                            value={dados.turma ? dados.turma.id : ''}
                         />
                     </div>
                     <div className={styles.div6}>
-                        <Input
-                            type="text"
-                            text="Telefone 2:"
-                            name="telefone2_funcionario"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone2_funcinario ? dados.telefone2_funcinario : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                        <Select
+                            name="turno"
+                            label="Turnos:"
+                            text="Selecione o turno"
+                            options={turno}
+                            handleOnChange={handleSelectTurno}
+                            value={dados.turno ? dados.turno.id : ''}
                         />
                     </div>
                     <div className={styles.div7}>
                         <Input
                             type="text"
                             text="CPF:"
-                            name="cpf_funcinoario"
+                            name="cpf"
                             placeholder="000.000.000-00"
                             handleOnChange={handleCPFChange}
-                            value={dados.cpf_funcinoario ? dados.cpf_funcinoario : ''}
+                            value={dados.cpf ? dados.cpf : ''}
                             onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
-
-                    <div className={styles.div13}>
-                        <Input
-                            type="text"
-                            text="RG:"
-                            name="rg_funcionario"
-                            placeholder="0.000.000"
-                            handleOnChange={handleRGChange}
-                            value={dados.rg_funcionario ? dados.rg_funcionario : ''}
-                            onInput={(e) => handleInputLimit(e, 8)}
-                        />
-                    </div>
-
                     <div className={styles.div8}>
                         <Input
                             type="text"
                             text="Endereço"
-                            name="endereco_funcionario"
+                            name="endereco"
                             placeholder="Endereço"
                             handleOnChange={handleChange}
-                            value={dados.endereco_funcionario ? dados.endereco_funcionario : ''}
+                            value={dados.endereco ? dados.endereco : ''}
                         />
                     </div>
                     <div className={styles.div9}>
                         <Input
                             type="number"
                             text="Nº"
-                            name="n_funcionario"
+                            name="n"
                             placeholder="Nº"
                             handleOnChange={handleChange}
-                            value={dados.n_funcionario ? dados.n_funcionario : ''}
+                            value={dados.n ? dados.n : ''}
                         />
                     </div>
                     <div className={styles.div10}>
                         <Input
                             type="text"
                             text="Cidade"
-                            name="cidade_funcionario"
+                            name="cidade"
                             placeholder="Cidade"
                             handleOnChange={handleChange}
-                            value={dados.cidade_funcionario ? dados.cidade_funcionario : ''}
+                            value={dados.cidade ? dados.cidade : ''}
                         />
                     </div>
                     <div className={styles.div11}>
                         <Input
                             type="text"
                             text="Bairro"
-                            name="bairro_funcionario"
+                            name="bairro"
                             placeholder="Bairro"
                             handleOnChange={handleChange}
-                            value={dados.bairro_funcionario ? dados.bairro_funcionario : ''}
+                            value={dados.bairro ? dados.bairro : ''}
                         />
                     </div>
                     <div className={styles.div12}>
                         <Input
                             type="text"
                             text="CEP"
-                            name="cep_funcionario"
+                            name="cep"
                             placeholder="000.000-00"
                             handleOnChange={handleCEPChange}
-                            value={dados.cep_funcionario ? dados.cep_funcionario : ''}
+                            value={dados.cep ? dados.cep : ''}
                             onInput={(e) => handleInputLimit(e, 9)}
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_funcionario"
-                            placeholder="E-mail"
-                            handleOnChange={handleChange}
-                            value={dados.email_funcionario ? dados.email_funcionario : ''}
                         />
                     </div>
                 </div>
@@ -319,52 +311,67 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                     <div className={styles.divmae1}>
                         <Input
                             type="text"
-                            text="Função"
-                            name="funcao"
-                            placeholder="Função do funcionário"
+                            text="Nome da mãe"
+                            name="nome_da_mae"
+                            placeholder="Nome completo"
                             handleOnChange={handleChange}
-                            value={dados.funcao ? dados.funcao : ''}
+                            value={dados.nome_da_mae ? dados.nome_da_mae : ''}
                         />
                     </div>
                     <div className={styles.div2}>
                         <Input
                             type="date"
-                            text="Data de entrada."
-                            name="data_da_entrada_funcionario"
+                            text="Data de nasc."
+                            name="data_da_mae"
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
-                            value={dados.data_da_entrada_funcionario ? dados.data_da_entrada_funcionario : ''}
+                            value={dados.data_da_mae ? dados.data_da_mae : ''}
                             min={dataMinima}
                             max={dataMaxima}
+                        />
+                    </div>
+                    <div className={styles.divmae2}>
+                        <Input
+                            type="text"
+                            text="CPF:"
+                            name="cpf_da_mae"
+                            placeholder="000.000.000-00"
+                            handleOnChange={handleCPFChange}
+                            value={dados.cpf_da_mae ? dados.cpf_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
                     <div className={styles.divmae3}>
                         <Input
                             type="text"
-                            text="Salário:"
-                            name="salario"
-                            placeholder="R$ 0,00"
+                            text="RG:"
+                            name="rg_da_mae"
+                            placeholder="0.000.000"
+                            handleOnChange={handleRGChange}
+                            value={dados.rg_da_mae ? dados.rg_da_mae : ''}
                             onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
                     <div className={styles.divmae4}>
                         <Input
                             type="text"
-                            text="Pix"
-                            name="pix_funcionario"
-                            placeholder="Pix Funcionário"
-                            handleOnChange={handleChange}
-                            value={dados.pix_funcionario ? dados.pix_funcionario : ''}
+                            text="Telefone 1"
+                            name="telefone1_da_mae"
+                            placeholder="Telefone 1"
+                            handleOnChange={handleTelefoneChange}
+                            value={dados.telefone1_da_mae ? dados.telefone1_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
-
-                    <div className={styles.divmae12}>
-                        <Botao
-                            id="copiarDados"
-                            onclick={handleClick}
-                            type="button"
-                            classname={styles.botao3}
-                            title="Resp. Financeiro"
+                    <div className={styles.divmae5}>
+                        <Input
+                            type="text"
+                            text="Telefone 2:"
+                            name="telefone2_da_mae"
+                            placeholder="Telefone 2"
+                            handleOnChange={handleTelefoneChange}
+                            value={dados.telefone2_da_mae ? dados.telefone2_da_mae : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
 
@@ -372,41 +379,41 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                     <div className={styles.divmae6}>
                         <Input
                             type="text"
-                            text="Nº da Agência"
-                            name="agencia_funcionario"
-                            placeholder="nº da agência"
+                            text="Endereço"
+                            name="endereco_da_mae"
+                            placeholder="Endereço"
                             handleOnChange={handleChange}
-                            value={dados.agencia_funcionario ? dados.agencia_funcionario : ''}
+                            value={dados.endereco_da_mae ? dados.endereco_da_mae : ''}
                         />
                     </div>
                     <div className={styles.divmae7}>
                         <Input
                             type="number"
-                            text="Nº da conta"
-                            name="n_conta_funcionario"
-                            placeholder="Nº da conta"
+                            text="Nº"
+                            name="n_da_mae"
+                            placeholder="Nº"
                             handleOnChange={handleChange}
-                            value={dados.n_conta_funcionario ? dados.n_conta_funcionario : ''}
+                            value={dados.n_da_mae ? dados.n_da_mae : ''}
                         />
                     </div>
                     <div className={styles.divmae8}>
                         <Input
                             type="text"
-                            text="Dígito"
-                            name="digito_funcionario"
-                            placeholder="Dígito"
+                            text="Cidade"
+                            name="cidade_da_mae"
+                            placeholder="Cidade"
                             handleOnChange={handleChange}
-                            value={dados.digito_funcionario ? dados.digito_funcionario : ''}
+                            value={dados.cidade_da_mae ? dados.cidade_da_mae : ''}
                         />
                     </div>
                     <div className={styles.divmae9}>
                         <Input
                             type="text"
-                            text="Banco"
-                            name="banco_funcionario"
-                            placeholder="Banco"
+                            text="Bairro"
+                            name="bairro_da_mae"
+                            placeholder="Bairro"
                             handleOnChange={handleChange}
-                            value={dados.banco_funcionario ? dados.banco_funcionario : ''}
+                            value={dados.bairro_da_mae ? dados.bairro_da_mae : ''}
                         />
                     </div>
                     <div className={styles.divmae10}>
@@ -420,28 +427,37 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
-
+                    <div className={styles.divmae11}>
+                        <Input
+                            type="text"
+                            text="E-mail"
+                            name="email_da_mae"
+                            placeholder="E-mail"
+                            handleOnChange={handleChange}
+                            value={dados.email_da_mae ? dados.email_da_mae : ''}
+                        />
+                    </div>
                 </div>
 
                 <div className={styles.container}>
                     <div className={styles.divmae1}>
                         <Input
                             type="text"
-                            text="Nome do responsável financeiro"
-                            name="resp_financeiro"
+                            text="Nome do pai"
+                            name="nome_do_pai"
                             placeholder="Nome completo"
                             handleOnChange={handleChange}
-                            value={dados.resp_financeiro ? dados.resp_financeiro : ''}
+                            value={dados.nome_do_pai ? dados.nome_do_pai : ''}
                         />
                     </div>
                     <div className={styles.div2}>
                         <Input
                             type="date"
                             text="Data de nasc."
-                            name="data_funcionario"
+                            name="data_do_pai"
                             placeholder="00/00/0000"
                             handleOnChange={handleChange}
-                            value={dados.data_funcionario ? dados.data_funcionario : ''}
+                            value={dados.data_do_pai ? dados.data_do_pai : ''}
                             min={dataMinima}
                             max={dataMaxima}
                         />
@@ -450,10 +466,10 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="text"
                             text="CPF:"
-                            name="cpf_financeiro"
+                            name="cpf_do_pai"
                             placeholder="000.000.000-00"
                             handleOnChange={handleCPFChange}
-                            value={dados.cpf_financeiro ? dados.cpf_financeiro : ''}
+                            value={dados.cpf_do_pai ? dados.cpf_do_pai : ''}
                             onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
@@ -461,74 +477,83 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="text"
                             text="RG:"
-                            name="rg_financeiro"
+                            name="rg_do_pai"
                             placeholder="000.000.000-00"
                             handleOnChange={handleRGChange}
-                            value={dados.rg_financeiro ? dados.rg_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 8)}
+                            value={dados.rg_do_pai ? dados.rg_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 9)}
                         />
                     </div>
-
+                    <div className={styles.divmae4}>
+                        <Input
+                            type="text"
+                            text="Telefone 1"
+                            name="telefone1_do_pai"
+                            placeholder="Telefone 1"
+                            handleOnChange={handleTelefoneChange}
+                            value={dados.telefone1_do_pai ? dados.telefone1_do_pai : ''}
+                            onInput={(e) => handleInputLimit(e, 15)}
+                        />
+                    </div>
                     <div className={styles.divmae5}>
                         <Input
                             type="text"
                             text="Telefone 2:"
-                            name="telefone2_financeiro"
+                            name="telefone2_do_pai"
                             placeholder="Telefone 2"
                             handleOnChange={handleTelefoneChange}
-                            value={dados.telefone2_financeiro ? dados.telefone2_financeiro : ''}
+                            value={dados.telefone2_do_pai ? dados.telefone2_do_pai : ''}
                             onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
-
                     <div className={styles.divmae6}>
                         <Input
                             type="text"
                             text="Endereço"
-                            name="endereco_financeiro"
+                            name="endereco_do_pai"
                             placeholder="Endereço"
                             handleOnChange={handleChange}
-                            value={dados.endereco_financeiro ? dados.endereco_financeiro : ''}
+                            value={dados.endereco_do_pai ? dados.endereco_do_pai : ''}
                         />
                     </div>
                     <div className={styles.divmae7}>
                         <Input
                             type="number"
                             text="Nº"
-                            name="n_financeiro"
+                            name="n_do_pai"
                             placeholder="Nº"
                             handleOnChange={handleChange}
-                            value={dados.n_financeiro ? dados.n_financeiro : ''}
+                            value={dados.n_do_pai ? dados.n_do_pai : ''}
                         />
                     </div>
                     <div className={styles.divmae8}>
                         <Input
                             type="text"
                             text="Cidade"
-                            name="cidade_financeiro"
+                            name="cidade_do_pai"
                             placeholder="Cidade"
                             handleOnChange={handleChange}
-                            value={dados.cidade_financeiro ? dados.cidade_financeiro : ''}
+                            value={dados.cidade_do_pai ? dados.cidade_do_pai : ''}
                         />
                     </div>
                     <div className={styles.divmae9}>
                         <Input
                             type="text"
                             text="Bairro"
-                            name="bairro_financeiro"
+                            name="bairro_do_pai"
                             placeholder="Bairro"
                             handleOnChange={handleChange}
-                            value={dados.bairro_financeiro ? dados.bairro_financeiro : ''}
+                            value={dados.bairro_do_pai ? dados.bairro_do_pai : ''}
                         />
                     </div>
                     <div className={styles.divmae10}>
                         <Input
                             type="text"
                             text="CEP"
-                            name="cep_financeiro"
+                            name="cep_do_pai"
                             placeholder="000.000-00"
                             handleOnChange={handleCEPChange}
-                            value={dados.cep_financeiro ? dados.cep_financeiro : ''}
+                            value={dados.cep_do_pai ? dados.cep_do_pai : ''}
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
@@ -536,21 +561,14 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="text"
                             text="E-mail"
-                            name="email_financeiro"
+                            name="email_do_pai"
                             placeholder="E-mail"
                             handleOnChange={handleChange}
-                            value={dados.email_financeiro ? dados.email_financeiro : ''}
+                            value={dados.email_do_pai ? dados.email_do_pai : ''}
                         />
                     </div>
                 </div>
                 <div className={styles.containerbotao}>
-                    <Botao
-                        type="button"
-                        onclick={handleClear}
-                        title="Limpar"
-                        icone={<IoTrashBinOutline />}
-                        classname={styles.botao4}
-                    />
                     <Botao
                         title="Salvar"
                         icone={<TfiSave />}
@@ -559,8 +577,5 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                 </div>
             </form>
         </>
-    )
-
+    );
 }
-
-export default InfoDosFuncionarios;
