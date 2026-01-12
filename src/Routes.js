@@ -14,6 +14,8 @@ import PaginaAluno from "./pages/PaginaAluno/PaginaAluno.js";
 import PaginaFinanceiro from "./pages/PaginaFinanceiro/PaginaFinanceiro.js";
 import PaginaFuncionario from "./pages/PaginaFuncionario/PaginaFuncionario.js";
 import DadosDosFuncionarios from "./pages/DadosDosFuncionarios/DadosDosFuncionarios.js";
+import DadosTurmas from "./pages/DadosTurmas/DadosTurmas.js";
+import InfoDasTurmas from "./componentes/Formulario/InfoDasTurmas/InfoDasTurmas.js";
 
 const AppRoutes = () => {
     return (
@@ -26,6 +28,7 @@ const AppRoutes = () => {
                     <Route path="/Funcionarios/DadosDosFuncionarios" element={<DadosDosFuncionarios />}></Route>
                     <Route path="/Financeiro" element={<Financeiro />}></Route>
                     <Route path="/Turmas" element={<Turmas />}></Route>
+                    <Route path="/Turmas/InfoDasTurmas" element={<InfoDasTurmas />}></Route>
                     <Route path="/Funcionarios" element={<Funcionarios />}></Route>
                     <Route path="/Historico/:id" element={<Historico />}></Route>
                     
@@ -33,6 +36,7 @@ const AppRoutes = () => {
                     <Route path="/PaginaAluno/:id" element={<PaginaAluno />}></Route>
                     <Route path="/PaginaFinanceiro/:id" element={<PaginaFinanceiro />}></Route>
                     <Route path="/PaginaFuncionario/:id" element={<PaginaFuncionario />}></Route>
+                    <Route path="/DadosTurmas/:id" element={<DadosTurmas />}></Route>
                 </Routes>
             </NavbarProvider>
         </Router>

@@ -1,302 +1,171 @@
 {
   "alunos": [
     {
-      "id": "e108fa1d-a82b-424c-91e3-502d0dc071ad",
+      "id": "75776f38-3460-4f72-a43c-18f3c3ea203b",
       "nome": "Francisco João da Silva Neto Boni",
       "endereco": "Abreu e Lima",
       "cidade": "Recife",
       "cep": "53580760",
-      "nome_do_pai": "Francisco João da Silva Neto Boni",
-      "telefone1_do_pai": "81971199800",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "cpf": "12312312312",
+      "nome_da_mae": "Danielle Nascimento da Silva",
+      "telefone1_da_mae": "81998292317",
+      "endereco_da_mae": "Rua Júlio Moliterno, 33",
+      "cidade_da_mae": "Abreu e Lima",
+      "cep_da_mae": "53510530",
+      "email_da_mae": "Danielle.nsilva@ufrpe.br",
+      "resp_financeiro": "Danielle Nascimento da Silva",
+      "telefone1_financeiro": "81998292317",
+      "endereco_financeiro": "Rua Júlio Moliterno, 33",
+      "cidade_financeiro": "Abreu e Lima",
+      "cep_financeiro": "53510530",
+      "email_financeiro": "Danielle.nsilva@ufrpe.br",
+      "matricula": 1,
+      "data": "2022-02-12"
+    },
+    {
+      "id": "86684542-6954-4d06-a74d-88a41b808066",
+      "nome": "Bernardo João da Silva Neto Boni",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53580760",
+      "nome_da_mae": "Julia Nascimento da Silva",
+      "telefone1_da_mae": "81998292317",
+      "endereco_da_mae": "Rua Júlio Moliterno, 33",
+      "cidade_da_mae": "Abreu e Lima",
+      "cep_da_mae": "53510530",
+      "email_da_mae": "Danielle.nsilva@ufrpe.br",
+      "resp_financeiro": "Mariete Nascimento da Silva",
+      "telefone1_financeiro": "81998292317",
+      "endereco_financeiro": "Rua Júlio Moliterno, 33",
+      "cidade_financeiro": "Abreu e Lima",
+      "cep_financeiro": "53510530",
+      "email_financeiro": "Danielle.nsilva@ufrpe.br",
+      "data": "2008-05-01",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "matricula": 5
+    },
+    {
+      "id": "352ed4ba-446f-4a6c-8e33-d8d9c6eac349",
+      "nome": "Suzana Alice Gomes",
+      "data": "2009-04-22",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "nome_da_mae": "Julia Maria da Silva",
+      "telefone1_da_mae": "81998292317",
+      "endereco_da_mae": "Rua Júlio Moliterno, 33",
+      "cidade_da_mae": "Abreu e Lima",
+      "cep_da_mae": "53510530",
+      "email_da_mae": "Danielle.nsilva@ufrpe.br",
+      "resp_financeiro": "Julia Maria da Silva",
+      "telefone1_financeiro": "81998292317",
+      "endereco_financeiro": "Rua Júlio Moliterno, 33",
+      "cidade_financeiro": "Abreu e Lima",
+      "cep_financeiro": "53510530",
+      "email_financeiro": "Danielle.nsilva@ufrpe.br",
+      "matricula": 6
+    },
+    {
+      "id": "082952ef-b449-4a65-b12d-f61adfbb880e",
+      "nome": "Rafael Gomes Luiz",
+      "data": "2011-11-25",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "nome_da_mae": "Berenice Odete da Silva",
+      "telefone1_da_mae": "81971199800",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "53580760",
+      "resp_financeiro": "Berenice Odete da Silva",
+      "telefone1_financeiro": "81971199800",
+      "endereco_financeiro": "Abreu e Lima",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "53580760",
+      "matricula": 7
+    },
+    {
+      "id": "e22686df-eb0f-4b8c-b68d-300c3cf38a94",
+      "nome": "Nome do Aluno COmpleto",
+      "data": "2022-12-15",
+      "naturalidade": "olinda",
+      "sexo": "M",
+      "turma": {
+        "id": "1",
+        "nome": "Maternal II"
+      },
+      "turno": {
+        "id": "11",
+        "nome": "Manhã"
+      },
+      "cpf": "12312312312",
+      "endereco": "Abreu e Lima",
+      "cidade": "Recife",
+      "cep": "53555555",
+      "n": "12",
+      "bairro": "centro",
+      "nome_da_mae": "Nome da Mãe completo",
+      "data_da_mae": "2000-12-12",
+      "cpf_da_mae": "12312312312",
+      "rg_da_mae": "1231231",
+      "telefone1_da_mae": "8199999999",
+      "telefone2_da_mae": "81988888888",
+      "endereco_da_mae": "Abreu e Lima",
+      "cidade_da_mae": "Recife",
+      "cep_da_mae": "5355555",
+      "email_da_mae": "email@gmail.com",
+      "resp_financeiro": "Nome da Mãe completo",
+      "data_financeiro": "2000-12-12",
+      "cpf_financeiro": "12312312312",
+      "rg_financeiro": "1231231",
+      "telefone1_financeiro": "8199999999",
+      "telefone2_financeiro": "81988888888",
+      "endereco_financeiro": "Abreu e Lima",
+      "n_financeiro": "12",
+      "cidade_financeiro": "Recife",
+      "cep_financeiro": "",
+      "email_financeiro": "email@gmail.com",
+      "nome_do_pai": "Nome do pai Completo",
+      "data_do_pai": "1991-11-11",
+      "cpf_do_pai": "12312312312",
+      "rg_do_pai": "5555555",
+      "telefone1_do_pai": "8199999999",
+      "telefone2_do_pai": "8188888888",
       "endereco_do_pai": "Abreu e Lima",
       "cidade_do_pai": "Recife",
       "cep_do_pai": "53580760",
-      "resp_financeiro": "Francisco João da Silva Neto Boni",
-      "telefone1_financeiro": "81971199800",
-      "endereco_financeiro": "Abreu e Lima",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "53580760",
-      "matricula": 1
-    },
-    {
-      "id": "10ea1cb5-7249-4bc1-9aeb-a5863e82943b",
-      "nome": "Francisco João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
-      "nome_da_mae": "Francisco João da Silva Neto Boni",
-      "telefone1_da_mae": "81971199800",
-      "endereco_da_mae": "Abreu e Lima",
-      "cidade_da_mae": "Recife",
-      "cep_da_mae": "53580760",
-      "resp_financeiro": "Francisco João da Silva Neto Boni",
-      "telefone1_financeiro": "81971199800",
-      "endereco_financeiro": "Abreu e Lima",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "53580760",
-      "matricula": 2
-    },
-    {
-      "id": "cbdb6267-fb33-43b4-bb49-32eac4bb5a07",
-      "nome_da_mae": "asd",
-      "resp_financeiro": "asd",
-      "telefone1_financeiro": "81971199800",
-      "endereco_financeiro": "Abreu e Lima",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "53580760",
-      "endereco_da_mae": "Abreu e Lima",
-      "telefone1_da_mae": "81971199800",
-      "cidade_da_mae": "Recife",
-      "cep_da_mae": "53580760",
-      "matricula": 3
-    },
-    {
-      "id": "ed7d4bf0-ac8c-4140-8a9c-f3f9e359b5f8",
-      "rg_financeiro": "",
-      "rg_funcionario": "",
-      "cpf": "",
-      "matricula": 4
+      "n_da_mae": "12",
+      "n_do_pai": "12",
+      "email_do_pai": "email@gmail.com",
+      "matricula": 8
     }
   ],
   "financeiro": [
-    {
-      "id": "e108fa1d-a82b-424c-91e3-502d0dc071ad",
-      "valor_matricula": 100,
-      "desconto_matricula": 0,
-      "valor_mensalidade": 100,
-      "desconto": 0,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "8",
-        "nome": "Agosto"
-      },
-      "total_mensalidade": 200,
-      "total_matricula": 100,
-      "renda_complementar": [
-        {
-          "id": "3111",
-          "nome": "Transporte",
-          "valor": 100
-        }
-      ],
-      "boletos": [
-        {
-          "id": "63234c6e-8a4c-4d6f-b5a1-7680f710f2a8",
-          "valor": 200,
-          "dia_pagamento": "21/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/10/2025",
-          "mes_id": "10",
-          "mes": "outubro"
-        },
-        {
-          "id": "7dd48954-c045-42a5-a129-ef29db9d0bfc",
-          "valor": 200,
-          "dia_pagamento": "21/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
-          "mes_id": "11",
-          "mes": "novembro"
-        },
-        {
-          "id": "8bc88189-519b-482a-aa06-e6455e3dfb05",
-          "valor": 200,
-          "dia_pagamento": "21/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ],
-      "boletos_pagos": [
-        {
-          "id": "cc0db548-f843-4844-98e4-de137eb147e6",
-          "boletoOriginalId": "610d3e42-119a-4a04-9867-231a270c63eb",
-          "valor": 200,
-          "dataVencimento": "12/08/2025",
-          "mes": "agosto",
-          "mes_id": "8",
-          "dataPagamento": "21/09/2025"
-        },
-        {
-          "id": "a647eb59-2fcf-4fcb-97d2-4460295d8064",
-          "boletoOriginalId": "6e7d016d-bf38-4242-b124-f761b3bcd74b",
-          "valor": 200,
-          "dataVencimento": "12/09/2025",
-          "mes": "setembro",
-          "mes_id": "9",
-          "dataPagamento": "28/09/2025"
-        }
-      ]
-    },
-    {
-      "id": "10ea1cb5-7249-4bc1-9aeb-a5863e82943b",
-      "valor_matricula": 100,
-      "desconto_matricula": 0,
-      "valor_mensalidade": 100,
-      "desconto": 10,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "11",
-        "nome": "Novembro"
-      },
-      "total_mensalidade": 340,
-      "total_matricula": 100,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "edd58e6d-1f56-4eb2-8580-16f9a0e29e51",
-          "valor": 340,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
-          "mes_id": "11",
-          "mes": "novembro"
-        },
-        {
-          "id": "0ce75a09-2f6e-491f-a5a4-573ba49665b1",
-          "valor": 340,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "cbdb6267-fb33-43b4-bb49-32eac4bb5a07",
-      "valor_matricula": 100,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 500,
-      "desconto": 15,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "8",
-        "nome": "Agosto"
-      },
-      "total_mensalidade": 735,
-      "total_matricula": 90,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "dbfd4602-8b52-4cc4-99b4-58bcbc924bd5",
-          "valor": 735,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/08/2025",
-          "mes_id": "8",
-          "mes": "agosto"
-        },
-        {
-          "id": "b767125f-55f9-417d-b734-2df5105c049b",
-          "valor": 735,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/09/2025",
-          "mes_id": "9",
-          "mes": "setembro"
-        },
-        {
-          "id": "5eaf9a34-b216-4277-9b44-882d5ebc5732",
-          "valor": 735,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/10/2025",
-          "mes_id": "10",
-          "mes": "outubro"
-        },
-        {
-          "id": "850f01f2-e089-4944-8619-989ea7aacf0c",
-          "valor": 735,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
-          "mes_id": "11",
-          "mes": "novembro"
-        },
-        {
-          "id": "c1153ee0-6e6f-472b-8c50-5bd1e4ec7ea7",
-          "valor": 735,
-          "dia_pagamento": "28/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "ed7d4bf0-ac8c-4140-8a9c-f3f9e359b5f8",
-      "valor_matricula": 100,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 100,
-      "desconto": 10,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "9",
-        "nome": "Setembro"
-      },
-      "total_mensalidade": 340,
-      "total_matricula": 90,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "3eb6151d-a132-4e59-b9aa-4e773d10749c",
-          "valor": 340,
-          "dia_pagamento": "29/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/09/2025",
-          "mes_id": "9",
-          "mes": "setembro"
-        },
-        {
-          "id": "98dd3f86-dd8c-41f0-b413-de5a5a5aa875",
-          "valor": 340,
-          "dia_pagamento": "29/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/10/2025",
-          "mes_id": "10",
-          "mes": "outubro"
-        },
-        {
-          "id": "57d1f906-5671-4086-bd72-0ad15f69137e",
-          "valor": 340,
-          "dia_pagamento": "29/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
-          "mes_id": "11",
-          "mes": "novembro"
-        },
-        {
-          "id": "db61576a-a4e0-4e1e-a6f3-450e19556dd5",
-          "valor": 340,
-          "dia_pagamento": "29/09/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
     {
       "id": "2d726580-8b20-49c6-b343-f0e51a8e99b2",
       "valor_matricula": 123.33,
@@ -418,6 +287,211 @@
           "mes": "dezembro"
         }
       ]
+    },
+    {
+      "id": "75776f38-3460-4f72-a43c-18f3c3ea203b",
+      "valor_matricula": 1233.22,
+      "desconto_matricula": 123.33,
+      "valor_mensalidade": 123.33,
+      "desconto": 0.11,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "8",
+        "nome": "Agosto"
+      },
+      "total_mensalidade": 373.21999999999997,
+      "total_matricula": 1109.89,
+      "renda_complementar": [
+        {
+          "id": "311",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "612647f0-7307-4862-9904-862dc479fc36",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/08/2025",
+          "mes_id": "8",
+          "mes": "agosto"
+        },
+        {
+          "id": "5bb32a86-f631-47f0-85da-25b0187fd9dd",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2025",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "3a3cc374-85e6-4f7e-b696-5257192eb69e",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2025",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "560ef41b-492a-4230-852d-cd61da8d8990",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "8561a69d-f78e-4e1a-9c9d-24e46ea2efe5",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "86684542-6954-4d06-a74d-88a41b808066",
+      "valor_matricula": 122.22,
+      "desconto_matricula": 10,
+      "valor_mensalidade": 123.33,
+      "desconto": 0.12,
+      "dia_vencimento": "20",
+      "meses": {
+        "id": "12",
+        "nome": "Dezembro"
+      },
+      "total_mensalidade": 373.21,
+      "total_matricula": 112.22,
+      "renda_complementar": [
+        {
+          "id": "311",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "f2339de3-792d-4641-8ad5-5ee480ae015a",
+          "valor": 373.21,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 20,
+          "data_vencimento": "20/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "352ed4ba-446f-4a6c-8e33-d8d9c6eac349",
+      "valor_matricula": 122.22,
+      "desconto_matricula": 1.22,
+      "valor_mensalidade": 123.33,
+      "desconto": 0.11,
+      "dia_vencimento": "20",
+      "meses": {
+        "id": "12",
+        "nome": "Dezembro"
+      },
+      "total_mensalidade": 373.21999999999997,
+      "total_matricula": 121,
+      "renda_complementar": [
+        {
+          "id": "311",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "fb9223d5-9fbf-44d7-afa8-223404cc787e",
+          "valor": 373.21999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 20,
+          "data_vencimento": "20/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "082952ef-b449-4a65-b12d-f61adfbb880e",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 1.23,
+      "valor_mensalidade": 123.33,
+      "desconto": 1.23,
+      "dia_vencimento": "28",
+      "meses": {
+        "id": "12",
+        "nome": "Dezembro"
+      },
+      "total_mensalidade": 372.09999999999997,
+      "total_matricula": 122.1,
+      "renda_complementar": [
+        {
+          "id": "311",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "a0cb3820-c62b-4f1f-bce6-fd3b71de56ba",
+          "valor": 372.09999999999997,
+          "dia_pagamento": "14/12/2025",
+          "dia_vencimento": 28,
+          "data_vencimento": "28/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "e22686df-eb0f-4b8c-b68d-300c3cf38a94",
+      "valor_matricula": 123.33,
+      "desconto_matricula": 12.33,
+      "valor_mensalidade": 123.33,
+      "desconto": 12.33,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "11",
+        "nome": "Novembro"
+      },
+      "total_mensalidade": 361,
+      "total_matricula": 111,
+      "renda_complementar": [
+        {
+          "id": "311",
+          "nome": "Transporte",
+          "valor": 250
+        }
+      ],
+      "boletos": [
+        {
+          "id": "4ba41cad-36ff-4c11-9b7a-02d1bc384ce5",
+          "valor": 361,
+          "dia_pagamento": "17/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2025",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "ba252d1e-bebc-4455-8de6-000ff89416d1",
+          "valor": 361,
+          "dia_pagamento": "17/12/2025",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2025",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
     }
   ],
   "opcoesturma": [
@@ -450,22 +524,43 @@
   ],
   "turmas": [
     {
-      "id": "1",
-      "professor": "Nome do Professor da Silva Grande",
-      "turma": "1º Ano",
-      "turno": "manhã",
-      "qtdalunos": "10"
+      "id": "a6dd",
+      "nome_turma": "teste",
+      "turma_turno": "Manhã",
+      "turma_professor": "Tomas1",
+      "turma_mensalidade": "123123",
+      "turma_diasletivos": "1222",
+      "inicio_aulas": "1995-08-12",
+      "previsao_aulas": "1997-05-12"
     }
   ],
   "funcionarios": [
     {
-      "id": "c5d3a5cf-d53c-4fd2-8afb-7303b0034db9",
-      "nome_funcionario": "Francisco João da Silva Neto",
+      "id": "7709a4c4-011f-4d7f-ab73-38fa2547713b",
+      "data_da_entrada_funcionario": "2022-02-12",
+      "data_funcionario": "2012-12-12",
+      "nome_funcionario": "teste 123asdasd",
+      "matricula": 2,
+      "telefone2_funcionario": "(81) 97119-9800",
       "telefone1_funcionario": "(81) 97119-9800",
       "endereco_funcionario": "Abreu e Lima",
       "cidade_funcionario": "Recife",
       "cep_funcionario": "53580-760",
-      "matricula": 1
+      "bairro_funcionario": "Abreu e Lima",
+      "sexo": "M",
+      "naturalidade_funcionario": "Olinda",
+      "funcao": "Professor",
+      "cpf_funcinoario": "000.000.000-00",
+      "cpf_funcionario": "000.000.000-01",
+      "n_funcionario": "2",
+      "email_funcionario": "asd@gmail.com",
+      "salario": "R$ 120,00",
+      "pix_funcionario": "20504060",
+      "agencia_funcionario": "11111",
+      "n_conta_funcionario": "2",
+      "digito_funcionario": "2",
+      "banco_funcionario": "2",
+      "rg_funcionario": "5.555.552"
     }
   ],
   "dadosfinanceiros": [

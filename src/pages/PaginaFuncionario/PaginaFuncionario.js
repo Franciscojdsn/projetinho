@@ -11,7 +11,7 @@ import EditarDadosFuncionario from '../../componentes/Formulario/EditarDadosFunc
 import Loading from '../../componentes/Formulario/Componentes/Loading/Loading';
 import InputExibirFuncionario from '../../componentes/Formulario/Componentes/InputExibirFuncionario/InputExibirFuncionario';
 
-function PaginaAluno() {
+function PaginaFuncionario() {
 
     const navigate = useNavigate()
     const { id } = useParams();
@@ -152,13 +152,6 @@ function PaginaAluno() {
                                                 alt="Foto do Aluno"
                                             />
                                             <div>
-                                                <Link to={`/Historico/${id}`}>
-                                                    <Botao
-                                                        title="Funcionario"
-                                                        classname={styles.botao3}
-                                                        icone={<AiOutlineEdit />}
-                                                    />
-                                                </Link>
                                                 <Link to={`/PaginaFinanceiro/${id}`}>
                                                     <Botao
                                                         title="Financeiro"
@@ -172,59 +165,41 @@ function PaginaAluno() {
                                         <div className={styles.containercabecalho}>
                                             <InputExibirFuncionario
                                                 nome_funcionario={funcionarios.nome_funcionario}
-                                                data_nasc={funcionarios.data ? (() => {
-                                                    const data = new Date(funcionarios.data);
+                                                data_funcionario={funcionarios.data_funcionario ? (() => {
+                                                    const data = new Date(funcionarios.data_funcionario);
                                                     const dia = String(data.getDate()).padStart(2, '0');
                                                     const mes = String(data.getMonth() + 1).padStart(2, '0');
                                                     const ano = data.getFullYear();
                                                     return `${dia}/${mes}/${ano}`;
                                                 })() : 'Não informada'}
-                                                naturalidade={funcionarios.naturalidade}
+                                                naturalidade={funcionarios.naturalidade_funcionario}
                                                 genero={funcionarios.sexo}
-                                                cpf_aluno={funcionarios.cpf ? formatCPF(funcionarios.cpf) : 'Não informado'}
-                                                turma={funcionarios.turma ? funcionarios.turma.nome : ''}
-                                                turno={funcionarios.turno ? funcionarios.turno.nome : ''}
-                                                endereco_aluno={funcionarios.endereco}
-                                                n_aluno={funcionarios.n}
-                                                cidade_aluno={funcionarios.cidade}
-                                                bairro_aluno={funcionarios.bairro}
-                                                cep_aluno={funcionarios.cep ? formatCEP(funcionarios.cep) : 'Não informado'}
+                                                cpf_funcionario={funcionarios.cpf_funcionario ? formatCPF(funcionarios.cpf_funcionario) : 'Não informado'}
+                                                endereco_funcionario={funcionarios.endereco_funcionario}
+                                                n_funcionario={funcionarios.n_funcionario}
+                                                cidade_funcionario={funcionarios.cidade_funcionario}
+                                                bairro_funcionario={funcionarios.bairro_funcionario}
+                                                cep_funcionario={funcionarios.cep_funcionario ? formatCEP(funcionarios.cep_funcionario) : 'Não informado'}
                                                 nome_mae={funcionarios.nome_da_mae}
-                                                data_mae={funcionarios.data_da_mae ? (() => {
-                                                    const data = new Date(funcionarios.data_da_mae);
+                                                data_da_entrada_funcionario={funcionarios.data_da_entrada_funcionario ? (() => {
+                                                    const data = new Date(funcionarios.data_da_entrada_funcionario);
                                                     const dia = String(data.getDate()).padStart(2, '0');
                                                     const mes = String(data.getMonth() + 1).padStart(2, '0');
                                                     const ano = data.getFullYear();
                                                     return `${dia}/${mes}/${ano}`;
                                                 })() : 'Não informada'}
                                                 cpf_mae={funcionarios.cpf_da_mae ? formatCPF(funcionarios.cpf_da_mae) : 'Não informado'}
-                                                rg_mae={funcionarios.rg_da_mae ? formatRG(funcionarios.rg_da_mae) : 'Não informado'}
-                                                telefone1_mae={funcionarios.telefone1_da_mae ? formatTelefone(funcionarios.telefone1_da_mae) : 'Não informado'}
-                                                telefone2_mae={funcionarios.telefone2_da_mae ? formatTelefone(funcionarios.telefone2_da_mae) : 'Não informado'}
-                                                endereco_mae={funcionarios.endereco_da_mae}
-                                                n_mae={funcionarios.n_da_mae}
-                                                cidade_mae={funcionarios.cidade_da_mae}
-                                                bairro_mae={funcionarios.bairro_da_mae}
-                                                cep_mae={funcionarios.cep_da_mae ? formatCEP(funcionarios.cep_da_mae) : 'Não informado'}
-                                                email_mae={funcionarios.email_da_mae}
-                                                nome_pai={funcionarios.nome_do_pai}
-                                                data_pai={funcionarios.data_do_pai ? (() => {
-                                                    const data = new Date(funcionarios.data_do_pai);
-                                                    const dia = String(data.getDate()).padStart(2, '0');
-                                                    const mes = String(data.getMonth() + 1).padStart(2, '0');
-                                                    const ano = data.getFullYear();
-                                                    return `${dia}/${mes}/${ano}`;
-                                                })() : 'Não informada'}
-                                                cpf_pai={funcionarios.cpf_do_pai ? formatCPF(funcionarios.cpf_do_pai) : 'Não informado'}
-                                                rg_pai={funcionarios.rg_do_pai ? formatRG(funcionarios.rg_do_pai) : 'Não informado'}
-                                                telefone1_pai={funcionarios.telefone1_do_pai ? formatTelefone(funcionarios.telefone1_do_pai) : 'Não informado'}
-                                                telefone2_pai={funcionarios.telefone2_do_pai ? formatTelefone(funcionarios.telefone2_do_pai) : 'Não informado'}
-                                                endereco_pai={funcionarios.endereco_do_pai}
-                                                n_pai={funcionarios.n_do_pai}
-                                                cidade_pai={funcionarios.cidade_do_pai}
-                                                bairro_pai={funcionarios.bairro_do_pai}
-                                                cep_pai={funcionarios.cep_do_pai ? formatCEP(funcionarios.cep_do_pai) : 'Não informado'}
-                                                email_pai={funcionarios.email_do_pai}
+                                                rg_funcionario={funcionarios.rg_funcionario ? formatRG(funcionarios.rg_funcionario) : 'Não informado'}
+                                                telefone1_funcionario={funcionarios.telefone1_funcionario ? formatTelefone(funcionarios.telefone1_funcionario) : 'Não informado'}
+                                                telefone2_funcionario={funcionarios.telefone2_funcionario ? formatTelefone(funcionarios.telefone2_funcionario) : 'Não informado'}
+                                                funcao={funcionarios.funcao}
+                                                pix_funcionario={funcionarios.pix_funcionario}
+                                                agencia_funcionario={funcionarios.agencia_funcionario}
+                                                n_conta_funcionario={funcionarios.n_conta_funcionario}
+                                                digito_funcionario={funcionarios.digito_funcionario}
+                                                banco_funcionario={funcionarios.banco_funcionario}
+                                                salario={funcionarios.salario}
+                                                email_funcionario={funcionarios.email_funcionario}
                                             />
                                         </div>
                                     </>
@@ -253,4 +228,4 @@ function PaginaAluno() {
 
 }
 
-export default PaginaAluno;
+export default PaginaFuncionario;

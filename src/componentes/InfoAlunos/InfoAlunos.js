@@ -66,7 +66,7 @@ function InfoAlunos() {
                 title1="Total Alunos"
                 title2="Pendentes"
                 valor1={totalAlunos}
-                valor2={alunosPendentes}
+                valor2={alunosPendentes - 1}
             />
         </div>
     )

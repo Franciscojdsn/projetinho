@@ -1,9 +1,10 @@
 import styles from "./InfoTurmas.module.css"
+import { Link } from "react-router-dom";
 import { MdOutlineAddHomeWork } from "react-icons/md";
 
 import Botao from "../Botao/index"
 
-export default function Turmas() {
+export default function InfoTurmas() {
 
     return (
         <>
@@ -14,11 +15,13 @@ export default function Turmas() {
                 <div>
                     <h1>Turmas</h1>
                 </div>
-                    <Botao
-                        title="Nova Turma"
-                        icone={<MdOutlineAddHomeWork />}
-                        classname={styles.botao}>
-                    </Botao>
+                    <Link to={'/Turmas/InfoDasTurmas'}> 
+                        <Botao
+                            title="Nova Turma"
+                            icone={<MdOutlineAddHomeWork />}
+                            classname={styles.botao}>
+                        </Botao>
+                    </Link>
             </div>
 
             <li className={styles.titulolista}>

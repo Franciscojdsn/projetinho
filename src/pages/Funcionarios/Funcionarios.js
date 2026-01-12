@@ -57,16 +57,16 @@ const Funcionarios = () => {
                     key={funcionario.id}
                     id={funcionario.matricula}
                     nome={funcionario.nome_funcionario}
-                    responsavel={funcionario.resp_financeiro ? funcionario.resp_financeiro : ''}
-                    data={funcionario.data ? (() => {
-                        const data = new Date(funcionario.data);
+                    responsavel={funcionario.endereco_funcionario ? funcionario.endereco_funcionario : ''}
+                    data={funcionario.data_funcionario ? (() => {
+                        const data = new Date(funcionario.data_funcionario);
                         const dia = String(data.getDate()).padStart(2, '0');
                         const mes = String(data.getMonth() + 1).padStart(2, '0');
                         const ano = data.getFullYear();
                         return `${dia}/${mes}/${ano}`;
                     })() : 'Não informada'}
-                    turma={funcionario.turma ? funcionario.turma.nome : ''}
-                    turno={funcionario.turno ? funcionario.turno.nome : ''}
+                    turma={funcionario.funcao ? funcionario.funcao : ''}
+                    turno={funcionario.telefone1_funcionario ? funcionario.telefone1_funcionario : ''}
                     icone={<CiCircleMore />}
                     link={`/PaginaFuncionario/${funcionario.id}`}
                 />

@@ -79,6 +79,23 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         console.log(dados);
     }
 
+    function handleChangeReais(e) {
+        const { name, value } = e.target;
+
+        // Remove caracteres não numéricos
+        const numericValue = value.replace(/\D/g, '');
+
+        // Formata o valor como reais
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(numericValue / 100); // Divide por 100 para considerar os centavos
+
+        // Atualiza o estado com o valor formatado
+        setDados({ ...dados, [name]: formattedValue });
+        console.log({ ...dados, [name]: formattedValue });
+    }
+
     // Função de limpar dados (ajeitar)
     function removerFormatacao(dados) {
         const camposParaRemoverFormatacao = [
@@ -224,7 +241,7 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                             name="telefone2_funcionario"
                             placeholder="Telefone 2"
                             handleOnChange={handleTelefoneChange}
-                            value={dados.telefone2_funcinario ? dados.telefone2_funcinario : ''}
+                            value={dados.telefone2_funcionario ? dados.telefone2_funcionario : ''}
                             onInput={(e) => handleInputLimit(e, 15)}
                         />
                     </div>
@@ -232,10 +249,10 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                         <Input
                             type="text"
                             text="CPF:"
-                            name="cpf_funcinoario"
+                            name="cpf_funcionario"
                             placeholder="000.000.000-00"
                             handleOnChange={handleCPFChange}
-                            value={dados.cpf_funcinoario ? dados.cpf_funcinoario : ''}
+                            value={dados.cpf_funcionario ? dados.cpf_funcionario : ''}
                             onInput={(e) => handleInputLimit(e, 14)}
                         />
                     </div>
@@ -344,7 +361,8 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                             text="Salário:"
                             name="salario"
                             placeholder="R$ 0,00"
-                            onInput={(e) => handleInputLimit(e, 9)}
+                            handleOnChange={handleChangeReais}
+                            value={dados.salario ? dados.salario : ''}
                         />
                     </div>
                     <div className={styles.divmae4}>
@@ -357,17 +375,6 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                             value={dados.pix_funcionario ? dados.pix_funcionario : ''}
                         />
                     </div>
-
-                    <div className={styles.divmae12}>
-                        <Botao
-                            id="copiarDados"
-                            onclick={handleClick}
-                            type="button"
-                            classname={styles.botao3}
-                            title="Resp. Financeiro"
-                        />
-                    </div>
-
 
                     <div className={styles.divmae6}>
                         <Input
@@ -420,129 +427,9 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
                             onInput={(e) => handleInputLimit(e, 8)}
                         />
                     </div>
-
                 </div>
 
-                <div className={styles.container}>
-                    <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Nome do responsável financeiro"
-                            name="resp_financeiro"
-                            placeholder="Nome completo"
-                            handleOnChange={handleChange}
-                            value={dados.resp_financeiro ? dados.resp_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.div2}>
-                        <Input
-                            type="date"
-                            text="Data de nasc."
-                            name="data_funcionario"
-                            placeholder="00/00/0000"
-                            handleOnChange={handleChange}
-                            value={dados.data_funcionario ? dados.data_funcionario : ''}
-                            min={dataMinima}
-                            max={dataMaxima}
-                        />
-                    </div>
-                    <div className={styles.divmae2}>
-                        <Input
-                            type="text"
-                            text="CPF:"
-                            name="cpf_financeiro"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleCPFChange}
-                            value={dados.cpf_financeiro ? dados.cpf_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 14)}
-                        />
-                    </div>
-                    <div className={styles.divmae3}>
-                        <Input
-                            type="text"
-                            text="RG:"
-                            name="rg_financeiro"
-                            placeholder="000.000.000-00"
-                            handleOnChange={handleRGChange}
-                            value={dados.rg_financeiro ? dados.rg_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 8)}
-                        />
-                    </div>
 
-                    <div className={styles.divmae5}>
-                        <Input
-                            type="text"
-                            text="Telefone 2:"
-                            name="telefone2_financeiro"
-                            placeholder="Telefone 2"
-                            handleOnChange={handleTelefoneChange}
-                            value={dados.telefone2_financeiro ? dados.telefone2_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
-                        />
-                    </div>
-
-                    <div className={styles.divmae6}>
-                        <Input
-                            type="text"
-                            text="Endereço"
-                            name="endereco_financeiro"
-                            placeholder="Endereço"
-                            handleOnChange={handleChange}
-                            value={dados.endereco_financeiro ? dados.endereco_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae7}>
-                        <Input
-                            type="number"
-                            text="Nº"
-                            name="n_financeiro"
-                            placeholder="Nº"
-                            handleOnChange={handleChange}
-                            value={dados.n_financeiro ? dados.n_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae8}>
-                        <Input
-                            type="text"
-                            text="Cidade"
-                            name="cidade_financeiro"
-                            placeholder="Cidade"
-                            handleOnChange={handleChange}
-                            value={dados.cidade_financeiro ? dados.cidade_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae9}>
-                        <Input
-                            type="text"
-                            text="Bairro"
-                            name="bairro_financeiro"
-                            placeholder="Bairro"
-                            handleOnChange={handleChange}
-                            value={dados.bairro_financeiro ? dados.bairro_financeiro : ''}
-                        />
-                    </div>
-                    <div className={styles.divmae10}>
-                        <Input
-                            type="text"
-                            text="CEP"
-                            name="cep_financeiro"
-                            placeholder="000.000-00"
-                            handleOnChange={handleCEPChange}
-                            value={dados.cep_financeiro ? dados.cep_financeiro : ''}
-                            onInput={(e) => handleInputLimit(e, 8)}
-                        />
-                    </div>
-                    <div className={styles.divmae11}>
-                        <Input
-                            type="text"
-                            text="E-mail"
-                            name="email_financeiro"
-                            placeholder="E-mail"
-                            handleOnChange={handleChange}
-                            value={dados.email_financeiro ? dados.email_financeiro : ''}
-                        />
-                    </div>
-                </div>
                 <div className={styles.containerbotao}>
                     <Botao
                         type="button"
