@@ -45,6 +45,12 @@ const Funcionarios = () => {
             .catch((err) => console.log(err))
     }, [])
 
+    function getFuncaoNome(funcao) {
+        if (!funcao) return '';
+        if (typeof funcao === 'string') return funcao;
+        return funcao.nome || funcao.nome_funcao || funcao.name || '';
+    }
+
     return (
         <>
             <div>
@@ -65,7 +71,7 @@ const Funcionarios = () => {
                         const ano = data.getFullYear();
                         return `${dia}/${mes}/${ano}`;
                     })() : 'Não informada'}
-                    turma={funcionario.funcao ? funcionario.funcao : ''}
+                    turma={getFuncaoNome(funcionario.funcao)}
                     turno={funcionario.telefone1_funcionario ? funcionario.telefone1_funcionario : ''}
                     icone={<CiCircleMore />}
                     link={`/PaginaFuncionario/${funcionario.id}`}

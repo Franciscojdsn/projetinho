@@ -4,14 +4,15 @@ import { TfiSave } from "react-icons/tfi";
 
 import styles from './EditarDadosTurmas.module.css';
 import Input from '../Componentes/Input/Input';
-import Radio from '../Componentes/Radio/Radio';
+import Select from '../Componentes/Select/Select';
 import Botao from '../../Botao/index'
-import { IoTrashBinOutline } from "react-icons/io5";
-import { v4 as uuid } from 'uuid';
+import { IoTrashBinOutline } from "react-icons/io5"; 
 
 
 export default function EditarDados({ aluno, onSave }) {
     const [dados, setDados] = useState(aluno);
+    const [opcoesProfessor, setOpcoesProfessor] = useState([]);
+    const [opcoesTurno, setOpcoesTurno] = useState([]);
 
     const anoAtual = new Date().getFullYear();
     const anoMinimo = anoAtual - 100;
@@ -84,19 +85,64 @@ export default function EditarDados({ aluno, onSave }) {
         }
     };
 
+    useEffect(() => {
+        fetch('http://localhost:5000/funcionarios', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                const nomeDaFuncao = (f) => {
+                    if (!f) return '';
+                    if (typeof f === 'string') return f;
+                    return f.nome || f.nome_funcao || f.name || '';
+                };
+
+                const professores = data.filter((item) => {
+                    const funcaoNome = nomeDaFuncao(item.funcao).toLowerCase();
+                    return funcaoNome.includes('professor');
+                });
+
+                const options = professores.map((p) => ({ id: p.id, nome: p.nome_funcionario || p.nome || p.name || '' }));
+                setOpcoesProfessor(options);
+            })
+            .catch((err) => console.log(err))
+
+        fetch('http://localhost:5000/turnos', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                const options = data.map((t) => ({ id: t.id, nome: t.nome }));
+                setOpcoesTurno(options);
+            })
+            .catch((err) => console.log(err))
+    }, []);
+
+    function getProfessorId(professor) {
+        if (!professor) return '';
+        if (typeof professor === 'object') return professor.id || '';
+        if (typeof professor === 'string') {
+            const found = opcoesProfessor.find((o) => o.nome === professor);
+            return found ? found.id : '';
+        }
+        return '';
+    }
+
+    function handleSelectProfessor(e) {
+        setDados((prev) => ({ ...prev, turma_professor: { id: e.target.value, nome: e.target.options[e.target.selectedIndex]?.text || '' } }));
+    }
+
+    function handleSelectTurno(e) {
+        setDados((prev) => ({ ...prev, turma_turno: e.target.options[e.target.selectedIndex]?.text || '' }));
+    }
+
     return (
         <>
-            <form onSubmit={submit}>
-                <div className={styles.containerimagem}>
-                    <Input
-                        name="imagem"
-                        type="file"
-                        accept="image/*"
-                        text='Foto do funcionário:'
-                        handleOnChange={handleFileChange}
-                        placeholder="Escolha uma imagem"
-                    />
-                </div>
+            <form onSubmit={submit}> 
                 <div className={styles.container1}>
                     <div className={styles.div1}>
                         <Input
@@ -109,24 +155,23 @@ export default function EditarDados({ aluno, onSave }) {
                         />
                     </div>
                     <div className={styles.div3}>
-                        <Input
-                            type="text"
-                            text="Turno:"
+                        <Select
                             name="turma_turno"
-                            placeholder="Turno"
-                            handleOnChange={handleChange}
-                            value={dados.turma_turno ? dados.turma_turno : ''}
+                            label="Turnos:"
+                            text="Selecione o turno"
+                            options={opcoesTurno}
+                            handleOnChange={handleSelectTurno}
+                            value={opcoesTurno.find(o => o.nome === dados.turma_turno)?.id || ''}
                         />
                     </div>
                     <div className={styles.div5}>
-                        <Input
-                            type="text"
-                            text="Professor"
+                        <Select
                             name="turma_professor"
-                            placeholder="Professor"
-                            handleOnChange={handleChange}
-                            value={dados.turma_professor ? dados.turma_professor : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                            label="Professor:"
+                            text="Selecione o professor"
+                            options={opcoesProfessor}
+                            handleOnChange={handleSelectProfessor}
+                            value={getProfessorId(dados.turma_professor)}
                         />
                     </div>
                     <div className={styles.div7}>

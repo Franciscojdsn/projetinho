@@ -1,168 +1,24 @@
 {
   "alunos": [
     {
-      "id": "75776f38-3460-4f72-a43c-18f3c3ea203b",
-      "nome": "Francisco João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
+      "id": "b96666b4-85f8-47a5-9a4d-b3a5a6b83a12",
       "turma": {
-        "id": "1",
-        "nome": "Maternal II"
+        "id": "b584",
+        "nome": "Maternal II",
+        "turno": "Manhã"
       },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "cpf": "12312312312",
-      "nome_da_mae": "Danielle Nascimento da Silva",
-      "telefone1_da_mae": "81998292317",
-      "endereco_da_mae": "Rua Júlio Moliterno, 33",
-      "cidade_da_mae": "Abreu e Lima",
-      "cep_da_mae": "53510530",
-      "email_da_mae": "Danielle.nsilva@ufrpe.br",
-      "resp_financeiro": "Danielle Nascimento da Silva",
-      "telefone1_financeiro": "81998292317",
-      "endereco_financeiro": "Rua Júlio Moliterno, 33",
-      "cidade_financeiro": "Abreu e Lima",
-      "cep_financeiro": "53510530",
-      "email_financeiro": "Danielle.nsilva@ufrpe.br",
-      "matricula": 1,
-      "data": "2022-02-12"
+      "nome": "teste",
+      "matricula": 10
     },
     {
-      "id": "86684542-6954-4d06-a74d-88a41b808066",
-      "nome": "Bernardo João da Silva Neto Boni",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53580760",
-      "nome_da_mae": "Julia Nascimento da Silva",
-      "telefone1_da_mae": "81998292317",
-      "endereco_da_mae": "Rua Júlio Moliterno, 33",
-      "cidade_da_mae": "Abreu e Lima",
-      "cep_da_mae": "53510530",
-      "email_da_mae": "Danielle.nsilva@ufrpe.br",
-      "resp_financeiro": "Mariete Nascimento da Silva",
-      "telefone1_financeiro": "81998292317",
-      "endereco_financeiro": "Rua Júlio Moliterno, 33",
-      "cidade_financeiro": "Abreu e Lima",
-      "cep_financeiro": "53510530",
-      "email_financeiro": "Danielle.nsilva@ufrpe.br",
-      "data": "2008-05-01",
+      "id": "96f89747-2a51-46fc-a3f5-76b08de5d989",
       "turma": {
-        "id": "1",
-        "nome": "Maternal II"
+        "id": "ea23",
+        "nome": "Maternal",
+        "turno": "Tarde"
       },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "matricula": 5
-    },
-    {
-      "id": "352ed4ba-446f-4a6c-8e33-d8d9c6eac349",
-      "nome": "Suzana Alice Gomes",
-      "data": "2009-04-22",
-      "turma": {
-        "id": "1",
-        "nome": "Maternal II"
-      },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "nome_da_mae": "Julia Maria da Silva",
-      "telefone1_da_mae": "81998292317",
-      "endereco_da_mae": "Rua Júlio Moliterno, 33",
-      "cidade_da_mae": "Abreu e Lima",
-      "cep_da_mae": "53510530",
-      "email_da_mae": "Danielle.nsilva@ufrpe.br",
-      "resp_financeiro": "Julia Maria da Silva",
-      "telefone1_financeiro": "81998292317",
-      "endereco_financeiro": "Rua Júlio Moliterno, 33",
-      "cidade_financeiro": "Abreu e Lima",
-      "cep_financeiro": "53510530",
-      "email_financeiro": "Danielle.nsilva@ufrpe.br",
-      "matricula": 6
-    },
-    {
-      "id": "082952ef-b449-4a65-b12d-f61adfbb880e",
-      "nome": "Rafael Gomes Luiz",
-      "data": "2011-11-25",
-      "turma": {
-        "id": "1",
-        "nome": "Maternal II"
-      },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "nome_da_mae": "Berenice Odete da Silva",
-      "telefone1_da_mae": "81971199800",
-      "endereco_da_mae": "Abreu e Lima",
-      "cidade_da_mae": "Recife",
-      "cep_da_mae": "53580760",
-      "resp_financeiro": "Berenice Odete da Silva",
-      "telefone1_financeiro": "81971199800",
-      "endereco_financeiro": "Abreu e Lima",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "53580760",
-      "matricula": 7
-    },
-    {
-      "id": "e22686df-eb0f-4b8c-b68d-300c3cf38a94",
-      "nome": "Nome do Aluno COmpleto",
-      "data": "2022-12-15",
-      "naturalidade": "olinda",
-      "sexo": "M",
-      "turma": {
-        "id": "1",
-        "nome": "Maternal II"
-      },
-      "turno": {
-        "id": "11",
-        "nome": "Manhã"
-      },
-      "cpf": "12312312312",
-      "endereco": "Abreu e Lima",
-      "cidade": "Recife",
-      "cep": "53555555",
-      "n": "12",
-      "bairro": "centro",
-      "nome_da_mae": "Nome da Mãe completo",
-      "data_da_mae": "2000-12-12",
-      "cpf_da_mae": "12312312312",
-      "rg_da_mae": "1231231",
-      "telefone1_da_mae": "8199999999",
-      "telefone2_da_mae": "81988888888",
-      "endereco_da_mae": "Abreu e Lima",
-      "cidade_da_mae": "Recife",
-      "cep_da_mae": "5355555",
-      "email_da_mae": "email@gmail.com",
-      "resp_financeiro": "Nome da Mãe completo",
-      "data_financeiro": "2000-12-12",
-      "cpf_financeiro": "12312312312",
-      "rg_financeiro": "1231231",
-      "telefone1_financeiro": "8199999999",
-      "telefone2_financeiro": "81988888888",
-      "endereco_financeiro": "Abreu e Lima",
-      "n_financeiro": "12",
-      "cidade_financeiro": "Recife",
-      "cep_financeiro": "",
-      "email_financeiro": "email@gmail.com",
-      "nome_do_pai": "Nome do pai Completo",
-      "data_do_pai": "1991-11-11",
-      "cpf_do_pai": "12312312312",
-      "rg_do_pai": "5555555",
-      "telefone1_do_pai": "8199999999",
-      "telefone2_do_pai": "8188888888",
-      "endereco_do_pai": "Abreu e Lima",
-      "cidade_do_pai": "Recife",
-      "cep_do_pai": "53580760",
-      "n_da_mae": "12",
-      "n_do_pai": "12",
-      "email_do_pai": "email@gmail.com",
-      "matricula": 8
+      "nome": "Francisco João",
+      "matricula": 11
     }
   ],
   "financeiro": [
@@ -289,8 +145,61 @@
       ]
     },
     {
-      "id": "75776f38-3460-4f72-a43c-18f3c3ea203b",
-      "valor_matricula": 1233.22,
+      "id": "b96666b4-85f8-47a5-9a4d-b3a5a6b83a12",
+      "valor_matricula": 122.22,
+      "desconto_matricula": 123.33,
+      "valor_mensalidade": 123.33,
+      "desconto": 0.12,
+      "dia_vencimento": "12",
+      "meses": {
+        "id": "9",
+        "nome": "Setembro"
+      },
+      "total_mensalidade": 123.21,
+      "total_matricula": -1.1099999999999994,
+      "renda_complementar": [],
+      "boletos": [
+        {
+          "id": "01023482-24f4-4d66-82ab-11b170bd943f",
+          "valor": 123.21,
+          "dia_pagamento": "13/01/2026",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/09/2026",
+          "mes_id": "9",
+          "mes": "setembro"
+        },
+        {
+          "id": "50ac887f-76df-4266-89fd-36c1bb4f90e6",
+          "valor": 123.21,
+          "dia_pagamento": "13/01/2026",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/10/2026",
+          "mes_id": "10",
+          "mes": "outubro"
+        },
+        {
+          "id": "c8462ece-35e1-402a-b248-28d698edd943",
+          "valor": 123.21,
+          "dia_pagamento": "13/01/2026",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/11/2026",
+          "mes_id": "11",
+          "mes": "novembro"
+        },
+        {
+          "id": "5774f9b8-e31a-4c4a-aa60-c4c7776ac4c7",
+          "valor": 123.21,
+          "dia_pagamento": "13/01/2026",
+          "dia_vencimento": 12,
+          "data_vencimento": "12/12/2026",
+          "mes_id": "12",
+          "mes": "dezembro"
+        }
+      ]
+    },
+    {
+      "id": "96f89747-2a51-46fc-a3f5-76b08de5d989",
+      "valor_matricula": 122.22,
       "desconto_matricula": 123.33,
       "valor_mensalidade": 123.33,
       "desconto": 0.11,
@@ -299,268 +208,171 @@
         "id": "8",
         "nome": "Agosto"
       },
-      "total_mensalidade": 373.21999999999997,
-      "total_matricula": 1109.89,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
+      "total_mensalidade": 123.22,
+      "total_matricula": -1.1099999999999994,
+      "renda_complementar": [],
       "boletos": [
         {
-          "id": "612647f0-7307-4862-9904-862dc479fc36",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
+          "id": "07b4e3d7-7640-43a8-afd0-fb6c82e38130",
+          "valor": 123.22,
+          "dia_pagamento": "13/01/2026",
           "dia_vencimento": 12,
-          "data_vencimento": "12/08/2025",
+          "data_vencimento": "12/08/2026",
           "mes_id": "8",
           "mes": "agosto"
         },
         {
-          "id": "5bb32a86-f631-47f0-85da-25b0187fd9dd",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
+          "id": "87705cc7-4961-4f39-9c23-03eeae0d5b10",
+          "valor": 123.22,
+          "dia_pagamento": "13/01/2026",
           "dia_vencimento": 12,
-          "data_vencimento": "12/09/2025",
+          "data_vencimento": "12/09/2026",
           "mes_id": "9",
           "mes": "setembro"
         },
         {
-          "id": "3a3cc374-85e6-4f7e-b696-5257192eb69e",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
+          "id": "13a1bb8a-7331-4aa0-9bba-bc37f76ebadc",
+          "valor": 123.22,
+          "dia_pagamento": "13/01/2026",
           "dia_vencimento": 12,
-          "data_vencimento": "12/10/2025",
+          "data_vencimento": "12/10/2026",
           "mes_id": "10",
           "mes": "outubro"
         },
         {
-          "id": "560ef41b-492a-4230-852d-cd61da8d8990",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
+          "id": "e90bc0a9-d272-4bfb-b33e-33586abaad83",
+          "valor": 123.22,
+          "dia_pagamento": "13/01/2026",
           "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
+          "data_vencimento": "12/11/2026",
           "mes_id": "11",
           "mes": "novembro"
         },
         {
-          "id": "8561a69d-f78e-4e1a-9c9d-24e46ea2efe5",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
+          "id": "b881075f-ebab-432f-8b0a-8843916fe19e",
+          "valor": 123.22,
+          "dia_pagamento": "13/01/2026",
           "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "86684542-6954-4d06-a74d-88a41b808066",
-      "valor_matricula": 122.22,
-      "desconto_matricula": 10,
-      "valor_mensalidade": 123.33,
-      "desconto": 0.12,
-      "dia_vencimento": "20",
-      "meses": {
-        "id": "12",
-        "nome": "Dezembro"
-      },
-      "total_mensalidade": 373.21,
-      "total_matricula": 112.22,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "f2339de3-792d-4641-8ad5-5ee480ae015a",
-          "valor": 373.21,
-          "dia_pagamento": "14/12/2025",
-          "dia_vencimento": 20,
-          "data_vencimento": "20/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "352ed4ba-446f-4a6c-8e33-d8d9c6eac349",
-      "valor_matricula": 122.22,
-      "desconto_matricula": 1.22,
-      "valor_mensalidade": 123.33,
-      "desconto": 0.11,
-      "dia_vencimento": "20",
-      "meses": {
-        "id": "12",
-        "nome": "Dezembro"
-      },
-      "total_mensalidade": 373.21999999999997,
-      "total_matricula": 121,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "fb9223d5-9fbf-44d7-afa8-223404cc787e",
-          "valor": 373.21999999999997,
-          "dia_pagamento": "14/12/2025",
-          "dia_vencimento": 20,
-          "data_vencimento": "20/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "082952ef-b449-4a65-b12d-f61adfbb880e",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 1.23,
-      "valor_mensalidade": 123.33,
-      "desconto": 1.23,
-      "dia_vencimento": "28",
-      "meses": {
-        "id": "12",
-        "nome": "Dezembro"
-      },
-      "total_mensalidade": 372.09999999999997,
-      "total_matricula": 122.1,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "a0cb3820-c62b-4f1f-bce6-fd3b71de56ba",
-          "valor": 372.09999999999997,
-          "dia_pagamento": "14/12/2025",
-          "dia_vencimento": 28,
-          "data_vencimento": "28/12/2025",
-          "mes_id": "12",
-          "mes": "dezembro"
-        }
-      ]
-    },
-    {
-      "id": "e22686df-eb0f-4b8c-b68d-300c3cf38a94",
-      "valor_matricula": 123.33,
-      "desconto_matricula": 12.33,
-      "valor_mensalidade": 123.33,
-      "desconto": 12.33,
-      "dia_vencimento": "12",
-      "meses": {
-        "id": "11",
-        "nome": "Novembro"
-      },
-      "total_mensalidade": 361,
-      "total_matricula": 111,
-      "renda_complementar": [
-        {
-          "id": "311",
-          "nome": "Transporte",
-          "valor": 250
-        }
-      ],
-      "boletos": [
-        {
-          "id": "4ba41cad-36ff-4c11-9b7a-02d1bc384ce5",
-          "valor": 361,
-          "dia_pagamento": "17/12/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/11/2025",
-          "mes_id": "11",
-          "mes": "novembro"
-        },
-        {
-          "id": "ba252d1e-bebc-4455-8de6-000ff89416d1",
-          "valor": 361,
-          "dia_pagamento": "17/12/2025",
-          "dia_vencimento": 12,
-          "data_vencimento": "12/12/2025",
+          "data_vencimento": "12/12/2026",
           "mes_id": "12",
           "mes": "dezembro"
         }
       ]
     }
   ],
-  "opcoesturma": [
+  "funcoes": [
     {
       "id": "1",
-      "nome": "Maternal II"
+      "nome": "Professor(a)"
     },
     {
       "id": "2",
-      "nome": "Maternal III"
+      "nome": "Serviços Gerais"
     },
     {
       "id": "3",
-      "nome": "Jardim I"
+      "nome": "Professor(a) Temporário"
     },
     {
       "id": "4",
-      "nome": "Jardim II"
+      "nome": "Coordenador Pedagógico"
+    },
+    {
+      "id": "5",
+      "nome": "Secretária(o)"
+    },
+    {
+      "id": "6",
+      "nome": "Diretor(a)"
+    },
+    {
+      "id": "7",
+      "nome": "Financeiro"
     }
   ],
   "turnos": [
     {
-      "id": "11",
+      "id": "1",
       "nome": "Manhã"
     },
     {
-      "id": "12",
+      "id": "2",
       "nome": "Tarde"
+    },
+    {
+      "id": "3",
+      "nome": "Noite"
+    },
+    {
+      "id": "4",
+      "nome": "Integral"
     }
   ],
   "turmas": [
     {
-      "id": "a6dd",
-      "nome_turma": "teste",
+      "id": "ea23",
+      "nome_turma": "Maternal",
+      "turma_turno": "Tarde",
+      "professor": {
+        "id": "c1dd264c-20b6-4ef3-8591-b09c5b252e6f",
+        "nome": "teste"
+      },
+      "turma_diasletivos": "200",
+      "inicio_aulas": "2026-02-02",
+      "previsao_aulas": "2026-12-02",
+      "turma_professor": {
+        "id": "c1dd264c-20b6-4ef3-8591-b09c5b252e6f",
+        "nome": "teste"
+      }
+    },
+    {
+      "id": "b584",
+      "nome_turma": "Maternal II",
       "turma_turno": "Manhã",
-      "turma_professor": "Tomas1",
-      "turma_mensalidade": "123123",
-      "turma_diasletivos": "1222",
-      "inicio_aulas": "1995-08-12",
-      "previsao_aulas": "1997-05-12"
+      "professor": {
+        "id": "774812ca-bf15-45e1-8359-e6c37f7f0145",
+        "nome": "teste 3"
+      },
+      "turma_diasletivos": "200",
+      "inicio_aulas": "2026-02-02",
+      "previsao_aulas": "2026-12-02"
     }
   ],
   "funcionarios": [
     {
-      "id": "7709a4c4-011f-4d7f-ab73-38fa2547713b",
-      "data_da_entrada_funcionario": "2022-02-12",
-      "data_funcionario": "2012-12-12",
-      "nome_funcionario": "teste 123asdasd",
-      "matricula": 2,
-      "telefone2_funcionario": "(81) 97119-9800",
-      "telefone1_funcionario": "(81) 97119-9800",
-      "endereco_funcionario": "Abreu e Lima",
-      "cidade_funcionario": "Recife",
-      "cep_funcionario": "53580-760",
-      "bairro_funcionario": "Abreu e Lima",
-      "sexo": "M",
-      "naturalidade_funcionario": "Olinda",
-      "funcao": "Professor",
-      "cpf_funcinoario": "000.000.000-00",
-      "cpf_funcionario": "000.000.000-01",
-      "n_funcionario": "2",
-      "email_funcionario": "asd@gmail.com",
-      "salario": "R$ 120,00",
-      "pix_funcionario": "20504060",
-      "agencia_funcionario": "11111",
-      "n_conta_funcionario": "2",
-      "digito_funcionario": "2",
-      "banco_funcionario": "2",
-      "rg_funcionario": "5.555.552"
+      "id": "fdb7d108-733c-4798-bcc0-321a625c8e73",
+      "funcao": {
+        "id": "6",
+        "nome": "Diretor(a)"
+      },
+      "matricula": 2
+    },
+    {
+      "id": "c1dd264c-20b6-4ef3-8591-b09c5b252e6f",
+      "nome_funcionario": "teste",
+      "funcao": {
+        "id": "1",
+        "nome": "Professor(a)"
+      },
+      "matricula": 3
+    },
+    {
+      "id": "774812ca-bf15-45e1-8359-e6c37f7f0145",
+      "nome_funcionario": "teste 3",
+      "funcao": {
+        "id": "1",
+        "nome": "Professor(a)"
+      },
+      "matricula": 4
+    },
+    {
+      "id": "a9045342-1d44-4e3a-a5f9-f8c4de3f9cda",
+      "nome_funcionario": "teste 4",
+      "funcao": {
+        "id": "3",
+        "nome": "Professor(a) Temporário"
+      },
+      "matricula": 5
     }
   ],
   "dadosfinanceiros": [

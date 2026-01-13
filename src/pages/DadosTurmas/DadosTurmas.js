@@ -11,6 +11,9 @@ import Loading from "../../componentes/Formulario/Componentes/Loading/Loading";
 
 import InputExibirTurmas from "../../componentes/Formulario/Componentes/InputExibirTurmas/InputExibirTurmas";
 import EditarDadosTurmas from "../../componentes/Formulario/EditarDadosTurmas/EditarDadosTurmas";
+import ListaAlunos from "../../componentes/ListaAlunos/ListaAlunos";
+import TituloLista from "../../componentes/TituloLista/TituloLista";
+import { CiCircleMore } from "react-icons/ci";
 
 
 export default function DadosTurmas({ }) {
@@ -24,6 +27,11 @@ export default function DadosTurmas({ }) {
 
     const [isEditing, setIsEditing] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    const [alunosTurma, setAlunosTurma] = useState([]);
+    const [alunosPendentes, setAlunosPendentes] = useState(new Set());
+    const [sortKey, setSortKey] = useState('nome');
+    const [sortOrder, setSortOrder] = useState('asc');
 
         useEffect(() => {
         if (location.state?.message) {
@@ -55,6 +63,45 @@ export default function DadosTurmas({ }) {
             .catch((err) => console.log(err))
             .finally(() => setIsLoading(false));
     }, [id]);
+
+    // Busca alunos vinculados a esta turma e dados de financeiro para pendências
+    useEffect(() => {
+        if (!id) return;
+        setIsLoading(true);
+
+        Promise.all([
+            fetch('http://localhost:5000/alunos', { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then((r) => r.json()),
+            fetch('http://localhost:5000/financeiro', { method: 'GET', headers: { 'Content-Type': 'application/json' } }).then((r) => r.json())
+        ])
+            .then(([alunosData, financeiroData]) => {
+                // Filtra apenas alunos cuja turma.id === id (ou com nome correspondente como fallback)
+                const filtered = alunosData.filter((a) => {
+                    if (!a.turma) return false;
+                    if (a.turma.id) return String(a.turma.id) === String(id);
+                    const turmaNome = turmas?.nome_turma || turmas?.nome || '';
+                    return turmaNome && String(a.turma.nome) === String(turmaNome);
+                });
+
+                setAlunosTurma(filtered);
+
+                // Determina alunos pendentes (reaproveita lógica do Home)
+                const hoje = new Date();
+                const idsPendentes = new Set(
+                    financeiroData.filter(fin => {
+                        if (!fin.boletos || !Array.isArray(fin.boletos)) return false;
+                        return fin.boletos.some(boleto => {
+                            if (!boleto.data_vencimento) return false;
+                            const [dia, mes, ano] = boleto.data_vencimento.split('/');
+                            const dataVencimento = new Date(`${ano}-${mes}-${dia}`);
+                            return dataVencimento < hoje;
+                        });
+                    }).map(fin => fin.id)
+                );
+                setAlunosPendentes(idsPendentes);
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setIsLoading(false));
+    }, [id, turmas]);
 
     function toggleEditMode() {
         setIsEditing((prev) => !prev);
@@ -103,6 +150,36 @@ export default function DadosTurmas({ }) {
         }
     }
 
+    // Computa a lista ordenada conforme sortKey / sortOrder
+    function getCompareValue(aluno, key) {
+        switch (key) {
+            case 'nome':
+                return (aluno.nome || '').toLowerCase();
+            case 'matricula':
+                return Number(aluno.matricula) || 0;
+            case 'data':
+                return aluno.data ? new Date(aluno.data).getTime() : 0;
+            case 'turno': {
+                let t = '';
+                if (aluno.turno) t = typeof aluno.turno === 'object' ? (aluno.turno.nome || '') : aluno.turno;
+                else if (aluno.turma && aluno.turma.turno) t = typeof aluno.turma.turno === 'object' ? (aluno.turma.turno.nome || '') : aluno.turma.turno;
+                return t.toLowerCase();
+            }
+            default:
+                return '';
+        }
+    }
+
+    const sortedAlunos = [...alunosTurma].sort((a, b) => {
+        const va = getCompareValue(a, sortKey);
+        const vb = getCompareValue(b, sortKey);
+
+        if (typeof va === 'number' && typeof vb === 'number') return sortOrder === 'asc' ? va - vb : vb - va;
+        if (va < vb) return sortOrder === 'asc' ? -1 : 1;
+        if (va > vb) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+    });
+
 return (
         <>
             {isLoading ? (
@@ -119,13 +196,6 @@ return (
                             <>
                                 {turmas && (
                                     <>
-                                        <div className={styles.containercabecalho2}>
-                                            <img
-                                                src={turmas.imagem}
-                                                alt="Foto do Aluno"
-                                            />
-                                        </div>
-
                                         <div className={styles.containercabecalho}>
                                             <InputExibirTurmas
                                                 nome_turma={turmas.nome_turma}
@@ -149,6 +219,8 @@ return (
                                                 
                                             />
                                         </div>
+
+                                        {/* Lista de alunos movida para uma seção separada */}
                                     </>
                                 )}
                             </>
@@ -167,6 +239,67 @@ return (
                                 onclick={handleDelete} // Adiciona a função de exclusão ao botão
                             />
                         </div>
+                    </div>
+
+                    {/* Seção separada para a lista de alunos da turma */}
+                    <div className={styles.containerlista}>
+                        <div className={styles.listaHeader}>
+                            <h3>Alunos desta turma</h3>
+                            <div className={styles.sortControls}>
+                                <label>
+                                    Ordenar por:&nbsp;
+                                    <select value={sortKey} onChange={(e) => setSortKey(e.target.value)}>
+                                        <option value="nome">Nome</option>
+                                        <option value="matricula">Matrícula</option>
+                                        <option value="data">Data de nascimento</option>
+                                        <option value="turno">Turno</option>
+                                    </select>
+                                </label>
+                                <button type="button" onClick={() => setSortOrder((s) => (s === 'asc' ? 'desc' : 'asc'))}>
+                                    {sortOrder === 'asc' ? 'Asc' : 'Desc'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <ul>
+                            <TituloLista />
+                            {sortedAlunos.length > 0 ? (
+                                sortedAlunos.map((aluno) => {
+                                    const estaPendente = alunosPendentes.has(aluno.id);
+
+                                    // Deriva o turno (compatibilidade com diferentes formatos)
+                                    let turnoValor = '';
+                                    if (aluno.turno) {
+                                        turnoValor = typeof aluno.turno === 'object' ? (aluno.turno.nome || '') : aluno.turno;
+                                    } else if (aluno.turma && aluno.turma.turno) {
+                                        turnoValor = typeof aluno.turma.turno === 'object' ? (aluno.turma.turno.nome || '') : aluno.turma.turno;
+                                    }
+
+                                    return (
+                                        <ListaAlunos
+                                            key={aluno.matricula}
+                                            id={aluno.matricula}
+                                            vencido={estaPendente ? <span style={{ color: 'red', fontWeight: 'bold' }} title="Boleto vencido">⚠️</span> : null}
+                                            nome={aluno.nome}
+                                            responsavel={aluno.resp_financeiro ? aluno.resp_financeiro : ''}
+                                            data={aluno.data ? (() => {
+                                                const data = new Date(aluno.data);
+                                                const dia = String(data.getDate()).padStart(2, '0');
+                                                const mes = String(data.getMonth() + 1).padStart(2, '0');
+                                                const ano = data.getFullYear();
+                                                return `${dia}/${mes}/${ano}`;
+                                            })() : 'Não informada'}
+                                            turma={aluno.turma ? aluno.turma.nome : ''}
+                                            turno={turnoValor}
+                                            icone={<CiCircleMore />}
+                                            link={`/PaginaAluno/${aluno.id}`}
+                                        />
+                                    )
+                                })
+                            ) : (
+                                <p>Não há alunos vinculados a esta turma.</p>
+                            )}
+                        </ul>
                     </div>
                 </>
             )}

@@ -5,6 +5,13 @@ export default function InputExibirFuncionario({ nome_funcionario, data_funciona
     
 }) {
 
+    const getFuncaoNome = (f) => {
+        if (!f) return '';
+        if (typeof f === 'string') return f;
+        return f.nome || f.nome_funcao || f.name || '';
+    };
+
+    const funcaoNome = getFuncaoNome(funcao);
 
     return (
 
@@ -40,8 +47,8 @@ export default function InputExibirFuncionario({ nome_funcionario, data_funciona
                         <span name={n_funcionario} id={n_funcionario}>{n_funcionario}</span>
                     </div>
                     <div className={styles.div8}>
-                        <label htmlFor={funcao}>Funçãoº:</label><br></br>
-                        <span name={funcao} id={funcao}>{funcao}</span>
+                        <label htmlFor={funcaoNome}>Funçãoº:</label><br></br>
+                        <span name={funcaoNome} id={funcaoNome}>{funcaoNome}</span>
                     </div>
                     <div className={styles.div9}>
                         <label htmlFor={data_da_entrada_funcionario}>Data de entrada:</label><br></br>

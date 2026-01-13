@@ -80,7 +80,6 @@ const DadosDosFuncionarios = () => {
                     handleSubmit={addFuncionario}
                 />
             </div>
-            funcionarios
         </>
     )
 }

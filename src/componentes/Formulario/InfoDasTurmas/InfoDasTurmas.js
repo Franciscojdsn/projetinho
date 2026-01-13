@@ -1,14 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TfiSave } from "react-icons/tfi";
 import { IoTrashBinOutline } from "react-icons/io5";
+
 
 import Input from '../Componentes/Input/Input';
 import styles from './InfoDasTurmas.module.css'
 import Botao from '../../Botao';
+import Select from '../Componentes/Select/Select';
 
 function InfoDasTurmas({ handleSubmit, dadosData }) {
 
+    const [opcoesProfessor, setOpcoesProfessor] = useState([])
+    const [opcoesTurno, setOpcoesTurno] = useState([])
     const [dados, setDados] = useState(dadosData || {})
+
+    const navigate = useNavigate();
 
     const submit = async (e) => {
         e.preventDefault();
@@ -17,9 +24,10 @@ function InfoDasTurmas({ handleSubmit, dadosData }) {
 
         console.log('Dados prontos para envio ->', dadosSemFormatacao);
 
-        // Se o pai passou uma função handleSubmit, usa ela.
+        // Se o pai passou uma função handleSubmit, usa ela e navega para lista com mensagem.
         if (typeof handleSubmit === 'function') {
-            handleSubmit(dadosSemFormatacao);
+            await Promise.resolve(handleSubmit(dadosSemFormatacao));
+            navigate('/Turmas', { state: { message: 'Turma salva com sucesso!' } });
             return;
         }
 
@@ -33,15 +41,57 @@ function InfoDasTurmas({ handleSubmit, dadosData }) {
 
             if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
 
-            // Limpa formulário e informa usuário
+            // Limpa formulário e navega para listar turmas com mensagem
             setDados({});
-            // Se quiser redirecionar, pode usar navigate ou emitir uma mensagem
-            alert('Turma salva com sucesso.');
+            navigate('/Turmas', { state: { message: 'Turma salva com sucesso!' } });
         } catch (error) {
             console.error('Erro ao salvar turma:', error);
             alert('Não foi possível salvar a turma. Verifique o servidor.');
         }
     };
+
+    useEffect(() => {
+        fetch('http://localhost:5000/funcionarios', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                // Filtra apenas funcionários cuja função contenha 'professor'
+                const nomeDaFuncao = (f) => {
+                    if (!f) return '';
+                    if (typeof f === 'string') return f;
+                    return f.nome || f.nome_funcao || f.name || '';
+                };
+
+                const professores = data.filter((item) => {
+                    const funcaoNome = nomeDaFuncao(item.funcao).toLowerCase();
+                    return funcaoNome.includes('professor');
+                });
+
+                const options = professores.map((p) => ({
+                    id: p.id,
+                    nome: p.nome_funcionario || p.nome || p.name || ''
+                }));
+
+                setOpcoesProfessor(options);
+            })
+            .catch((err) => console.log(err))
+
+        // Busca turnos do servidor e mapeia para { id, nome }
+        fetch('http://localhost:5000/turnos', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                const options = data.map((t) => ({ id: t.id, nome: t.nome }));
+                setOpcoesTurno(options);
+            })
+            .catch((err) => console.log(err))
+    }, [])
 
     // Função de limpar dados (ajeitar)
     function removerFormatacao(dados) {
@@ -98,6 +148,22 @@ function InfoDasTurmas({ handleSubmit, dadosData }) {
         console.log("Todos os campos foram limpos!");
     }
 
+    function handleSelectProfessor(e) {
+        setDados({
+            ...dados, professor: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
+    }
+
+    function handleSelectTurno(e) {
+        setDados({
+            ...dados,
+            turma_turno: e.target.options[e.target.selectedIndex].text,
+        })
+    }
+
     return (
         <>
             <form onSubmit={submit}>
@@ -123,24 +189,23 @@ function InfoDasTurmas({ handleSubmit, dadosData }) {
                         />
                     </div>
                     <div className={styles.div3}>
-                        <Input
-                            type="text"
-                            text="Turno:"
+                        <Select
                             name="turma_turno"
-                            placeholder="Turno"
-                            handleOnChange={handleChange}
-                            value={dados.turma_turno ? dados.turma_turno : ''}
+                            label="Turnos:"
+                            text="Selecione o turno"
+                            options={opcoesTurno}
+                            handleOnChange={handleSelectTurno}
+                            value={opcoesTurno.find(o => o.nome === dados.turma_turno)?.id || ''}
                         />
                     </div>
                     <div className={styles.div5}>
-                        <Input
-                            type="text"
-                            text="Professor"
-                            name="turma_professor"
-                            placeholder="Professor"
-                            handleOnChange={handleChange}
-                            value={dados.turma_professor ? dados.turma_professor : ''}
-                            onInput={(e) => handleInputLimit(e, 15)}
+                        <Select
+                            name="professor"
+                            label="Professor:"
+                            text="Selecione o professor"
+                            options={opcoesProfessor}
+                            handleOnChange={handleSelectProfessor}
+                            value={dados.professor ? dados.professor.id : ''}
                         />
                     </div>
                     <div className={styles.div7}>
@@ -163,7 +228,7 @@ function InfoDasTurmas({ handleSubmit, dadosData }) {
                             value={dados.inicio_aulas ? dados.inicio_aulas : ''}
                         />
                     </div>
-                        <div className={styles.div10}>
+                    <div className={styles.div10}>
                         <Input
                             type="date"
                             text="Previsão de término:"

@@ -92,6 +92,15 @@ const Home = () => {
                             alunos.map((aluno) => {
                                 // Verifica se o aluno está pendente
                                 const estaPendente = alunosPendentes.has(aluno.id);
+
+                                // Deriva o turno: primeiro verifica `aluno.turno`, depois `aluno.turma.turno` (compatibilidade de formatos)
+                                let turnoValor = '';
+                                if (aluno.turno) {
+                                    turnoValor = typeof aluno.turno === 'object' ? (aluno.turno.nome || '') : aluno.turno;
+                                } else if (aluno.turma && aluno.turma.turno) {
+                                    turnoValor = typeof aluno.turma.turno === 'object' ? (aluno.turma.turno.nome || '') : aluno.turma.turno;
+                                }
+
                                 return (
                                     <ListaAlunos
                                         key={aluno.matricula}
@@ -107,7 +116,7 @@ const Home = () => {
                                             return `${dia}/${mes}/${ano}`;
                                         })() : 'Não informada'}
                                         turma={aluno.turma ? aluno.turma.nome : ''}
-                                        turno={aluno.turno ? aluno.turno.nome : ''}
+                                        turno={turnoValor}
                                         icone={<CiCircleMore />}
                                         link={`/PaginaAluno/${aluno.id}`}
                                     />

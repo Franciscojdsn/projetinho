@@ -13,7 +13,6 @@ export default function EditarDados({ aluno, onSave }) {
     const [dados, setDados] = useState(aluno);
 
     const [opcoesturma, setOpcoesturma] = useState([])
-    const [turno, setTurno] = useState([])
 
     const anoAtual = new Date().getFullYear();
     const anoMinimo = anoAtual - 100; 
@@ -33,6 +32,20 @@ export default function EditarDados({ aluno, onSave }) {
     function handleSubmit(e) {
         e.preventDefault();
         const dadosSemFormatacao = removerFormatacao(dados);
+
+        // Garantir que o turno fique embutido dentro de `turma` como string:
+        // { turma: { id, nome, turno: 'Manhã' } }
+        const turnoNome = dadosSemFormatacao.turno && (dadosSemFormatacao.turno.nome || (typeof dadosSemFormatacao.turno === 'string' ? dadosSemFormatacao.turno : ''));
+        if (dadosSemFormatacao.turma) {
+            dadosSemFormatacao.turma = { ...dadosSemFormatacao.turma, turno: turnoNome };
+        } else if (turnoNome) {
+            // Se por acaso não houver turma, mantém turno separado (fallback)
+            dadosSemFormatacao.turma = { id: '', nome: '', turno: turnoNome };
+        }
+
+        // Remove o campo top-level `turno` para evitar salvar objetos independentes
+        if (dadosSemFormatacao.turno) delete dadosSemFormatacao.turno;
+
         onSave(dadosSemFormatacao); // Chama a função de salvar com os dados atualizados
     }
 
@@ -114,23 +127,19 @@ export default function EditarDados({ aluno, onSave }) {
     }
 
     function handleSelectTurma(e) {
+        const selectedId = e.target.value;
+        const selected = opcoesturma.find((o) => String(o.id) === String(selectedId));
         setDados({
-            ...dados, turma: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
+            ...dados,
+            turma: {
+                id: selectedId,
+                nome: selected ? selected.nome : e.target.options[e.target.selectedIndex].text,
             },
+            turno: selected ? { id: '', nome: selected.turno } : dados.turno,
         })
     }
 
-    function handleSelectTurno(e) {
-        setDados({
-            ...dados, turno: {
-                id: e.target.value,
-                nome: e.target.options[e.target.selectedIndex].text,
-            },
-        })
-        console.log(dados)
-    }
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -146,25 +155,19 @@ export default function EditarDados({ aluno, onSave }) {
     };
 
     useEffect(() => {
-        fetch('http://localhost:5000/opcoesturma', {
+        fetch('http://localhost:5000/turmas', {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then((resp) => resp.json())
             .then((data) => {
-                setOpcoesturma(data)
-            })
-            .catch((err) => console.log(err))
-
-        fetch('http://localhost:5000/turnos', {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then((resp) => resp.json())
-            .then((data) => {
-                setTurno(data)
+                const options = data.map((t) => {
+                    const nome = t.nome_turma || t.nome || '';
+                    const turno = t.turma_turno || t.turno || '';
+                    return { id: t.id, nome, display: turno ? `${nome} - ${turno}` : nome, turno };
+                });
+                setOpcoesturma(options)
             })
             .catch((err) => console.log(err))
     }, [])
@@ -233,16 +236,7 @@ export default function EditarDados({ aluno, onSave }) {
                             value={dados.turma ? dados.turma.id : ''}
                         />
                     </div>
-                    <div className={styles.div6}>
-                        <Select
-                            name="turno"
-                            label="Turnos:"
-                            text="Selecione o turno"
-                            options={turno}
-                            handleOnChange={handleSelectTurno}
-                            value={dados.turno ? dados.turno.id : ''}
-                        />
-                    </div>
+
                     <div className={styles.div7}>
                         <Input
                             type="text"

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TfiSave } from "react-icons/tfi";
 import { IoTrashBinOutline } from "react-icons/io5";
 
@@ -6,9 +6,11 @@ import Input from '../Componentes/Input/Input';
 import Radio from '../Componentes/Radio/Radio';
 import styles from './InfoDosFuncionarios.module.css'
 import Botao from '../../Botao';
+import Select from '../Componentes/Select/Select';
 
 function InfoDosFuncionarios({ handleSubmit, dadosData }) {
 
+    const [opcoesfuncao, setOpcoesfuncao] = useState([])
     const [dados, setDados] = useState(dadosData || {})
 
     const anoAtual = new Date().getFullYear();
@@ -26,6 +28,20 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         console.log(dadosSemFormatacao);
         handleSubmit(dadosSemFormatacao);
     };
+
+    useEffect(() => {
+        fetch('http://localhost:5000/funcoes', {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then((resp) => resp.json())
+            .then((data) => {
+                setOpcoesfuncao(data)
+            })
+            .catch((err) => console.log(err))
+
+    }, [])
 
     function formatCPF(value) {
         return value
@@ -151,22 +167,13 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
         console.log("Todos os campos foram limpos!");
     }
 
-    function handleClick() {
-        setDados((prevDados) => ({
-            ...prevDados,
-            resp_financeiro: prevDados.nome_da_mae,
-            data_financeiro: prevDados.data_da_mae,
-            cpf_financeiro: prevDados.cpf_da_mae,
-            rg_financeiro: prevDados.rg_da_mae,
-            telefone1_financeiro: prevDados.telefone1_da_mae,
-            telefone2_financeiro: prevDados.telefone2_da_mae,
-            endereco_financeiro: prevDados.endereco_da_mae,
-            n_financeiro: prevDados.n_da_mae,
-            cidade_financeiro: prevDados.cidade_da_mae,
-            bairro_financeiro: prevDados.bairro_da_mae,
-            cep_financeiro: prevDados.cep_da_mae,
-            email_financeiro: prevDados.email_da_mae,
-        }));
+    function handleSelectFuncao(e) {
+        setDados({
+            ...dados, funcao: {
+                id: e.target.value,
+                nome: e.target.options[e.target.selectedIndex].text,
+            },
+        })
     }
 
     return (
@@ -334,13 +341,13 @@ function InfoDosFuncionarios({ handleSubmit, dadosData }) {
 
                 <div className={styles.container}>
                     <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Função"
+                        <Select
                             name="funcao"
-                            placeholder="Função do funcionário"
-                            handleOnChange={handleChange}
-                            value={dados.funcao ? dados.funcao : ''}
+                            label="Função:"
+                            text="Selecione a função"
+                            options={opcoesfuncao}
+                            handleOnChange={handleSelectFuncao}
+                            value={dados.funcao ? dados.funcao.id : ''}
                         />
                     </div>
                     <div className={styles.div2}>

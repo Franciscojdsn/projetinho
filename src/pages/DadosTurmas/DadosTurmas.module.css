@@ -40,7 +40,7 @@
     padding: 2em;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     gap: 8px;
 }
 
@@ -192,125 +192,6 @@
 
 input[type="radio"] {
     accent-color: rgba(106, 109, 160, 0.815);
-}
-
-.divmae1 {
-    grid-column: span 4 / span 4;
-}
-
-.divmae1 input {
-    width: 18em;
-}
-
-.divmae2 {
-    grid-column-start: 6;
-}
-
-.divmae2 input {
-    width: 9em;
-}
-
-.divmae3 {
-    grid-column: span 1 / span 1;
-    grid-column-start: 7;
-}
-
-.divmae3 input {
-    width: 6em;
-}
-
-.divmae4 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 8;
-    grid-row-start: 1;
-}
-
-.divmae4 input {
-    width: 8em;
-}
-
-.divmae5 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 10;
-    grid-row-start: 1;
-}
-
-.divmae5 input {
-    width: 8em;
-}
-
-.divmae6 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 1;
-    grid-row-start: 2;
-}
-
-.divmae6 input {
-    width: 18em;
-}
-
-.divmae7 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 5;
-    grid-row-start: 2;
-}
-
-.divmae7 input {
-    width: 3em;
-}
-
-.divmae8 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 6;
-    grid-row-start: 2;
-}
-
-.divmae8 input {
-    width: 8em;
-}
-
-.divmae9 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 7;
-    grid-row-start: 2;
-}
-
-.divmae9 input {
-    width: 7em;
-}
-
-.divmae10 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 8;
-    grid-row-start: 2;
-}
-
-.divmae10 input {
-    width: 8em;
-}
-
-.divmae11 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 10;
-    grid-row-start: 2;
-}
-
-.divmae12 {
-    grid-column: span 2 / span 2;
-    grid-column-start: 12;
-    grid-row-start: 1;
-}
-
-.divmae12 label div {
-    margin: .4em;
-    border: 1px solid rgba(139, 139, 255, 0.301);
-    background-color: white;
-    border-radius: .3em;
-}
-
-.divmae12 label label {
-    padding-left: .5em;
-    width: 1.5em;
 }
 
 .containerbotao {

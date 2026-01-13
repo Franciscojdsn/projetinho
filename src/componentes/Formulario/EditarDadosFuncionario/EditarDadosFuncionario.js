@@ -12,7 +12,7 @@ import Botao from '../../Botao/index'
 export default function EditarDados({ aluno, onSave }) {
     const [dados, setDados] = useState(aluno);
 
-    const [opcoesturma, setOpcoesturma] = useState([])
+    const [opcoesfuncao, setOpcoesfuncao] = useState([])
     const [turno, setTurno] = useState([])
 
     const anoAtual = new Date().getFullYear();
@@ -107,6 +107,12 @@ export default function EditarDados({ aluno, onSave }) {
         return dadosSemFormatacao;
     }
 
+    function handleSelectFuncao(e) {
+        const selectedId = e.target.value;
+        const selectedText = e.target.options[e.target.selectedIndex]?.text || '';
+        setDados((prev) => ({ ...prev, funcao: { id: selectedId, nome: selectedText } }));
+    }
+
     function handleInputLimit(e, maxLength) {
         if (e.target.value.length > maxLength) {
             e.target.value = e.target.value.slice(0, maxLength); // Limita o valor ao máximo permitido
@@ -145,14 +151,14 @@ export default function EditarDados({ aluno, onSave }) {
     };
 
     useEffect(() => {
-        fetch('http://localhost:5000/opcoesturma', {
+        fetch('http://localhost:5000/funcoes', {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
             }
         }).then((resp) => resp.json())
             .then((data) => {
-                setOpcoesturma(data)
+                setOpcoesfuncao(data)
             })
             .catch((err) => console.log(err))
 
@@ -333,13 +339,13 @@ export default function EditarDados({ aluno, onSave }) {
 
                 <div className={styles.container}>
                     <div className={styles.divmae1}>
-                        <Input
-                            type="text"
-                            text="Função"
+                        <Select
                             name="funcao"
-                            placeholder="Função do funcionário"
-                            handleOnChange={handleChange}
-                            value={dados.funcao ? dados.funcao : ''}
+                            label="Função:"
+                            text="Selecione a função"
+                            options={opcoesfuncao}
+                            handleOnChange={handleSelectFuncao}
+                            value={dados.funcao ? dados.funcao.id : ''}
                         />
                     </div>
                     <div className={styles.div2}>
