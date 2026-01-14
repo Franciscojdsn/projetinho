@@ -126,6 +126,7 @@ const Financeiro = () => {
             valor_atividade: parseFloat(dados.valor_atividade.replace(/[^\d,]/g, '').replace(',', '.')) || 0,
         };
 
+        //Adicionar nova renda complementar
         fetch('http://localhost:5000/renda_complementar/', {
             method: 'POST',
             headers: {

@@ -53,8 +53,16 @@ const DadosFinanceiros = () => {
                 let somaPendentes = 0;
                 let somaAReceber = 0;
                 const hoje = new Date();
+                const mesAtual = String(hoje.getMonth() + 1);
+                const anoAtual = hoje.getFullYear();
+
                 data.forEach((item) => {
-                    somaMensalidade += Number(item.total_mensalidade) || 0;
+                    // Somar apenas as mensalidades do mês/ano atual
+                    const itemMesId = item?.meses?.id;
+                    if (String(itemMesId) === mesAtual) {
+                        somaMensalidade += Number(item.total_mensalidade) || 0;
+                    }
+
                     if (Array.isArray(item.boletos)) {
                         item.boletos.forEach((boleto) => {
                             if (boleto.data_vencimento) {
@@ -74,6 +82,7 @@ const DadosFinanceiros = () => {
                         });
                     }
                 });
+
                 setValorTotal(somaMensalidade);
                 setValorPendentes(somaPendentes);
                 setValorAReceber(somaAReceber);
@@ -85,16 +94,26 @@ const DadosFinanceiros = () => {
             });
     }, []);
 
-    // Soma extras válidos ao valorTotal
+    // Soma extras válidos ao valorTotal (apenas extras do mês/ano atual e não expirados)
     const valorTotalComExtras = (() => {
         const hoje = new Date();
+        const mesAtual = hoje.getMonth() + 1;
+        const anoAtual = hoje.getFullYear();
         let somaExtras = 0;
+
         extras.forEach(extra => {
-            const dataExpiracao = new Date(extra.dataExpiracao);
-            if (hoje <= dataExpiracao) {
-                somaExtras += Number(extra.valor) || 0;
+            const extraMes = Number(extra.mes);
+            const extraAno = Number(extra.ano);
+            const dataExpiracao = extra.dataExpiracao ? new Date(extra.dataExpiracao) : null;
+
+            // Inclui apenas extras do mês/ano atual e cuja data de expiração ainda é válida (ou sem expiração)
+            if (extraMes === mesAtual && extraAno === anoAtual) {
+                if (!dataExpiracao || hoje <= dataExpiracao) {
+                    somaExtras += Number(extra.valor) || 0;
+                }
             }
         });
+
         return valorTotal + somaExtras;
     })();
 
